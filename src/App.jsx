@@ -1,13 +1,12 @@
-import './App.css'
-import Home from './components/home/home'
+import "./App.css";
+import Prueba from "./components/Prueba-J/Prueba";
 
 function App() {
-
   return (
     <>
-    <Home/>
+      <Prueba />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
