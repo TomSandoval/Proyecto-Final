@@ -1,6 +1,3 @@
-import { category } from "../../data"
-
-export default function Home(){
-
-
+export default function Home() {
+  console.log("home");
 }
