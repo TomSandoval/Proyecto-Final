@@ -1,13 +1,16 @@
-import { category } from "../../data"
 import Products from "../Products/products"
-const Home = () => {
-    return (
-        <div>
-            <p>PRODUCTS</p>
-            <Products/>
-        </div>
-    )
+import FilterButtons from "./filterButtons/filterButtons";
+import SearchBar from '../Nav/nav';
 
+
+export default function Home(){
+
+    return (
+        <>
+        <SearchBar/>
+        <FilterButtons/>            
+        <Products/>
+        </>
+    )
 }
 
-export default Home;
