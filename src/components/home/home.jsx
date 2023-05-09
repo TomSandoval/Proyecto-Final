@@ -1,19 +1,14 @@
+import { category } from "../../data";
+import FilterButtons from "./filterButtons/filterButtons";
+import { category } from "../../data";
+import SearchBar from '../Nav/nav';
 
-import { category } from "../../data"
-import SearchBar from '../Nav/nav'
+
 export default function Home(){
 
 
     return (
-        <>
- 
-            <SearchBar/>
-        </>
+        <SearchBar/>
+        <FilterButtons/>
     )
-
 }
-
-export default function Home() {
-  console.log("home");
-}
-
