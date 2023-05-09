@@ -1,3 +1,4 @@
+
 import { category } from "../../data"
 import SearchBar from '../Nav/nav'
 export default function Home(){
@@ -11,3 +12,8 @@ export default function Home(){
     )
 
 }
+
+export default function Home() {
+  console.log("home");
+}
+
