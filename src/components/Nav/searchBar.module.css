@@ -1,0 +1,100 @@
+.divSearchBar{
+    margin:0;
+    width: 100vw;
+    max-width: 100%;
+    background-color: #FF9F1C;
+    height:6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divInput{
+    align-items: center;
+    margin-left: auto;
+    display: flex;
+}
+
+.divUser{
+    align-items: center;
+    margin-left: auto;
+    display: flex;
+}
+
+.input{
+    border-radius:10px;
+    height: 3vh;
+    width: 30vh;
+    margin: 3px;
+    font-size: 18px;
+}
+
+.buttonSerch{
+    border-radius:10px;
+    height: 3vh;
+    margin: 3px;
+    width: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button{
+    background: none;
+    border: none;
+    width: 5vh;
+    height: 5vh;
+    margin: 5px;
+    margin-right:25px;
+}
+
+.link{
+    font-size: 20px;
+    text-decoration: none;
+    color: #efe9e9;
+    height: 5vh;
+    margin-bottom: 5px;
+    margin-right:25px;
+}
+
+.link:hover{
+    color: rgb(44, 139, 58);
+}
+
+.img {
+    width: 18px;
+    transition:0.2s;
+}
+
+.img:hover {
+    width: 23px;
+    transition:0.2s;
+}
+
+.img2 {
+    width: 25px;
+    transition:0.2s;
+}
+
+.img2:hover {
+    width: 27px;
+    transition:0.2s;
+}
+
+.buttonLogin{
+    background: none;
+    border: none;
+    margin: 5px;
+    margin-right:25px;
+}
+
+
+
+
+
+
+
+
+
+
+
