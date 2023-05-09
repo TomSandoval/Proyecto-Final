@@ -4,8 +4,6 @@ const initialState = {
   allProducts: [],
 };
 
-console.log(initialState.allProducts);
-
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_PRODUCTS:
