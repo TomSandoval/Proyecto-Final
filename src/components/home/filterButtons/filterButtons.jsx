@@ -13,6 +13,7 @@ export default function FilterButtons(){
                 category.map((c,index) => <Link to={`/categories/${c.name}`} key={index} className="button-filter"><img className="filter-image" src={c.image}/><p key={index} className="filter-title">{c.name}</p></Link>)
             }
             </div>
+            <div className="hr"></div>
         </div>
     )
 }
