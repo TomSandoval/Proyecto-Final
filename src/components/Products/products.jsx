@@ -1,6 +1,7 @@
 import React from "react";
 import { clothing, electronics, home } from "../../data";
 import Card from "./Card";
+import './products.css'
 
 
 //! REVISAR LAS CARTAS PARA QUE QUEDEN UNA AL LADO DE OTRA!!!
@@ -16,14 +17,23 @@ const Products = () => {
     const homee = home.map((product) => <Card key={product.id} {...product} />);
 
     return (
-        <div>
+        <div className="main">
 
-            <h1 class="display-6 d-flex">Clothes</h1>
-            <div>{clothes}</div>
-            <h1 class="display-6 d-flex">Electric</h1>
-            <div>{electric}</div>
-            <h1 class="display-6 d-flex">Home</h1>
-            <div>{homee}</div>
+            <div>
+            <h1>Clothes</h1>
+            <div className="card-container-all">{clothes}</div>
+            </div>
+            <div className="hr"></div>
+            <div>
+            <h1>Electric</h1>
+            <div className="card-container-all">{electric}</div>
+            </div>
+            <div className="hr"></div>
+            <div>
+            <h1>Home</h1>
+            <div className="card-container-all">{homee}</div>
+            </div>
+            <div className="hr"></div>
         </div>
     );
 };
