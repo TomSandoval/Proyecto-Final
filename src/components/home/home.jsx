@@ -1,4 +1,4 @@
-import Products from "../Products/products"
+import ProductFilter3 from "../Products/product3Categories3Products"
 import FilterButtons from "./filterButtons/filterButtons";
 import SearchBar from '../Nav/nav';
 
@@ -9,7 +9,7 @@ export default function Home(){
         <>
         <SearchBar/>
         <FilterButtons/>            
-        <Products/>
+        <ProductFilter3/>
         </>
     )
 }

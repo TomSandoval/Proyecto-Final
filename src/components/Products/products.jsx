@@ -3,9 +3,6 @@ import { clothing, electronics, home } from "../../data";
 import Card from "./Card";
 
 
-//! REVISAR LAS CARTAS PARA QUE QUEDEN UNA AL LADO DE OTRA!!!
-//! AGREGAR A FAVORITOS
-
 const Products = () => {
     const clothes = clothing.map((product) => (
         <Card key={product.id} {...product} />
@@ -17,7 +14,6 @@ const Products = () => {
 
     return (
         <div>
-
             <h1 class="display-6 d-flex">Clothes</h1>
             <div>{clothes}</div>
             <h1 class="display-6 d-flex">Electric</h1>

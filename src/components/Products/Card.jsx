@@ -1,7 +1,7 @@
 import React from "react";
 import cart from "../../assets/cartShop.png";
 
-const Card = ({ title, price, image, category }) => {
+const Card = ({ title, price, image }) => {
   return (
     <div class="row row-cols-3">
       <div class="col">
