@@ -1,0 +1,166 @@
+.detail-container {
+  border-radius: 1.5vh;
+  width: 192vh;
+  height: 120vh;
+  margin: 5%;
+  mix-blend-mode: normal;
+  border: 1px solid #040404;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
+  background: #ffffff;
+}
+
+.btn-outline-danger {
+  margin: 1.5%;
+  position: absolute;
+}
+
+.detail-image {
+  width: 20%;
+  border-radius: 40px;
+  position: absolute;
+  left: 15%;
+  top: 28%;
+  margin: 0;
+}
+.detail-container span {
+  color: #ff9f1c;
+}
+
+.feactures-container {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100vh;
+  height: 90vh;
+  left: 700px;
+  margin-top: 2%;
+  background: #fdfafa;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  font-family: "Kameron";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.02em;
+  overflow: auto;
+}
+
+.price {
+  position: absolute;
+  right: 4%;
+  top: 5%;
+}
+
+.hr-container {
+  position: absolute;
+  width: 70vh;
+  height: 0px;
+  left: 123px;
+  bottom: -10vh;
+  border: 1px solid #000000;
+}
+
+.nav-inverse {
+  width: 100%;
+  height: 25vh;
+  background-color: #ff9f1c;
+  box-shadow: 0px -1px 6px 5px rgba(0, 0, 0, 0.31);
+  border-radius: 40px 40px 0px 0px;
+}
+
+.name-container {
+  width: 75vh;
+  margin: 2%;
+  top: 223px;
+  font-family: "Kameron";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100px;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+
+.contact {
+  margin: 1%;
+  position: absolute;
+  right: 18.5%;
+  font-family: "Kameron";
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 43px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+
+.contact h1 {
+  font-size: 30px;
+}
+
+.email-container {
+  position: absolute;
+  right: 7.5%;
+  margin-top: 5%;
+  font-family: "Kameron";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+
+.links-container {
+  margin-top: 1.3%;
+  position: absolute;
+  right: 50%;
+  font-family: "Kameron";
+  font-size: 10px;
+  line-height: 43px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #000000;
+}
+
+.links-container h1 {
+  font-size: 30px;
+}
+
+.enlaces-container {
+  position: absolute;
+  margin-top: 6%;
+  right: 51.2%;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  padding-left: 10px;
+  display: block;
+  color: #000000;
+}
+
+.button-container-new {
+  position: absolute;
+  width: 150px;
+  height: 46px;
+  margin: 10%;
+  bottom: -45%;
+  right: 0%;
+  background: #ff9f1c;
+  border-radius: 10px;
+  font-family: "Kameron";
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.02em;
+  color: #000000;
+  box-shadow: 0px -1px 6px 5px rgba(0, 0, 0, 0.08);
+}
+
+.button-container-new:hover {
+  box-shadow: 0px -1px 6px 5px rgba(0, 0, 0, 0.15);
+  transition: 500ms;
+  background-color: #ffa01ca7;
+}
