@@ -5,15 +5,20 @@ import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
 import { useDispatch } from "react-redux";
 import styles from "./searchBar.module.css";
+import { getProductByName } from "../../redux/actions";
 
 export default function SearchBar() {
   const [name, setName] = useState("");
+
+  const dispatch = useDispatch()
 
   function handleInput(e) {
     setName(e.target.value);
   }
 
-  function handleSubmit(e) {
+  function handleSubmit() {
+    dispatch(getProductByName(name))
+    setName("")
   }
 
   return (
@@ -25,7 +30,7 @@ export default function SearchBar() {
           onChange={(e) => handleInput(e)}
           className={styles.input}
         />
-        <button className={styles.buttonSerch}>
+        <button onClick={handleSubmit} className={styles.buttonSerch}>
           <img src={logoSearch} className={styles.img} />
         </button>
       </div>

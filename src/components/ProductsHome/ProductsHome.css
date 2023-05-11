@@ -1,0 +1,41 @@
+.container {
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
+}
+
+.section-all {
+  margin-top: 4em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  gap: 10em;
+  margin: 100px;
+}
+
+.text-container {
+    width: 100vw;
+    max-width: 60%;
+    font-family: "Kameron";
+    letter-spacing: 2px;
+}
+
+
+.hr {
+    width: 60%;
+    height: 1px;
+    background-color: #ddd;
+    margin-bottom: 2em;
+}
+
+
+@font-face {
+    font-family: "Kameron";
+    src: url('/public/fonts/Kameron-Regular.ttf');
+}

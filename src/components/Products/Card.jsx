@@ -3,24 +3,23 @@ import cart from "../../assets/cartShop.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({ title, price, image, id, category }) => {
+export default function Card (props){
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate(`Detail/${id}`);
-  };
+    navigate(`Detail/${props.id}`);
+  }
 
 
-const Card = ({ title, price, image }) => {
   return (
-    <div class="container-card" onClick={handleNavigate}>
-      <img src={image} class="card-img-top card-image" alt="..." />
-      <div class="container-info">
-        <h5 class="card-title">{title}</h5>
+    <div className="container-card" >
+      <img src={props.img} onClick={handleNavigate} className="card-img-top card-image" alt={props.name} />
+      <div className="container-info">
+        <h5 className="card-title">{props.name}</h5>
         <hr></hr>
         <div className="buy-info">
-          <p class="card-price">${price} </p>
-          <button type="button" class="button-buy">
+          <p className="card-price">${props.price} </p>
+          <button type="button" className="button-buy">
             <img src={cart} alt="" />
           </button>
         </div>
@@ -29,6 +28,5 @@ const Card = ({ title, price, image }) => {
   );
 };
 
-export default Card;
 
 //agregar el onClick={
