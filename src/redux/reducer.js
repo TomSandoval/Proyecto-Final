@@ -1,4 +1,4 @@
-import { GET_PRODUCTS } from "./actions";
+import { GET_PRODUCTS , GET_NAME , POST_FORM_REGISTER } from "./actions";
 
 const initialState = {
   allProducts: [],
@@ -11,7 +11,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allProducts: action.payload,
       };
+    
 
+      case POST_FORM_REGISTER:
+        return {
+          ...state,
+        };
     default:
       return { ...state };
   }
