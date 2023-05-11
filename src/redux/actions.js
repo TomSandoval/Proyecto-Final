@@ -16,6 +16,7 @@ export const postForm = (payload) => {
     return dispatch({
         type:POST_FORM_REGISTER,
         payload:json,
+        
     });
 }
 };

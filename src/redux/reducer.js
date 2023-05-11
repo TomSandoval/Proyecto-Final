@@ -16,6 +16,7 @@ const rootReducer = (state = initialState, action) => {
       case POST_FORM_REGISTER:
         return {
           ...state,
+          
         };
     default:
       return { ...state };
