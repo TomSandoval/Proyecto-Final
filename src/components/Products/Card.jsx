@@ -10,6 +10,8 @@ const Card = ({ title, price, image, id, category }) => {
     navigate(`Detail/${id}`);
   };
 
+
+const Card = ({ title, price, image }) => {
   return (
     <div class="container-card" onClick={handleNavigate}>
       <img src={image} class="card-img-top card-image" alt="..." />

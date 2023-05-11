@@ -4,9 +4,6 @@ import Card from "./Card";
 import './products.css'
 
 
-//! REVISAR LAS CARTAS PARA QUE QUEDEN UNA AL LADO DE OTRA!!!
-//! AGREGAR A FAVORITOS
-
 const Products = () => {
     const clothes = clothing.map((product) => (
         <Card key={product.id} {...product} />
@@ -14,11 +11,10 @@ const Products = () => {
     const electric = electronics.map((product) => (
         <Card key={product.id} {...product} />
     ));
-    const homee = home.map((product) => <Card key={product.id} {...product} />);
+    const home = home.map((product) => <Card key={product.id} {...product} />);
 
     return (
         <div className="main">
-
             <div>
             <h1>Clothes</h1>
             <div className="card-container-all">{clothes}</div>
@@ -31,7 +27,7 @@ const Products = () => {
             <div className="hr"></div>
             <div>
             <h1>Home</h1>
-            <div className="card-container-all">{homee}</div>
+            <div className="card-container-all">{home}</div>
             </div>
             <div className="hr"></div>
         </div>
