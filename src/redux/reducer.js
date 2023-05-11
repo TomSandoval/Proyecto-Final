@@ -1,7 +1,10 @@
 import { GET_PRODUCTS } from "./actions";
+import { PRODUCT_DETAIL } from "./actions";
+import { CLEAN_DETAIL } from "./actions";
 
 const initialState = {
   allProducts: [],
+  productDetail: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -10,6 +13,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         allProducts: action.payload,
+      };
+
+    case PRODUCT_DETAIL:
+      return {
+        ...state,
+        productDetail: action.payload,
+      };
+
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        productDetail: {},
       };
 
     default:
