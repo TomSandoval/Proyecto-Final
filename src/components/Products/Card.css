@@ -21,6 +21,7 @@
     border: 1px solid #eee;
     border-radius: 35px;
     box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+    transition: transform .2s;
 }
 .buy-info  {
     display: flex;
@@ -44,4 +45,9 @@
     padding: 6px 16px;
     background-color: #298DFD;
     border-radius: 10px;
+}
+
+
+.container-card:hover {
+    transform: scale(1.1);
 }

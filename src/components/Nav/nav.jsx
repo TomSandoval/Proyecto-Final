@@ -11,14 +11,15 @@ export default function SearchBar() {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
   function handleInput(e) {
-    e.preventDefault();
     setName(e.target.value);
   }
+  
   function handleSubmit(e){
     console.log('hola');
     e.preventDefault();
     dispatch(getName(name))
 };
+
 
   return (
     <div className={styles.divSearchBar}>
