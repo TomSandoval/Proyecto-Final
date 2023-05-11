@@ -10,12 +10,10 @@ export default function SearchBar() {
   const [name, setName] = useState("");
 
   function handleInput(e) {
-    e.preventDefault();
     setName(e.target.value);
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
   }
 
   return (

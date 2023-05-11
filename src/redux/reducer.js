@@ -1,11 +1,15 @@
+
+import { GET_CATEGORIES, GET_PRODUCTS } from "./actions";
 import { GET_PRODUCTS } from "./actions";
 import { PRODUCT_DETAIL } from "./actions";
 import { CLEAN_DETAIL } from "./actions";
 
 const initialState = {
   allProducts: [],
+  categories: [], 
   productDetail: {},
-};
+}
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -14,6 +18,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         allProducts: action.payload,
       };
+      case GET_CATEGORIES : {
+        return {
+          ...state,
+          categories: action.payload
+        }
+      }
 
     case PRODUCT_DETAIL:
       return {
