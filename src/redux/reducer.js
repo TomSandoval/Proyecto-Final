@@ -1,4 +1,8 @@
+
 import {
+  GET_PRODUCTS,
+  GET_NAME,
+  POST_FORM_REGISTER,
   GET_PRODUCTS,
   AXIOS_PRODUCTS_BY_CATEGORY_REQUEST,
   AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS,
@@ -47,7 +51,14 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productDetail: {},
-      };
+      };    
+
+      case POST_FORM_REGISTER:
+        return {
+          ...state,
+          
+        };
+
     default:
       return state;
   }

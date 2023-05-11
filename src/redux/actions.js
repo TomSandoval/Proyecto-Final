@@ -1,7 +1,10 @@
 import axios from "axios";
 import { data } from "../data";
+import axios from 'axios';
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
+export const GET_NAME='GET_NAME'
+export const POST_FORM_REGISTER='POST_FORM_REGISTER'
 export const AXIOS_PRODUCTS_BY_CATEGORY_REQUEST = 'AXIOS_PRODUCTS_BY_CATEGORY_REQUEST';
 export const AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS = 'AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS';
 export const AXIOS_PRODUCTS_BY_CATEGORY_FAILURE = 'AXIOS_PRODUCTS_BY_CATEGORY_FAILURE';
@@ -10,9 +13,19 @@ export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
-
 export const getClothing = () => {
   return { type: GET_PRODUCTS, payload: data };
+};
+
+export const postForm = (payload) => {
+  return async function(dispatch){
+    var json=await axios.post('http://localhost:5173/product',payload);
+    return dispatch({
+        type:POST_FORM_REGISTER,
+        payload:json,
+        
+    });
+}
 };
 
 export const axiosProductsByCategory = (categoryName) => async (dispatch) => {
