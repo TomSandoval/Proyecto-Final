@@ -3,14 +3,20 @@ import {
   AXIOS_PRODUCTS_BY_CATEGORY_REQUEST,
   AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS,
   AXIOS_PRODUCTS_BY_CATEGORY_FAILURE,
+  GET_CATEGORIES,
+  PRODUCT_DETAIL,
+  CLEAN_DETAIL
 } from "./actions";
 
 const initialState = {
   allProducts: [],
   isLoading: false,
   products: [],
+  categories: [],  
+  productDetail: {},
   error: null
 };
+
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -25,6 +31,23 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, isLoading: false, products: action.payload };
     case AXIOS_PRODUCTS_BY_CATEGORY_FAILURE:
       return { ...state, isLoading: false, error: action.error };
+      };
+      case GET_CATEGORIES : {
+        return {
+          ...state,
+          categories: action.payload
+        }
+      }
+    case PRODUCT_DETAIL:
+      return {
+        ...state,
+        productDetail: action.payload,
+      };
+    case CLEAN_DETAIL:
+      return {
+        ...state,
+        productDetail: {},
+      };
     default:
       return state;
   }

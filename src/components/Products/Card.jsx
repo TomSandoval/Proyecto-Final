@@ -1,22 +1,28 @@
 import React from "react";
 import cart from "../../assets/cartShop.png";
+import "./Card.css";
+import { useNavigate } from "react-router-dom";
+
+const Card = ({ title, price, image, id, category }) => {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate(`Detail/${id}`);
+  };
+
 
 const Card = ({ title, price, image }) => {
   return (
-    <div class="row row-cols-3">
-      <div class="col">
-        <div class="card h-100">
-          <img src={image} class="card-img-top " alt="..."/>
-          <div class="card-body">
-            <h5 class="card-title">{title}</h5>
-            <p class="card-text">${price} </p>
-            <button type="button" class="btn btn-primary ">
-              <img src={cart} alt="" />
-            </button>
-          </div>
-          <div class="card-footer">
-            <small class="text-body-secondary">TukiMarket</small>
-          </div>
+    <div class="container-card" onClick={handleNavigate}>
+      <img src={image} class="card-img-top card-image" alt="..." />
+      <div class="container-info">
+        <h5 class="card-title">{title}</h5>
+        <hr></hr>
+        <div className="buy-info">
+          <p class="card-price">${price} </p>
+          <button type="button" class="button-buy">
+            <img src={cart} alt="" />
+          </button>
         </div>
       </div>
     </div>
