@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME='GET_NAME'
 export const POST_FORM_REGISTER='POST_FORM_REGISTER'
 export const AXIOS_PRODUCTS_BY_CATEGORY_REQUEST = 'AXIOS_PRODUCTS_BY_CATEGORY_REQUEST';
@@ -12,9 +11,7 @@ export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
 
-export const getClothing = () => {
-  return { type: GET_PRODUCTS, payload: data };
-};
+
 
 export const postForm = (payload) => {
   return async function(dispatch){

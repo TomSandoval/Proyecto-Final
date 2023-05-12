@@ -28,6 +28,14 @@ export default function SearchBar() {
     setName("");
   }
 
+  function handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      handleSubmit();
+      console.log("tecla enter");
+    }
+  }
+
+
   return (
     <div className={styles.divSearchBar}>
       <div className={styles.containerTuki}>
@@ -41,6 +49,7 @@ export default function SearchBar() {
             placeholder="¿Que vas a llevar hoy?"
             value={name}
             onChange={(e) => handleInput(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
             className={styles.input}
           />
 
