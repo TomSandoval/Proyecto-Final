@@ -95,6 +95,28 @@ export default function Validation (input,setErrors,errors,e) {
                     setErrors({...errors, birthDate:''});
                 }
                 break;
+
+            case'number':
+            if(!input.number)setErrors({...errors, number:'Campo Vacio'});
+            else{
+               if (isNaN(input.number)) {
+                setErrors({...errors, number:'Solo se puede ingrasar numeros'});
+                isValid = false;
+               };
+               if(isValid){
+                setErrors({...errors, number:''});
+            };
+            }
+            break;
+
+            case 'street':
+                if(!input.street)setErrors({...errors, street:'Campo Vacio'});
+                else {
+                    if(isValid){
+                        setErrors({...errors, street:''});
+                    };
+                }
+            break;
     
         default:
             break;
