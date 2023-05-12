@@ -1,0 +1,128 @@
+.div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid black;
+    width: 49vw;
+    height: 70vh;
+    margin: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius:40px;
+}
+
+.divForm{
+    width: 100%;
+}
+.divAlreadyRegister{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.inputMail{
+    background-color: rgb(210, 210, 210);
+    border-radius: 0.3vw;
+    width: 20vw;
+    height: 4vh;
+    border: none;
+    font-size: larger;
+    margin-top:0.2vw;
+    margin-bottom: 0.2vw;
+}
+
+.input{
+    background-color: rgb(210, 210, 210);
+    border-radius: 0.3vw;
+    width: 9.8vw;
+    height: 4vh;
+    border: none;
+    font-size: larger;
+    margin-top:0.2vw;
+    margin-bottom: 0.2vw;
+}
+
+.inputPassword{
+    background-color: rgb(210, 210, 210);
+    border-radius: 0.3vw;
+    width: 15vw;
+    height: 4vh;
+    border: none;
+    font-size: larger;
+    margin-top:0.2vw;
+    margin-bottom: 0.2vw;
+}
+
+.buttonAlreadyRegister{
+    border-radius: 4vw;
+    margin-left: 1vw;
+    width: 4vw;
+    height: 3vh;
+    font-size: larger;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF9F1C;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.buttonAlreadyRegister:hover{
+    width: 4.2vw;
+
+}
+
+.buttonHome{
+    background-color: #FF9F1C;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    border-radius: 4vw;
+    margin-left: 1vw;
+    width: 20vw;
+    height: 3.5vh;
+    transition: 0.5s;
+    margin:0.5vw;
+}
+.buttonHome:hover{
+    width: 100%;
+    height: 4vh;
+    border-radius:0vw;
+    margin: 0%;
+    transition: 0.5s;
+
+}
+
+.buttonCreate{
+    background-color: #FF9F1C;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    border-radius: 4vw;
+    margin-left: 1vw;
+    width: 20vw;
+    height: 3.5vh;
+    transition: 0.5s;
+    color:  rgb(210, 210, 210);
+    margin:0.5vw;
+}
+.buttonCreate:hover{
+    width: 100%;
+    height: 4vh;
+    border-radius:0vw;
+    margin: 0%;
+    transition: 0.5s;
+
+}
+.link{
+    text-decoration: none;
+    color: #efe9e9;
+}
