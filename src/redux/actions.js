@@ -18,7 +18,8 @@ export const getClothing = () => {
 
 export const postForm = (payload) => {
   return async function(dispatch){
-    var json=await axios.post('http://localhost:5173/product',payload);
+    console.log(payload);
+    var json=await axios.post('http://localhost:3001/user/create',payload);
     return dispatch({
         type:POST_FORM_REGISTER,
         payload:json,
