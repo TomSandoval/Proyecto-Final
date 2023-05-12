@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
+import logo from '../../assets/Recurso 1.png'
 import { useDispatch } from "react-redux";
+import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
 import imagen from "../../assets/cart-regular-36.png";
 
-import { getProductByName } from "../../redux/actions";
+
 
 export default function SearchBar() {
   const [name, setName] = useState("");
@@ -18,7 +20,6 @@ export default function SearchBar() {
   }
 
   function handleSubmit(e) {
-    console.log("hola");
     e.preventDefault();
     dispatch(getName(name));
   }
@@ -31,28 +32,25 @@ export default function SearchBar() {
   function handleKeyDown(e) {
     if (e.keyCode === 13) {
       handleSubmit();
-      console.log("tecla enter");
     }
   }
 
 
   return (
     <div className={styles.divSearchBar}>
-      <div className={styles.containerTuki}>
-        <img src={imagen} alt="" />
-        <span className={styles.tukimarket}>TukiMarket</span>
-      </div>
-      <div className={styles.containerInput}>
-        <div className={styles.divInput}>
-          <input
-            type="search"
-            placeholder="¿Que vas a llevar hoy?"
-            value={name}
-            onChange={(e) => handleInput(e)}
-            onKeyDown={(e) => handleKeyDown(e)}
-            className={styles.input}
-          />
 
+      <div className={styles.logoContainer}>
+        <Link className={styles.logo} to='/'><img className={styles.logoImg} src={logo} alt="TukiMarket" /></Link>
+      </div>
+      <div className={styles.divInput}>
+        <input
+          type="search"
+          value={name}
+          onChange={(e) => handleInput(e)}           
+          onKeyDown={(e) => handleKeyDown(e)}
+          className={styles.input}
+        />
+        <button onClick={handleSubmit} className={styles.buttonSerch}>
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>

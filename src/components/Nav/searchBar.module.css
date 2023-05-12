@@ -1,3 +1,23 @@
+.divSearchBar{
+    margin:0;
+    width: 100vw;
+    max-width: 100%;
+    background-color: #FF9F1C;
+    height:6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.divInput{
+    align-items: center;
+    display: flex;
+}
+
+.divUser{
+    align-items: center;
+    display: flex;
+  
 .divSearchBar {
   margin: 0;
   width: 100vw;
@@ -142,6 +162,24 @@
 
 .link:hover {
   color: rgb(44, 139, 58);
+}
+
+.logoContainer {
+    width: 320px;
+    display: flex;
+    place-content: center;
+}
+
+.logo {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    letter-spacing: 2px;
+    width: 190px;
+}
+
+.logoImg {
+    width: 200px;
 }
 
 .img {
