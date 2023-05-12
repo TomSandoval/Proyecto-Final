@@ -17,75 +17,152 @@
 .divUser{
     align-items: center;
     display: flex;
+  
+.divSearchBar {
+  margin: 0;
+  width: 100vw;
+  max-width: 100%;
+  background-color: #ff9f1c;
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px -1px 6px 5px rgba(0, 0, 0, 0.31);
+  border-radius: 0px 0px 10px 10px;
 }
 
-.input{
-    border-radius:10px;
+.containerInput {
+  flex: 1 1 0%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+}
+
+.divInput {
+  /* align-items: center;
+  margin-left: auto;
+  display: flex; */
+
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.divUser {
+  align-items: center;
+  margin-left: auto;
+  display: flex;
+}
+
+.input:hover {
+  outline: 2px solid rgb(151, 146, 142);
+}
+
+.input {
+  /* border-radius:10px;
     height: 3vh;
     width: 30vh;
     margin: 3px;
-    font-size: 18px;
+    font-size: 18px; */
+  outline: none;
+
+  width: 350px;
+  height: 42px;
+  color: black;
+  font-size: 14px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  border-top: 1px solid rgb(145, 145, 145);
+  border-bottom: 1px solid rgb(145, 145, 145);
+  border-left: 1px solid rgb(145, 145, 145);
+  border-image: initial;
+  border-right: none;
+  box-sizing: border-box;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  padding: 6px 6px 6px 1.5em;
 }
 
-.buttonSerch{
-    border-radius:10px;
-    height: 3vh;
-    margin: 3px;
-    width: 2vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.buttonSerch:hover {
+  background-color: rgb(198, 190, 182);
+  transition: 300ms;
 }
 
-.button{
-    background: none;
-    border: none;
-    width: 5vh;
-    height: 5vh;
-    margin: 5px;
-    margin-right:25px;
+.buttonSerch {
+  /* border-radius: 10px;
+  height: 3vh;
+  margin: 3px;
+  width: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  position: absolute;
+  width: 50px;
+  height: 42px;
+  padding: 7px 6px;
+  border-top: 1px solid rgb(145, 145, 145);
+  border-right: 1px solid rgb(145, 145, 145);
+  border-bottom: 1px solid rgb(145, 145, 145);
+  border-image: initial;
+  border-left: none;
+  box-sizing: border-box;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  transition: all 0.3s ease 0s;
+  /* right: 46%; */
 }
 
-.link{
-    font-size: 20px;
-    text-decoration: none;
-    color: #efe9e9;
-    height: 5vh;
-    margin-bottom: 5px;
-    margin-right:25px;
+.tukimarket {
+  font-size: 30px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  background: none;
+  margin-right: 15px;
+  margin: 10px;
+  color: #fff;
 }
 
-.link:hover{
-    color: rgb(44, 139, 58);
+.tukimarket:hover {
+  font-size: 30px;
+  color: white;
+  /* box-shadow: 0px 0px 5px 2px yellow; */
+  text-shadow: 1px 1px 0px white;
+
+  /* text-shadow: -3px 1px rgb(153, 255, 0); */
+  transition: 400ms;
 }
 
-.img {
-    width: 18px;
-    transition:0.2s;
+.containerTuki {
+  margin: 10px;
 }
 
-.img:hover {
-    width: 23px;
-    transition:0.2s;
+.button {
+  background: none;
+  border: none;
+  width: 5vh;
+  height: 5vh;
+  margin: 5px;
+  margin-right: 25px;
 }
 
-.img2 {
-    width: 25px;
-    transition:0.2s;
+.link {
+  font-size: 20px;
+  text-decoration: none;
+  color: #efe9e9;
+  height: 5vh;
 }
 
-.img2:hover {
-    width: 27px;
-    transition:0.2s;
+.link:hover {
+  color: rgb(44, 139, 58);
 }
-
-.buttonLogin{
-    background: none;
-    border: none;
-    margin: 5px;
-    margin-right:25px;
-}
-
 
 .logoContainer {
     width: 320px;
@@ -103,4 +180,39 @@
 
 .logoImg {
     width: 200px;
+}
+
+.img {
+  width: 18px;
+  transition: 0.2s;
+}
+
+.img:hover {
+  width: 23px;
+  transition: 0.2s;
+}
+
+.img2 {
+  width: 25px;
+  transition: 0.2s;
+}
+
+.img2:hover {
+  width: 27px;
+  transition: 0.2s;
+}
+
+.buttonLogin {
+  background: none;
+  border: none;
+  margin: 5px;
+  margin-right: 25px;
+}
+
+.span1 {
+  margin: 7px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #efe9e9;
+  height: 5vh;
 }

@@ -15,6 +15,8 @@ export default function ProductsHome() {
   const productsTwo = products[prodNames[1]];
   const productsThree = products[prodNames[2]];
 
+  console.log(productsOne);
+
   useEffect(() => {
     // Hacer un dispatch por cada categoría
     categories.slice(0, 3).forEach((category) => {
@@ -23,28 +25,27 @@ export default function ProductsHome() {
   }, [dispatch, categories]);
   return (
     <div className="container">
-        <div className="text-container">
-          <h1>{prodNames[0]}</h1>
-        </div>
-        <div className="section-all">
-          {productsOne?.slice(0,3).map((p, index) => (
-            <Card
-              key={index}
-              name={p.name}
-              price={p.price}
-              img={p.img[0]}
-              id={p.id}
-            ></Card>
-          ))}
-        </div>
-
+      <div className="text-container">
+        <h1>{prodNames[0]}</h1>
+      </div>
+      <div className="section-all">
+        {productsOne?.slice(0, 3).map((p, index) => (
+          <Card
+            key={index}
+            name={p.name}
+            price={p.price}
+            img={p.img[0]}
+            id={p.id}
+          ></Card>
+        ))}
+      </div>
 
       <div className="hr"></div>
       <div className="text-container">
         <h1>{prodNames[1]}</h1>
       </div>
       <div className="section-all">
-        {productsTwo?.slice(0,3).map((p, index) => (
+        {productsTwo?.slice(0, 3).map((p, index) => (
           <Card
             key={index}
             name={p.name}
@@ -59,7 +60,7 @@ export default function ProductsHome() {
         <h1>{prodNames[2]}</h1>
       </div>
       <div className="section-all">
-        {productsThree?.slice(0,3).map((p, index) => (
+        {productsThree?.slice(0, 3).map((p, index) => (
           <Card
             key={index}
             name={p.name}
