@@ -8,7 +8,6 @@ import styles from './form.module.css'
 function verificarObjeto(objeto) {
     for (let clave in objeto) {
       if (objeto[clave]!=='') {
-        console.log(objeto);
         return false;
       }
     }
@@ -25,6 +24,8 @@ export default function FormRegister(){
         birthDate:'*',
         password:'*',
         passwordRepit:'*',
+        street:'*',
+        number:'*',
     });
     const [input , setInput]=useState({
         email:'',
@@ -34,13 +35,24 @@ export default function FormRegister(){
         birthDate:'',
         password:'',
         passwordRepit:'',
+        street:'',
+        number:'',
+        address:'',
     });
 
     const handleChange=(e)=>{
-        setInput({
-            ...input,
-            [e.target.name]:e.target.value,
-        })
+        if(e.target.name === 'street' || e.target.name === 'number') {
+            setInput({
+                ...input,
+                [e.target.name]:e.target.value,
+                address: `${input.street} ${input.number}`,
+            })
+        }else{
+            setInput({
+                ...input,
+                [e.target.name]:e.target.value,
+            })
+        }
         Validation({...input ,[e.target.name]:e.target.value,},setErrors, errors,e);
     };
 
@@ -51,14 +63,17 @@ export default function FormRegister(){
             dispatch(postForm(input));
             alert('Usuario Creado Con Exito')
             setInput({
-                email:'*',
-                name:'*',
-                lastName:'*',
-                nickname:'*',
+                email:'',
+                name:'',
+                lastName:'',
+                nickname:'',
                 birthDate:'',
-                password:'*',
-                passwordRepit:'*',
-            });
+                password:'',
+                passwordRepit:'',
+                street:'',
+                number:'',
+                address:'',
+             });
             setErrors({
                 email:'*',
                 name:'*',
@@ -67,6 +82,9 @@ export default function FormRegister(){
                 birthDate:'*',
                 password:'*',
                 passwordRepit:'*',
+                street:'*',
+                number:'*',
+                address:'*',
             })
         }else{
             alert('Completa correctamente los campos')
@@ -76,7 +94,7 @@ export default function FormRegister(){
 
     return(
         <div className={styles.div}>
-            <form onSubmit={(e)=>handleSubmit(e)}  className={styles.divForm}>
+            <form onSubmit={(e)=>handleSubmit(e)}  className={styles.divForm} action='/user/create' method='POST'>
                 <div className={styles.divAlreadyRegister}>
                     <input 
                     type="text" 
@@ -149,6 +167,26 @@ export default function FormRegister(){
                     className={styles.inputPassword}
                     />
                     {<span>{errors.passwordRepit}</span>}
+                </div>
+                <div className={styles.divAlreadyRegister}>
+                    <input 
+                    type="text" 
+                    value={input.street}
+                    onChange={handleChange}
+                    name="street"
+                    placeholder="Street"
+                    className={styles.input}
+                    />
+                    {<span>{errors.street}</span>}
+                    <input 
+                    type="text" 
+                    value={input.number}
+                    onChange={handleChange}
+                    name="number"
+                    placeholder="Number"
+                    className={styles.input}
+                    />
+                    {<span>{errors.number}</span>}
                 </div>
                 <div className={styles.divAlreadyRegister}>
                     <h5> Are you already registered ?</h5>
