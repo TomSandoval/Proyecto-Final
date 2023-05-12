@@ -32,10 +32,12 @@ const rootReducer = (state = initialState, action) => {
     case AXIOS_PRODUCTS_BY_CATEGORY_REQUEST:
       return { ...state, isLoading: true };
     case AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS:
-      return { ...state, isLoading: false, products: action.payload };
+      return { ...state, isLoading: false, products: {
+        ...state.products,
+        [action.payload.categoryName]: action.payload.products
+      }};
     case AXIOS_PRODUCTS_BY_CATEGORY_FAILURE:
       return { ...state, isLoading: false, error: action.error };
-      };
       case GET_CATEGORIES : {
         return {
           ...state,
