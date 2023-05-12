@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
+import logo from '../../assets/Recurso 1.png'
 import { useDispatch } from "react-redux";
+import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
 
-import { getProductByName } from "../../redux/actions";
+
 
 export default function SearchBar() {
   const [name, setName] = useState("");
@@ -30,6 +32,9 @@ export default function SearchBar() {
 
   return (
     <div className={styles.divSearchBar}>
+      <div className={styles.logoContainer}>
+        <Link className={styles.logo} to='/'><img className={styles.logoImg} src={logo} alt="TukiMarket" /></Link>
+      </div>
       <div className={styles.divInput}>
         <input
           type="search"

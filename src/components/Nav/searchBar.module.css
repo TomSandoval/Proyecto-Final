@@ -6,18 +6,16 @@
     height:6vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .divInput{
     align-items: center;
-    margin-left: auto;
     display: flex;
 }
 
 .divUser{
     align-items: center;
-    margin-left: auto;
     display: flex;
 }
 
@@ -89,12 +87,20 @@
 }
 
 
+.logoContainer {
+    width: 320px;
+    display: flex;
+    place-content: center;
+}
 
+.logo {
+    color: #000;
+    text-decoration: none;
+    font-size: 18px;
+    letter-spacing: 2px;
+    width: 190px;
+}
 
-
-
-
-
-
-
-
+.logoImg {
+    width: 200px;
+}
