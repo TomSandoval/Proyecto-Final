@@ -7,7 +7,6 @@ import logo from '../../assets/Recurso 1.png'
 import { useDispatch } from "react-redux";
 import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
-import imagen from "../../assets/cart-regular-36.png";
 
 
 
@@ -38,7 +37,6 @@ export default function SearchBar() {
 
   return (
     <div className={styles.divSearchBar}>
-
       <div className={styles.logoContainer}>
         <Link className={styles.logo} to='/'><img className={styles.logoImg} src={logo} alt="TukiMarket" /></Link>
       </div>
@@ -50,12 +48,10 @@ export default function SearchBar() {
           onKeyDown={(e) => handleKeyDown(e)}
           className={styles.input}
         />
-        <button onClick={handleSubmit} className={styles.buttonSerch}>
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>
         </div>
-      </div>
       <div className={styles.divUser}>
         <div>
           <button className={styles.buttonLogin}>
