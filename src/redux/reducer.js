@@ -19,11 +19,7 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PRODUCTS:
-      return {
-        ...state,
-        allProducts: action.payload,
-      };
+    
     case AXIOS_PRODUCTS_BY_CATEGORY_REQUEST:
       return { ...state, isLoading: true };
     case AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS:
