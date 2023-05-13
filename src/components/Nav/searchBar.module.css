@@ -3,10 +3,12 @@
   width: 100vw;
   max-width: 100%;
   background-color: #ff9f1c;
-  height: 6vh;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 4px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 .divInput {
@@ -30,10 +32,6 @@
 }
 
 .divInput {
-  /* align-items: center;
-  margin-left: auto;
-  display: flex; */
-
   margin: 0;
   padding: 0;
   border: 0;
@@ -50,14 +48,10 @@
 }
 
 .input {
-  /* border-radius:10px;
-    height: 3vh;
-    width: 30vh;
-    margin: 3px;
-    font-size: 18px; */
   outline: none;
+  border-radius: 10px 0px 0px 10px;
 
-  width: 350px;
+  width: 450px;
   height: 42px;
   color: black;
   font-size: 14px;
@@ -168,7 +162,7 @@
 
 .span1 {
   margin: 7px;
-  font-size: 20px;
+  font-size: 25px;
   text-decoration: none;
   color: #efe9e9;
   height: 5vh;

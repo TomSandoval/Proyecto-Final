@@ -11,9 +11,9 @@ export default function ProductsHome() {
 
   const prodNames = Object.keys(products);
 
-  const productsOne = products[prodNames[0]];
-  const productsTwo = products[prodNames[1]];
-  const productsThree = products[prodNames[2]];
+  const productsOne = products[prodNames[0]]?.rows;
+  const productsTwo = products[prodNames[1]]?.rows;
+  const productsThree = products[prodNames[2]]?.rows;
 
   console.log(productsOne);
 
