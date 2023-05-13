@@ -6,6 +6,8 @@ import {
   GET_CATEGORIES,
   PRODUCT_DETAIL,
   CLEAN_DETAIL,
+  POST_FORM_LOGIN,
+  ERROR_MAIL,
 } from "./actions";
 
 const initialState = {
@@ -15,6 +17,7 @@ const initialState = {
   categories: [],
   productDetail: {},
   error: null,
+  errorMail:null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -52,9 +55,18 @@ const rootReducer = (state = initialState, action) => {
 
     case POST_FORM_REGISTER:
       return {
-        ...state,
+        ...state, 
       };
-
+    case POST_FORM_LOGIN:
+      return{
+        ...state
+      }
+    case ERROR_MAIL:
+      return {
+        ...state,
+        errorMail:true,
+      }
+      
     default:
       return state;
   }
