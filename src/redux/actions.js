@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export const POST_FORM_LOGIN = 'POST_FORM_LOGIN';
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME='GET_NAME'
@@ -14,9 +15,7 @@ export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
 export const ERROR_MAIL = 'ERROR_MAIL';
 
-export const getClothing = () => {
-  return { type: GET_PRODUCTS, payload: data };
-};
+
 
 export const postForm = (payload) => {
   return async function(dispatch){
@@ -66,7 +65,6 @@ export const getCategories = () => {
 export const getDetail = (id) => {
   return async function (dispatch) {
     const data = (await axios.get(`http://localhost:3001/product/${id}`)).data;
-    console.log(data);
     return dispatch({ type: PRODUCT_DETAIL, payload: data });
   };
 };
