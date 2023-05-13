@@ -7,7 +7,7 @@ export default function Home(){
 
     return (
         <>
-        <SearchBar/>
+        <SearchBar view={true}/>
         <FilterButtons/>            
         <ProductsHome/>
         </>

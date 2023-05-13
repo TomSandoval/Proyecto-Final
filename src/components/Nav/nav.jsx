@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
@@ -10,7 +10,7 @@ import styles from "./searchBar.module.css";
 
 
 
-export default function SearchBar() {
+export default function SearchBar({view}) {
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export default function SearchBar() {
       <div className={styles.logoContainer}>
         <Link className={styles.logo} to='/'><img className={styles.logoImg} src={logo} alt="TukiMarket" /></Link>
       </div>
-      <div className={styles.divInput}>
+      { view ? <div className={styles.divInput}>
         <input
           type="search"
           value={name}
@@ -51,7 +51,7 @@ export default function SearchBar() {
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>
-        </div>
+        </div> : null}
       <div className={styles.divUser}>
         <div>
           <button className={styles.buttonLogin}>
