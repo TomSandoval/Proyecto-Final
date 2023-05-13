@@ -6,7 +6,7 @@ import Publicidad from "../Publicidad/Publicidad";
 export default function Home() {
   return (
     <>
-      <SearchBar />
+      <SearchBar view={true}/>
       <Publicidad />
       <FilterButtons />
       <ProductsHome />

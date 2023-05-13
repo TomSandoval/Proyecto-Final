@@ -54,7 +54,6 @@ export const getCategories = () => {
 export const getDetail = (id) => {
   return async function (dispatch) {
     const data = (await axios.get(`http://localhost:3001/product/${id}`)).data;
-    console.log(data);
     return dispatch({ type: PRODUCT_DETAIL, payload: data });
   };
 };

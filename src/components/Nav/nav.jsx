@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
@@ -8,7 +8,9 @@ import { useDispatch } from "react-redux";
 import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
 
-export default function SearchBar() {
+
+export default function SearchBar({view}) {
+
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -39,7 +41,7 @@ export default function SearchBar() {
           <img className={styles.logoImg} src={logo} alt="TukiMarket" />
         </Link>
       </div>
-      <div className={styles.divInput}>
+      { view ? <div className={styles.divInput}>
         <input
           type="search"
           value={name}
@@ -48,10 +50,12 @@ export default function SearchBar() {
           onKeyDown={(e) => handleKeyDown(e)}
           className={styles.input}
         />
-        <button onClick={handleSubmit} className={styles.buttonSerch}>
-          <img src={logoSearch} className={styles.img} />
-        </button>
-      </div>
+
+          <button onClick={handleSubmit} className={styles.buttonSerch}>
+            <img src={logoSearch} className={styles.img} />
+          </button>
+        </div> : null}
+
       <div className={styles.divUser}>
         <div>
           <button className={styles.buttonLogin}>
