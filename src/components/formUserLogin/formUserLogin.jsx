@@ -1,5 +1,8 @@
 import { useDispatch } from "react-redux";
 import React, { useState , useEffect } from 'react';
+import Validation from "./validation";
+import { postLogin } from '../../redux/actions.js';
+import styles from './form.module.css'
 
 import { Link} from "react-router-dom";
 
@@ -17,11 +20,11 @@ export default function FormUserLogin(){
     const dispatch = useDispatch();
 
     const [input , setInput]=useState({
-        email:'',
+        nickName:'',
         password:'',
     });
     const [errors, setErrors] =useState({
-        email:'*',
+        nickName:'*',
         password:'*',
     });
 
@@ -30,19 +33,19 @@ export default function FormUserLogin(){
             ...input,
             [e.target.name]:e.target.value,
         })
-        //Validation({...input ,[e.target.name]:e.target.value,},setErrors, errors,e);
+        Validation({...input ,[e.target.name]:e.target.value,},setErrors, errors,e);
     };
     const handleSubmit=(e)=>{
         e.preventDefault();
         const verificar=verificarObjeto(errors)
         if (verificar) {
-            dispatch(postForm(input));
+            dispatch(postLogin(input));
             setInput({
-                email:'*',
-                password:'*',
+                nickName:'',
+                password:'',
             });
             setErrors({
-                email:'*',
+                nickName:'*',
                 password:'*',
             })
 
@@ -53,31 +56,38 @@ export default function FormUserLogin(){
     };
 
     return(
-        <div>
-            <form action="" onSubmit={(e)=>handleSubmit(e)}>
-            <div>
+        <div className={styles.div}>
+            <form action='/login' method='POST'onSubmit={(e)=>handleSubmit(e)} className={styles.divForm}>
+            <div className={styles.divAlreadyRegister}>
                 <input 
                 type="text" 
-                name="email"
-                value={input.email}
+                name="nickName"
+                value={input.nickName}
                 onChange={handleChange}
-                placeholder="Email address"
+                placeholder="Nick Name"
+                className={styles.inputMail}
                 />
+                {<span>{errors.nickName}</span>}                
             </div>
-            <div>
+            <div className={styles.divAlreadyRegister}>
                 <input 
                 type="password" 
                 value={input.password}
                 onChange={handleChange}
                 name="password"
                 placeholder="Password"
+                className={styles.inputMail}
                 />
+                {<span>{errors.password}</span>}
             </div>
-            <div>
-                <button>Login</button>
+            <div className={styles.divAlreadyRegister}>
+                <button className={styles.buttonHome}>Login</button>
             </div>
-            <div>
-                <Link to={'/formRegister'}>No tengo Cuenta</Link>
+            <div className={styles.divAlreadyRegister}>
+                <Link to={'/formRegister'} >No tengo Cuenta</Link>
+            </div>
+            <div className={styles.divAlreadyRegister}>
+                <button className={styles.buttonHome}><Link to='/' className={styles.link}>Continuar como Invitado</Link></button>
             </div>
             </form>
         </div>

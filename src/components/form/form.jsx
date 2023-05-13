@@ -16,6 +16,7 @@ function verificarObjeto(objeto) {
 
 export default function FormRegister(){
     const dispatch = useDispatch();
+
     const [errors, setErrors] =useState({
         email:'*',
         name:'*',
@@ -84,7 +85,6 @@ export default function FormRegister(){
                 passwordRepit:'*',
                 street:'*',
                 number:'*',
-                address:'*',
             })
         }else{
             alert('Completa correctamente los campos')
@@ -94,7 +94,7 @@ export default function FormRegister(){
 
     return(
         <div className={styles.div}>
-            <form onSubmit={(e)=>handleSubmit(e)}  className={styles.divForm} action='/user/create' method='POST'>
+            <form onSubmit={(e)=>handleSubmit(e)}  className={styles.divForm} action='/create' method='POST'>
                 <div className={styles.divAlreadyRegister}>
                     <input 
                     type="text" 
