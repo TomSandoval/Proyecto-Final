@@ -18,7 +18,7 @@ export default function Publicidad() {
   };
 
   useEffect(() => {
-    const intervalId = setInterval(nextImage, 2000);
+    const intervalId = setInterval(nextImage, 3000);
     return () => clearInterval(intervalId);
   }, [currentIndex]);
 
