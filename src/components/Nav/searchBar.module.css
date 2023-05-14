@@ -3,12 +3,11 @@
   width: 100vw;
   max-width: 100%;
   background-color: #ff9f1c;
-  height: 10vh;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 4px;
-  border-radius: 0px 0px 10px 10px;
 }
 
 .divInput {

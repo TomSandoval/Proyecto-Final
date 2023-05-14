@@ -13,7 +13,9 @@ export const GET_CATEGORIES = 'GET_CATEGORIES';
 export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
+export const SET_PRODUCTS_HOME = 'SET_PRODUCTS_HOME' 
 export const ERROR_MAIL = 'ERROR_MAIL';
+
 
 
 
@@ -87,6 +89,34 @@ export const getProductByName = (name) => async (dispatch) => {
   }
 }
 
+export const prevPageHome = (value,page) => async (dispatch) => {
+  try {
+    console.log(page)
+    const response = await axios.get(`http://localhost:3001/categories/${value}?page=${page}`)
+    const products = response.data;
+    dispatch({
+      type: SET_PRODUCTS_HOME,
+      payload: {products,value}
+    })
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const nextPageHome = (value,page) => async (dispatch) => {
+    try {
+      console.log(page)
+      const response = await axios.get(`http://localhost:3001/categories/${value}?page=${page}`)
+      const products = response.data;
+      dispatch({
+        type: SET_PRODUCTS_HOME,
+        payload: {products,value}
+      })
+    } catch (error) {
+      console.log(error)
+    }
+}
+
 export const postLogin = (payload) => {
   return async function(dispatch){
     try {
@@ -101,6 +131,7 @@ export const postLogin = (payload) => {
     }
 }
 };
+
 
 
 
