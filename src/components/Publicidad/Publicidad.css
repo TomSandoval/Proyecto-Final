@@ -1,18 +1,16 @@
-.publicidad {
-  width: 100%;
-  max-width: 100%;
-  max-height: 100%;
-}
-
 .carousel {
   overflow: hidden;
   height: 400px;
+  width: 100vw;
+  max-width: 100%;
+  margin-bottom: 4em;
 }
 
 .carousel-image {
   position: absolute;
   opacity: 0;
   transition: opacity 0.9s ease-in-out;
+  width: 100%;
 }
 
 .carousel-image.active {
