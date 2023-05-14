@@ -24,6 +24,7 @@ export default function ProductsHome() {
     [nameThree]: 0,
   });
 
+
   useEffect(() => {
     // Hacer un dispatch por cada categoría
     categories.slice(0, 3).forEach((category) => {
@@ -146,6 +147,7 @@ export default function ProductsHome() {
             id={p.id}
           ></Card>
         ))}
+
         <div className="button-container next">
           <button value={prodNames[0]} action="next" onClick={handleClick}>
             <svg

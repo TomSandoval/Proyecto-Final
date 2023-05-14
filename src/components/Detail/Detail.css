@@ -52,7 +52,7 @@
 }
 
 .feactures-container {
-  grid-area: 1 / 2 / 2 / 3; 
+  grid-area: 1 / 2 / 2 / 3;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -69,20 +69,19 @@
   align-items: center;
 }
 
-.description-text p{
+.description-text p {
   font-size: 1.3em;
 }
 
 .description-text h2 {
-  color: #FF9F1C;
+  color: #ff9f1c;
 }
 
-.name-container h1{
+.name-container h1 {
   text-align: center;
   margin: 0;
   font-size: 2em;
 }
-
 
 .info-block {
   width: 100%;
@@ -97,10 +96,9 @@
   gap: 1em;
 }
 
-
 .button-container-new {
   border: none;
-  background-color: #FF9F1C;
+  background-color: #ff9f1c;
   padding: 8px 6px;
   border-radius: 10px;
   border: 1px solid #000;
@@ -111,50 +109,7 @@
   border: 1px solid #ddd;
   padding: 4px;
   border-radius: 10px;
-  color: #FF9F1C;
-}
-
-.footer {
-  width: 100vw;
-  max-width: 100%;
-  height: 80px;
-  background-color: #FF9F1C;
-  margin-top: 4em; 
-  padding-left: 2em;
-  padding-right: 2em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.contact-block, .redirect-links {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.redirect-links div ul {
-  display: flex;
-  list-style-type: none;
-  gap: 12px;
-  padding: 0;
-}
-
-.redirect-links div ul li a {
-  color: #000;
-  text-decoration: none;
-}
-
-.redirect-links div ul li {
-  width: 70px;
-  text-align: center;
-}
-
-.footer-logo {
-  width: 200px;
+  color: #ff9f1c;
 }
 
 .button-back {
@@ -172,8 +127,8 @@
 
 .navigate-img img {
   width: 70px;
-  filter: opacity(.7);
-  transition: filter .2s;
+  filter: opacity(0.7);
+  transition: filter 0.2s;
 }
 
 .navigate-img img:hover {
