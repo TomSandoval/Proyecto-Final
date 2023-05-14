@@ -1,36 +1,28 @@
 import { useParams } from "react-router-dom";
 import SearchBar from "../Nav/nav";
 import Loading from "../Loading/Loading";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { getDetail, cleanDetail } from "../../redux/actions";
 import { Link } from "react-router-dom";
-
-import image from "../../assets/envelope-regular-24.png";
-import logo from '../../assets/Recurso 1.png';
-
+import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
 
-const Detail = () => {
+export default function Detail() {
   const productDetail = useSelector((state) => state.productDetail);
   const [selectImage, setSelectImage] = useState(0);
   const dispatch = useDispatch();
   const { id } = useParams();
-  
-  
+
   useEffect(() => {
     dispatch(cleanDetail());
     dispatch(getDetail(id));
   }, [dispatch]);
-  
 
-
-  if(!productDetail) {
-    return <p>Cargando informacion</p>
+  if (!productDetail) {
+    return <p>Cargando informacion</p>;
   }
-  
-  
+
   return (
     <div className="allContainer">
       <SearchBar view={false} />
@@ -43,10 +35,6 @@ const Detail = () => {
             <div className="name-container">
               <h1>{productDetail.name}</h1>
             </div>
-            {/* <h2>
-                  <span>Category: </span>
-                  {productDetail.category}
-                </h2> */}
             <div className="description-text">
               <h2>Description:</h2>
               <p>{productDetail.description}</p>
@@ -74,48 +62,32 @@ const Detail = () => {
             </div>
           </div>
           <div className="image-container">
-            <div className='navigate-img'>
-              {
-                productDetail?.img.length > 1 ? productDetail?.img?.map((img,index) => <img onClick={()=> setSelectImage(index)} key={index} src={img} alt={productDetail.name}></img>)
-              : null}
+            <div className="navigate-img">
+              {productDetail?.img.length > 1
+                ? productDetail?.img?.map((img, index) => (
+                    <img
+                      onClick={() => setSelectImage(index)}
+                      key={index}
+                      src={img}
+                      alt={productDetail.name}
+                    ></img>
+                  ))
+                : null}
             </div>
-            {
-            productDetail.img && <img src={productDetail?.img[selectImage]} alt="" className="detail-image" />
-            }
+            {productDetail.img && (
+              <img
+                src={productDetail?.img[selectImage]}
+                alt=""
+                className="detail-image"
+              />
+            )}
             <div className="hr-container"></div>
           </div>
         </div>
       ) : (
         <Loading />
       )}
-      <footer className="footer">
-        <div className="redirect-links">
-          <h4>Redirect</h4>
-          <div>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-              <li>
-                <Link to="/developers">Developers</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <img className='footer-logo' src={logo} alt='TukiMarket'></img>
-        <div className="contact-block">
-          <h4>Contact</h4>
-          <div>
-            <img src={image} alt="mail" />
-            <span>TukiMarket@gmail.com</span>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
-};
-
-export default Detail;
+}

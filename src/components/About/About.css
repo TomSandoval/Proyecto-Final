@@ -1,0 +1,52 @@
+.container-about {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://images3.alphacoders.com/559/thumb-1920-559115.png");
+  background-size: cover;
+}
+
+.btn-outline-success {
+  position: absolute;
+  right: 15%;
+  top: 12%;
+}
+
+.btn-outline-warning {
+  position: absolute;
+  right: 20%;
+  top: 12%;
+}
+
+.About {
+  width: 70vw;
+  position: absolute;
+  top: 61%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  padding: 20px;
+  backdrop-filter: blur(55px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.About:root {
+  --animate-duration: 1s;
+  --animate-delay: 1s;
+  --animate-repeat: 1;
+}
+
+.About p {
+  font-family: Work Sans;
+  font-size: 20px;
+  font-size: 25px;
+  color: #fff;
+}
+
+.container-about h1 {
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-size: 8em;
+  position: absolute;
+  top: 7%;
+  left: 15%;
+}
