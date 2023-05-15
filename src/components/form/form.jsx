@@ -58,8 +58,7 @@ export default function FormRegister() {
     Validation(
       { ...input, [e.target.name]: e.target.value },
       setErrors,
-      errors,
-      e
+      errors
     );
   };
 
