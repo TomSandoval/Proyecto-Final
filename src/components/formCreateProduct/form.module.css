@@ -1,4 +1,16 @@
+.container {
+    height: 150vh;
+    background: linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%);
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .div{
+    background: #003049;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,25 +18,31 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     border: 1px solid black;
     width: 49vw;
-    height: 70vh;
     margin: 50px;
     margin-left: auto;
     margin-right: auto;
     border-radius:40px;
 }
-
 .divForm{
     width: 100%;
 }
+
 .inputMail{
-    background-color: rgb(210, 210, 210);
-    border-radius: 0.3vw;
-    width: 20vw;
-    height: 4vh;
-    border: none;
-    font-size: larger;
-    margin-top:0.2vw;
-    margin-bottom: 0.2vw;
+    top: 50px;
+    font-family: 'Judson';
+    margin-top: 15px;
+    box-sizing: border-box;
+    width: 373px;
+    height: 48px;
+    background-color: #003049;
+    position: relative;
+    border: 1px solid #0A9396;
+    border-radius: 5px;
+}
+
+.options {
+    color: white;
+    text-align: center;
 }
 
 .buttonHome{
@@ -38,18 +56,13 @@
     border-radius: 4vw;
     margin-left: 1vw;
     width: 20vw;
-    height: 3.5vh;
+    height: 41px;
     transition: 0.5s;
     color: #efe9e9;
-    margin:0.5vw;
+    margin: 0.5vw;
 }
 .buttonHome:hover{
-    width: 100%;
-    height: 4vh;
-    border-radius:0vw;
-    margin: 0%;
-    transition: 0.5s;
-
+    background-color: #c97c10;
 }
 
 .divAlreadyRegister{
@@ -58,7 +71,26 @@
     align-items: center;
     width: 100%;
 }
+
 .link{
     text-decoration: none;
     color: #efe9e9;
+}
+
+.register {
+    position: absolute;
+    text-align: center;
+    font-family: 'Judson';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 37px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+}
+.divAlreadyRegister{
+    margin-top: 10px;
 }
