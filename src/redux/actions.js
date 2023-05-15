@@ -15,6 +15,8 @@ export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
 export const SET_PRODUCTS_HOME = 'SET_PRODUCTS_HOME' 
 export const ERROR_MAIL = 'ERROR_MAIL';
+export const CLEAN_PRODUCTS = 'CLEAN_PRODUCTS'
+export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 
 
 
@@ -91,7 +93,6 @@ export const getProductByName = (name) => async (dispatch) => {
 
 export const prevPageHome = (value,page) => async (dispatch) => {
   try {
-    console.log(page)
     const response = await axios.get(`http://localhost:3001/categories/${value}?page=${page}`)
     const products = response.data;
     dispatch({
@@ -105,7 +106,6 @@ export const prevPageHome = (value,page) => async (dispatch) => {
 
 export const nextPageHome = (value,page) => async (dispatch) => {
     try {
-      console.log(page)
       const response = await axios.get(`http://localhost:3001/categories/${value}?page=${page}`)
       const products = response.data;
       dispatch({
@@ -132,8 +132,40 @@ export const postLogin = (payload) => {
 }
 };
 
+export const getProductByCategory = (name) => async (dispatch) =>  {
+  try {
+    const response = await axios.get(`http://localhost:3001/categories/${name}?page=0&size=6`)
+    const products = response.data;
+    dispatch({
+      type: GET_PRODUCTS_CATEGORY,
+      payload: products
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+export const cleanProducts = () => {
+  return({
+    type: CLEAN_PRODUCTS
+  })
+}
 
+export const filterByCategory = (name,min,max) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}`)
+    const products = {
+      count: "Filtrados",
+      rows: response.data
+    }
+    dispatch({
+      type: FILTER_PRODUCTS,
+      payload: products
+  })
+  } catch (error) {
+    
+  }
+}
 
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
