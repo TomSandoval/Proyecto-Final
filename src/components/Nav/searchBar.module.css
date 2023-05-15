@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 4px 4px;
+  position: fixed;
+  z-index: 100000;
 }
 
 .divInput {
