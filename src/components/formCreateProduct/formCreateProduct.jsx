@@ -37,7 +37,7 @@ export default function FormCreateProducs(){
         salePrice:'',
         email:'',
         status:'',
-        categories:'',
+        category:'',
         img:[],
     });
 
@@ -48,7 +48,7 @@ export default function FormCreateProducs(){
         stock:'*',
         email:'*',
         status:'*',
-        categories:'*',
+        category:'*',
         salePrice:'',
         img:'*',
 
@@ -90,7 +90,7 @@ export default function FormCreateProducs(){
                 salePrice:'',
                 email:'',
                 status:'',
-                categories:'',
+                category:'',
                 img:[],
             });
             setErrors({
@@ -100,7 +100,7 @@ export default function FormCreateProducs(){
                 stock:'*',
                 email:'*',
                 status:'*',
-                categories:'*',
+                category:'*',
                 salePrice:'',
                 img:'*',
             })
@@ -213,13 +213,13 @@ export default function FormCreateProducs(){
                 {<span>{errors.status}</span>}
             </div>
             <div className={styles.divAlreadyRegister}>
-                <select name="categories" id="" onChange={handleChange}>
+                <select name="category" id="" onChange={handleChange}>
                     <option value='*'>      </option>
                     {allCategories?.map(e => (
                         <option key={e} value={e.name}>{e.name}</option>
                     ))}
                  </select>
-                 {<span>{errors.categories}</span>}
+                 {<span>{errors.category}</span>}
             </div>
             <div className={styles.divAlreadyRegister}>
 
