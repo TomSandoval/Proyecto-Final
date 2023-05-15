@@ -98,16 +98,15 @@ export default function Validation (input,setErrors,errors,e) {
             }
         break
 
-        case 'categories':
-            console.log(input.categories);
-            if(!input.categories)setErrors({...errors, categories:'Campo Vacio'});
+        case 'category':
+            if(!input.category)setErrors({...errors, category:'Campo Vacio'});
             else{
-                if(input.categories==='*'){
-                    setErrors({...errors, categories:'*'})
+                if(input.category==='*'){
+                    setErrors({...errors, category:'*'})
                     isValid=false 
                 }
                 if(isValid){
-                    setErrors({...errors, categories:''}); 
+                    setErrors({...errors, category:''}); 
                 }
             }
         break
