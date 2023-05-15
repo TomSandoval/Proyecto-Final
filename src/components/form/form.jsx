@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState , useEffect } from 'react';
+import { Link , useNavigate} from "react-router-dom";
 import Validation from "./validacion.js";
 import { useDispatch } from "react-redux";
 import { postForm } from "../../redux/actions.js";
@@ -15,8 +15,10 @@ function verificarObjeto(objeto) {
   return true;
 }
 
-export default function FormRegister() {
-  const dispatch = useDispatch();
+
+export default function FormRegister(){
+    const dispatch = useDispatch();
+    const navegate=useNavigate();
 
   const [errors, setErrors] = useState({
     email: "*",
@@ -61,40 +63,39 @@ export default function FormRegister() {
       errors
     );
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const verificar = verificarObjeto(errors);
-    if (verificar) {
-      dispatch(postForm(input));
-      alert("Usuario Creado Con Exito");
-      setInput({
-        email: "",
-        name: "",
-        lastName: "",
-        nickname: "",
-        birthDate: "",
-        password: "",
-        passwordRepit: "",
-        street: "",
-        number: "",
-        address: "",
-      });
-      setErrors({
-        email: "*",
-        name: "*",
-        lastName: "*",
-        nickname: "*",
-        birthDate: "*",
-        password: "*",
-        passwordRepit: "*",
-        street: "*",
-        number: "*",
-      });
-    } else {
-      alert("Completa correctamente los campos");
-    }
-  };
+  
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        const verificar=verificarObjeto(errors)
+        if (verificar) {
+            dispatch(postForm(input));
+            alert('Usuario Creado Con Exito')
+            setInput({
+                email:'',
+                name:'',
+                lastName:'',
+                nickname:'',
+                birthDate:'',
+                password:'',
+                passwordRepit:'',
+                street:'',
+                number:'',
+                address:'',
+             });
+            setErrors({
+                email:'*',
+                name:'*',
+                lastName:'*',
+                nickname:'*',
+                birthDate:'*',
+                password:'*',
+                passwordRepit:'*',
+                street:'*',
+                number:'*',
+            })
+            navegate('/')
+        }else{
+            alert('Completa correctamente los campos')
 
   return (
     <div className={styles.allForm}>
