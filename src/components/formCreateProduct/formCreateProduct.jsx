@@ -18,7 +18,7 @@ function verificarObjeto(objeto) {
     }
     return true;
 }
-
+  
 export default function FormCreateProducs() {
     const allCategories = useSelector((state) => state.categories);
     const dispatch = useDispatch();
@@ -187,7 +187,6 @@ export default function FormCreateProducs() {
                     />
                     {<span>{errors.stock}</span>}
                 </div>
-              
                 <div className={styles.divAlreadyRegister}>
                     <label className={styles.options} htmlFor="isOnSale">¿Está en oferta?</label>
                     <input
