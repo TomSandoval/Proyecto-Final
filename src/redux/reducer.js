@@ -13,6 +13,10 @@ import {
   CLEAN_PRODUCTS,
   FILTER_PRODUCTS,
 
+  POST_CREATE,
+
+
+
 } from "./actions";
 
 const initialState = {
@@ -78,6 +82,10 @@ const rootReducer = (state = initialState, action) => {
         ...state, 
       };
     case POST_FORM_LOGIN:
+      return{
+        ...state
+      }
+    case POST_CREATE:
       return{
         ...state
       }

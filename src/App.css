@@ -15,3 +15,28 @@
     z-index: 200;
     
 }
+
+.bubble_chat {
+    height: 150px;
+    position: fixed;
+    bottom: -10px;
+    right: -20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-right: 15px;
+}
+
+.chat_with{
+    height: 150px;
+    position: fixed;
+    bottom: -10px;
+    right: 31px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    margin-right: 15px;
+    text-align: center;
+}

@@ -17,6 +17,8 @@ export const SET_PRODUCTS_HOME = 'SET_PRODUCTS_HOME'
 export const ERROR_MAIL = 'ERROR_MAIL';
 export const CLEAN_PRODUCTS = 'CLEAN_PRODUCTS'
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
+export const POST_CREATE = 'POST_CREATE';
+
 
 
 
@@ -123,6 +125,21 @@ export const postLogin = (payload) => {
       var json=await axios.post('http://localhost:3001/login',payload);
       return dispatch({
           type:POST_FORM_LOGIN,
+          payload:json,
+          
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+};
+export const postCreate = (payload) => {
+  console.log(payload);
+  return async function(dispatch){
+    try {
+      var json=await axios.post('http://localhost:3001/product',payload);
+      return dispatch({
+          type:POST_CREATE,
           payload:json,
           
       });
