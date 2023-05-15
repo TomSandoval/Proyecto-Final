@@ -10,6 +10,10 @@ import {
   POST_FORM_LOGIN,
   ERROR_MAIL,
 
+  POST_CREATE,
+
+
+
 } from "./actions";
 
 const initialState = {
@@ -70,6 +74,10 @@ const rootReducer = (state = initialState, action) => {
         ...state, 
       };
     case POST_FORM_LOGIN:
+      return{
+        ...state
+      }
+    case POST_CREATE:
       return{
         ...state
       }

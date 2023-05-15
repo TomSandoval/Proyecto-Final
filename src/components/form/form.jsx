@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import Validation from "./validacion.js";
 import { useDispatch } from 'react-redux';
 import { postForm } from '../../redux/actions.js';
@@ -16,6 +16,7 @@ function verificarObjeto(objeto) {
 
 export default function FormRegister(){
     const dispatch = useDispatch();
+    const navegate=useNavigate();
 
     const [errors, setErrors] =useState({
         email:'*',
@@ -86,6 +87,7 @@ export default function FormRegister(){
                 street:'*',
                 number:'*',
             })
+            navegate('/')
         }else{
             alert('Completa correctamente los campos')
 
