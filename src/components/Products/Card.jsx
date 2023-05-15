@@ -20,7 +20,7 @@ export default function Card (props){
         <div className="buy-info">
           <p className="card-price">${props.price} </p>
           <button type="button" className="button-buy">
-            <img src={cart} alt="" />
+            <img src={cart} alt="buy" />
           </button>
         </div>
       </div>

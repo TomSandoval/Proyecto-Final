@@ -9,6 +9,9 @@ import {
   SET_PRODUCTS_HOME,
   POST_FORM_LOGIN,
   ERROR_MAIL,
+  GET_PRODUCTS_CATEGORY,
+  CLEAN_PRODUCTS,
+  FILTER_PRODUCTS,
 
   POST_CREATE,
 
@@ -68,7 +71,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productDetail: {},
       };
-
+    case GET_PRODUCTS_CATEGORY: {
+      return {
+        ...state,
+        products: action.payload
+      }
+    }
     case POST_FORM_REGISTER:
       return {
         ...state, 
@@ -86,7 +94,18 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         errorMail:true,
       }
-      
+    case CLEAN_PRODUCTS: {
+      return {
+        ...state, 
+        products: []
+      }
+    } 
+    case FILTER_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload
+      }
+    }
     default:
       return state;
   }

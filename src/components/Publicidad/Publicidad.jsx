@@ -25,7 +25,6 @@ export default function Publicidad() {
   return (
     <div
       className="carousel"
-      // style={{ backgroundImage: `url(${background_image})` }}
     >
       {background_image.map((image, index) => (
         <img

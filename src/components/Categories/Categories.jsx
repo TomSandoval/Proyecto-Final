@@ -17,7 +17,7 @@ export default function Categories() {
   return (
     <>
     <SearchBar/>    
-    <main>
+    <main className="main">
         <h1>Categorias</h1>
       <div className="buttons-container">
         {allCategories?.map((c, index) => (
