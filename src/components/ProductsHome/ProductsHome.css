@@ -54,6 +54,9 @@
 .button-container button:hover {
   background-color: #ddd;
 }
+.next {
+  grid-area: 1 / 5 / 2 / 6;
+}
 
 @font-face {
     font-family: "Kameron";

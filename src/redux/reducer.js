@@ -6,9 +6,14 @@ import {
   GET_CATEGORIES,
   PRODUCT_DETAIL,
   CLEAN_DETAIL,
+  SET_PRODUCTS_HOME,
   POST_FORM_LOGIN,
   ERROR_MAIL,
+
   POST_CREATE,
+
+
+
 } from "./actions";
 
 const initialState = {
@@ -37,6 +42,16 @@ const rootReducer = (state = initialState, action) => {
       };
     case AXIOS_PRODUCTS_BY_CATEGORY_FAILURE:
       return { ...state, isLoading: false, error: action.error };
+      
+    case SET_PRODUCTS_HOME: {
+      return {
+        ...state,
+        products: {
+          ...state.products,
+          [action.payload.value]: action.payload.products
+        }
+      }
+    }
     case GET_CATEGORIES: {
       return {
         ...state,
