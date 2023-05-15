@@ -14,6 +14,7 @@ export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
 export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
 export const ERROR_MAIL = 'ERROR_MAIL';
+export const POST_CREATE = 'POST_CREATE';
 
 
 
@@ -93,6 +94,21 @@ export const postLogin = (payload) => {
       var json=await axios.post('http://localhost:3001/login',payload);
       return dispatch({
           type:POST_FORM_LOGIN,
+          payload:json,
+          
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
+};
+export const postCreate = (payload) => {
+  console.log(payload);
+  return async function(dispatch){
+    try {
+      var json=await axios.post('http://localhost:3001/product',payload);
+      return dispatch({
+          type:POST_CREATE,
           payload:json,
           
       });

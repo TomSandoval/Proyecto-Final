@@ -6,6 +6,7 @@ import Categories from "./components/Categories/Categories";
 import Detail from "./components/Detail/Detail";
 import "./App.css";
 import FormUserLogin from "./components/formUserLogin/formUserLogin";
+import FormCreateProducs from "./components/formCreateProduct/formCreateProduct";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/categories/:name" element={<CategoriesProduct />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/Detail/:id" element={<Detail />} />
+        <Route path="/formCreateProduct" element={<FormCreateProducs />} />
       </Routes>
     </>
   );
