@@ -6,6 +6,9 @@ import CategoriesProduct from "./components/CategoriesProduct/CategoriesProduct"
 import Categories from "./components/Categories/Categories";
 import Detail from "./components/Detail/Detail";
 import FormUserLogin from "./components/formUserLogin/formUserLogin";
+
+import FormCreateProducs from "./components/formCreateProduct/formCreateProduct";
+
 import About from "./components/About/About";
 import "./App.css";
 //Para el bot
@@ -14,18 +17,27 @@ import "react-chatbot-kit/build/main.css";
 import config from "./components/Bot/Config";
 import ActionProvider from "./components/Bot/ActionProvider";
 import MessageParser from "./components/Bot/MessageParser";
+import bubble from "../src/assets/bubblechat.png"
+
 
 function App() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const toggleVisibility = () => {
     setVisible(!visible);
+    const bubbleChat = document.querySelector('.bubble_chat');
+    if (visible) {
+      bubbleChat.style.display = "block";
+    } else {
+      bubbleChat.style.display = "none";
+    }
   }
-
-
-
   return (
     <>
+      <img src={bubble} alt="bubblechat" className="bubble_chat"/>
+      <span className="chat_with">Chat with <br />me!!</span>
       <button className='tuki_chat' onClick={toggleVisibility}>🐸</button>
+      
+      
       {visible && (
         <Chatbot
           config={config}
@@ -42,6 +54,7 @@ function App() {
         <Route path="/categories/:name" element={<CategoriesProduct />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/Detail/:id" element={<Detail />} />
+        <Route path="/formCreateProduct" element={<FormCreateProducs />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </>

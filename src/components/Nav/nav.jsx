@@ -66,6 +66,10 @@ export default function SearchBar({view}) {
             <Link to="/formRegister" className={styles.link}>
               <span>Register</span>
             </Link>
+            <span className={styles.span1}>|</span>
+            <Link to="/formCreateProduct" className={styles.link}>
+              <span>Create</span>
+            </Link>
           </button>
         </div>
         <button className={styles.button}>
