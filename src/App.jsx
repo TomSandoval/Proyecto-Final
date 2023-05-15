@@ -14,18 +14,26 @@ import "react-chatbot-kit/build/main.css";
 import config from "./components/Bot/Config";
 import ActionProvider from "./components/Bot/ActionProvider";
 import MessageParser from "./components/Bot/MessageParser";
+import bubble from "../src/assets/bubblechat.png"
 
 function App() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const toggleVisibility = () => {
     setVisible(!visible);
+    const bubbleChat = document.querySelector('.bubble_chat');
+    if (visible) {
+      bubbleChat.style.display = "block";
+    } else {
+      bubbleChat.style.display = "none";
+    }
   }
-
-
-
   return (
     <>
+      <img src={bubble} alt="bubblechat" className="bubble_chat"/>
+      <span className="chat_with">Chat with <br />me!!</span>
       <button className='tuki_chat' onClick={toggleVisibility}>🐸</button>
+      
+      
       {visible && (
         <Chatbot
           config={config}
