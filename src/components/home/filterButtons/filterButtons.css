@@ -11,6 +11,8 @@
     align-items: center;
     flex-direction: column;
     gap: 14px;
+    position: relative;
+    top: 80px;
 }
 
 .filter-buttons-container .hr {

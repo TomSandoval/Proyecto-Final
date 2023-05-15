@@ -28,6 +28,7 @@ export default function FormCreateProducs() {
         dispatch(getCategories());
     }, [dispatch]);
 
+
     const [loading, setLoading] = useState(false);
     const [input, setInput] = useState({
         name: '',
@@ -215,9 +216,18 @@ export default function FormCreateProducs() {
                         <option key='nuevo' value="USADO">Usado</option>
                         <option key='usado' value="NUEVO">Nuevo</option>
                     </select>
-                    {<span>{errors.status}</span>}
-                </div>
-                
+                {<span>{errors.status}</span>}
+            </div>
+            <div className={styles.divAlreadyRegister}>
+                <select name="category" id="" onChange={handleChange}>
+                    <option value='*'>      </option>
+                    {allCategories?.map(e => (
+                        <option key={e} value={e.name}>{e.name}</option>
+                    ))}
+                 </select>
+                 {<span>{errors.category}</span>}
+            </div>
+            <div className={styles.divAlreadyRegister}>
 
                 <div className={styles.divAlreadyRegister}>
                 <label className={styles.options} htmlFor="">Categorías: </label>

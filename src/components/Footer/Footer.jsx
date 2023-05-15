@@ -9,7 +9,6 @@ export default function Footer() {
   const location = useLocation();
 
   return (
-    <div>
       <footer className="footer">
         <div className="redirect-links">
           <h4>Redirect</h4>
@@ -39,6 +38,5 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </div>
   );
 }

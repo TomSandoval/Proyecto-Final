@@ -52,10 +52,6 @@ export default function ProductsHome() {
   const pagesOfProductsThree = Math.ceil(totalProductsThree / 3);
 
 
-  // console.log(pagesOfProductsOne);
-  console.log(pagesOfProductsTwo);
-  // console.log(pagesOfProductsThree);
-
   function handleClick(e) {
     const value = e.currentTarget.value;
     const action = e.currentTarget.getAttribute("action");
