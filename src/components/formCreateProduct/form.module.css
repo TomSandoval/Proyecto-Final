@@ -1,5 +1,5 @@
 .container {
-    height: 150vh;
+    height: 100vh;
     background: linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%);
 }
 
@@ -25,10 +25,13 @@
 }
 .divForm{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .inputMail{
-    top: 50px;
     font-family: 'Judson';
     margin-top: 15px;
     box-sizing: border-box;
@@ -78,7 +81,6 @@
 }
 
 .register {
-    position: absolute;
     text-align: center;
     font-family: 'Judson';
     font-style: normal;
@@ -93,4 +95,16 @@
 }
 .divAlreadyRegister{
     margin-top: 10px;
+}
+
+.inputName, .description, .emailInputs, .price, .stock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5px;
+}
+
+.errors {
+    color: red
 }

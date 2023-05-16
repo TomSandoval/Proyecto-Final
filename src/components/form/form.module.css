@@ -17,8 +17,8 @@
   justify-content: space-evenly;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border: 1px solid black;
-  width: 40vw;
-  padding: 2%;
+  width: 700px;
+  padding: 20px;
   border-radius: 20px;
   background: #003049;
   border: 3px solid #000000;
@@ -32,18 +32,13 @@
   font-style: normal;
   font-weight: 400;
   font-size: 32px;
-  line-height: 37px;
   letter-spacing: 0.02em;
-}
-.divForm {
-  width: 100%;
 }
 
 .divAlreadyRegister {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
 .divAlreadyRegister h6 {
   font-family: "Exo";
@@ -60,7 +55,6 @@
   background: none;
   border-radius: 4px;
   color: #fff;
-  width: 80%;
   outline: none;
   border: 1.5px solid #0a9396;
   font-family: "Judson";
@@ -68,12 +62,10 @@
   font-weight: 400;
   font-size: 17px;
   line-height: 30px;
-  margin: 2%;
+  width: 60%;
 }
 .inputsmall {
   background: none;
-  max-width: 23%;
-  height: 30px;
   border-radius: 4px;
   outline: none;
   border: 1.5px solid #0a9396;
@@ -81,16 +73,9 @@
   font-style: normal;
   font-weight: 400;
   font-size: 17px;
-  line-height: 30px;
-  margin: 2%;
-  width: 40%;
-  max-width: 37.2%;
 }
 
 .buttonAlreadyRegister {
-  margin-left: 1vw;
-  width: 9vw;
-  height: 2.5vh;
   font-size: larger;
   display: flex;
   justify-content: center;
@@ -104,63 +89,35 @@
   font-weight: 400;
   font-size: 17px;
   line-height: 20px;
-}
-
-.buttonAlreadyRegister:hover {
-  width: 30%;
-  height: 3vh;
-  border-radius: 1vw;
-  margin: 0%;
-  transition: 0.5s;
-  margin-left: 1vw;
+  padding: 4px 10px;
+  margin-left: 10px;
 }
 
 .buttonHome {
   background-color: #ff9f1c;
   border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: larger;
   border-radius: 10px;
-  margin-left: 1vw;
-  width: 19vw;
-  height: 3.8vh;
-  transition: 0.5s;
-  margin: 0.5vw;
-}
-.buttonHome:hover {
-  width: 60%;
-  height: 3.7vh;
-  border-radius: 1vw;
-  margin: 0%;
-  transition: 0.5s;
+  width: 200px;
+  padding: 2px;
 }
 
 .buttonCreate {
   background-color: #ff9f1c;
   border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: larger;
   border-radius: 10px;
-  margin-left: 1vw;
-  width: 19vw;
-  height: 4vh;
-  transition: 0.5s;
-  color: rgb(210, 210, 210);
-  margin: 0.5vw;
+  color: #fff;
+  width: 200px;
+  padding: 2px;
+  margin: 5px;
   font-size: 17px;
-}
-.buttonCreate:hover {
-  width: 60%;
-  border-radius: 1vw;
-  margin: 0%;
-  transition: 0.5s;
-  height: 4vh;
 }
 .link {
   text-decoration: none;
@@ -171,10 +128,6 @@
   text-decoration: none;
   color: #efe9e9;
   font-size: 17px;
-}
-
-.tukimark {
-  width: 17%;
 }
 
 @media screen and (max-width: 900px) {
@@ -221,7 +174,6 @@
   }
   .inputsmall {
     background: none;
-    max-width: 23%;
     height: 20px;
     border-radius: 4px;
     outline: none;
@@ -231,7 +183,6 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 30px;
-    max-width: 100%;
   }
 
   .divH1 {
@@ -329,4 +280,83 @@
     letter-spacing: 0.02em;
     font-size: 9px;
   }
+}
+
+.errors {
+  font-size: 15px;
+  text-align: center;
+  color: #da0303;
+}
+
+input {
+  color: #fff;
+  padding: 4px;
+  margin: 0;
+}
+
+.inputEmail {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputNames {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.inputNames div {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.secondGroup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.inputNickname,
+.secondGroup div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputPassword {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+}
+
+.addressInputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  margin-bottom: 1em;
+}
+
+.streetInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.allInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }

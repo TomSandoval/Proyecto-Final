@@ -1,54 +1,44 @@
-import { useParams } from "react-router-dom";
-import "./CategoriesProduct.css";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import SearchBar from "../Nav/nav";
-import { getProductByCategory, filterByCategory } from "../../redux/actions";
-import CardList from "../Products/CardList";
-import Footer from "../Footer/Footer";
-
-export default function CategoriesProduct() {
-  const products = useSelector((state) => state.products);
-
-  const [priceFilters,setPriceFilters] = useState({
-    min: 0,
-    max: 0
-  })
-
-  const { name } = useParams();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductByCategory(name));
-  }, []);
+import { useParams } from 'react-router-dom';
+import './SearchProduct.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { getProductByName } from '../../redux/actions';
+import SearchBar from '../Nav/nav';
+import CardList from '../Products/CardList';
+import Footer from '../Footer/Footer';
 
 
-  const handleChange = (e) => {
-    setPriceFilters({
-      ...priceFilters,
-      [e.target.name] : e.target.value
-    })
-  }
+export default function SearchProduct(){
 
-  const handleSubmit = () => {
-    let min = priceFilters.min;
-    let max = priceFilters.max;
-    max === 0 || max === "" ? max = 999999999 : max = priceFilters.max
-    min === "" ? min = 0 : min = priceFilters.min
-    dispatch(filterByCategory(name,min,max))
-  }
+    const {name} = useParams();
+    const products = useSelector(state => state.products);
+    const dispatch = useDispatch();
 
 
-  if(!products.rows) {
+
+    useEffect(()=>{
+        dispatch(getProductByName(name))
+    },[])
+
+    const handleChange = (e) => {
+        setPriceFilters({
+          ...priceFilters,
+          [e.target.name] : e.target.value
+        })
+      }
+    
+      const handleSubmit = () => {
+        let min = priceFilters.min;
+        let max = priceFilters.max;
+        max === 0 || max === "" ? max = 999999999 : max = priceFilters.max
+        min === "" ? min = 0 : min = priceFilters.min
+        dispatch(filterByCategory(name,min,max))
+      }
+
     return (
-      <></>
-    )
-  }
-
-  return (
-    <>
-      <SearchBar view={true} />
-      <main className="main-category">
+        <>
+        <SearchBar view={true}/>
+        <main className="main-category">
         <div className="filters-container">
           <h4>Filtros</h4>
           <div className="price-container">
@@ -76,7 +66,7 @@ export default function CategoriesProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                category={p.Categories[0].name}
+                category={'Proximamente descripción aqui'}
                 stock={p.stock}
                 price={p.price}
               />
@@ -84,7 +74,8 @@ export default function CategoriesProduct() {
           </div>
         </div>
       </main>
-      <Footer />
-    </>
-  );
+        </>
+    )
 }
+
+

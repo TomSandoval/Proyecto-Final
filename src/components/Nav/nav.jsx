@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
@@ -10,6 +10,8 @@ import styles from "./searchBar.module.css";
 
 export default function SearchBar({ view }) {
   const [name, setName] = useState("");
+
+  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   function handleInput(e) {
@@ -24,6 +26,7 @@ export default function SearchBar({ view }) {
   function handleSubmit() {
     dispatch(getProductByName(name));
     setName("");
+    navigate(`/Search/${name}`)
   }
 
   function handleKeyDown(e) {
@@ -60,15 +63,15 @@ export default function SearchBar({ view }) {
         <div>
           <button className={styles.buttonLogin}>
             <Link to="/formLogin" className={styles.link}>
-              <span>Iniciar Sesión</span>
+              Iniciar Sesión
             </Link>
             <span className={styles.span1}>|</span>
             <Link to="/formRegister" className={styles.link}>
-              <span>Registrarse</span>
+              Registrarse
             </Link>
             <span className={styles.span1}>|</span>
             <Link to="/formCreateProduct" className={styles.link}>
-              <span>Crear</span>
+              Crear
             </Link>
           </button>
         </div>

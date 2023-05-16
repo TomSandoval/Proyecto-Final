@@ -43,15 +43,15 @@ export default function FormCreateProducs() {
   });
 
   const [errors, setErrors] = useState({
-    name: "*",
-    description: "*",
-    price: "*",
-    stock: "*",
-    email: "*",
-    status: "*",
-    categories: "*",
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    email: "",
+    status: "",
+    categories: "",
     salePrice: "",
-    img: "*",
+    img: "",
   });
 
   const handleChange = (e) => {
@@ -99,15 +99,15 @@ export default function FormCreateProducs() {
         img: [],
       });
       setErrors({
-        name: "*",
-        description: "*",
-        price: "*",
-        stock: "*",
-        email: "*",
-        status: "*",
-        categories: "*",
+        name: "",
+        description: "",
+        price: "",
+        stock: "",
+        email: "",
+        status: "",
+        categories: "",
         salePrice: "",
-        img: "*",
+        img: "",
       });
       alert("producto creado con exito");
       navigate("/");
@@ -146,13 +146,14 @@ export default function FormCreateProducs() {
         <img src={logo} alt="logo" className={styles.logo} />
       </Link>
       <div className={styles.div}>
+        <span className={styles.register}>Ingresa tu producto</span>
         <form
           action="/create"
           method="POST"
           className={styles.divForm}
           onSubmit={(e) => handleSubmit(e)}
         >
-          <div className={styles.divAlreadyRegister}>
+          <div className={styles.inputName}>
             <input
               type="text"
               name="name"
@@ -160,10 +161,10 @@ export default function FormCreateProducs() {
               placeholder="Nombre del producto"
               className={styles.inputMail}
             />
-            {<span>{errors.name}</span>}
-            <span className={styles.register}>Ingresa tu producto</span>
+            {<span className={styles.errors}>{errors.name}</span>}
           </div>
-          <div className={styles.divAlreadyRegister}>
+
+          <div className={styles.description}>
             <input
               type="text"
               name="description"
@@ -171,9 +172,10 @@ export default function FormCreateProducs() {
               placeholder="Descripción"
               className={styles.inputMail}
             />
-            {<span>{errors.description}</span>}
+            {<span className={styles.errors}>{errors.description}</span>}
           </div>
-          <div className={styles.divAlreadyRegister}>
+
+          <div className={styles.emailInputs}>
             <input
               type="text"
               name="email"
@@ -181,9 +183,10 @@ export default function FormCreateProducs() {
               placeholder="Email"
               className={styles.inputMail}
             />
-            {<span>{errors.email}</span>}
+            {<span className={styles.errors}>{errors.email}</span>}
           </div>
-          <div className={styles.divAlreadyRegister}>
+
+          <div className={styles.emailInputs}>
             <input
               type="text"
               name="price"
@@ -191,9 +194,10 @@ export default function FormCreateProducs() {
               placeholder="Precio"
               className={styles.inputMail}
             />
-            {<span>{errors.price}</span>}
+            {<span className={styles.errors}>{errors.price}</span>}
           </div>
-          <div className={styles.divAlreadyRegister}>
+
+          <div className={styles.emailInputs}>
             <input
               type="text"
               name="stock"
@@ -201,102 +205,89 @@ export default function FormCreateProducs() {
               placeholder="Stock"
               className={styles.inputMail}
             />
-            {<span>{errors.stock}</span>}
+            {<span className={styles.errors}>{errors.stock}</span>}
           </div>
-          <div className={styles.divAlreadyRegister}>
-            <label className={styles.options} htmlFor="isOnSale">
-              ¿Está en oferta?
-            </label>
-            <input type="checkbox" name="isOnSale" onChange={handleChange} />
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <input
-              type="text"
-              name="salePrice"
-              placeholder="Precio Oferta"
-              onChange={handleChange}
-              className={styles.inputMail}
-              style={{ display: input.isOnSale ? "block" : "none" }}
+
+          <label className={styles.options} htmlFor="isOnSale">
+            ¿Está en oferta?
+          </label>
+          <input type="checkbox" name="isOnSale" onChange={handleChange} />
+
+          <input
+            type="text"
+            name="salePrice"
+            placeholder="Precio Oferta"
+            onChange={handleChange}
+            className={styles.inputMail}
+            style={{ display: input.isOnSale ? "block" : "none" }}
+          />
+          {
+            <span className={styles.errors} style={{ display: input.isOnSale ? "block" : "none" }}>
+              {input.isOnSale === "none"
+                ? setErrors({ ...errors, salePrice: "" })
+                : errors.salePrice}
+            </span>
+          }
+          <label className={styles.options} htmlFor="">
+            Estado del producto:
+          </label>
+          <select
+            defaultValue="Estado"
+            name="status"
+            id=""
+            onChange={handleChange}
+          >
+            <option  value="Estado">
+              Seleccionar Estado
+            </option>
+            <option  value="USADO">
+              Usado
+            </option>
+            <option  value="NUEVO">
+              Nuevo
+            </option>
+          </select>
+          {<span className={styles.errors}>{errors.status}</span>}
+
+          <label className={styles.options} htmlFor="">
+            Categorías:{" "}
+          </label>
+          <select defaultValue='Categorias' name="categories" id="" onChange={handleChange}>
+            <option value="Categorias">Seleccionar Categorias</option>
+            {allCategories?.map((e,index) => (
+              <option key={index} value={e.name}>
+                {e.name}
+              </option>
+            ))}
+          </select>
+          {<span className={styles.errors}>{errors.categories}</span>}
+
+          <FormGroup>
+            <Input
+              type="file"
+              name="img"
+              placeholder="Sube foto aqui"
+              onChange={uploadImage}
             />
-            {
-              <span style={{ display: input.isOnSale ? "block" : "none" }}>
-                {input.isOnSale === "none"
-                  ? setErrors({ ...errors, salePrice: "" })
-                  : errors.salePrice}
-              </span>
-            }
-          </div>
-          <div className={styles.divAlreadyRegister} key="status-product">
-            <label className={styles.options} htmlFor="">
-              Estado del producto:{" "}
-            </label>
-            <select name="status" id="" onChange={handleChange}>
-              <option key="" value="*">
-                {" "}
-              </option>
-              <option key="nuevo" value="USADO">
-                Usado
-              </option>
-              <option key="usado" value="NUEVO">
-                Nuevo
-              </option>
-            </select>
-            {<span>{errors.status}</span>}
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <select name="category" id="" onChange={handleChange}>
-              <option value="*"> </option>
-              {allCategories?.map((e) => (
-                <option key={e} value={e.name}>
-                  {e.name}
-                </option>
-              ))}
-            </select>
-            {<span>{errors.category}</span>}
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <label className={styles.options} htmlFor="">
-              Categorías:{" "}
-            </label>
-            <select name="categories" id="" onChange={handleChange}>
-              <option value="*"> </option>
-              {allCategories?.map((e) => (
-                <option key={e} value={e.name}>
-                  {e.name}
-                </option>
-              ))}
-            </select>
-            {<span>{errors.categories}</span>}
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <FormGroup>
-              <Input
-                type="file"
-                name="img"
-                placeholder="Sube foto aqui"
-                onChange={uploadImage}
-              />
-              {loading ? (
-                <label htmlFor="">Loading Image</label>
-              ) : (
-                input.img.map((i, index) => (
-                  <img key={index} src={i} style={{ width: "300px" }} />
-                ))
-              )}
-              {<span>{errors.img}</span>}
-            </FormGroup>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <button className={styles.buttonHome}>Crea tu producto</button>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <button className={styles.buttonHome}>
-              <Link to="/" className={styles.link}>
-                Home
-              </Link>
-            </button>
-          </div>
+            {loading ? (
+              <label htmlFor="">Loading Image</label>
+            ) : (
+              input.img.map((i, index) => (
+                <img key={index} src={i} style={{ width: "300px" }} />
+              ))
+            )}
+            {<span className={styles.errors}>{errors.img}</span>}
+          </FormGroup>
+
+          <button className={styles.buttonHome}>Crea tu producto</button>
         </form>
+        <div className={styles.divAlreadyRegister}>
+          <button className={styles.buttonHome}>
+            <Link to="/" className={styles.link}>
+              Home
+            </Link>
+          </button>
+        </div>
       </div>
     </div>
   );
