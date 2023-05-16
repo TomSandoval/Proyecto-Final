@@ -1,8 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import styles from './form.module.css'
-import logo from '../../assets/Recurso 1.png'
+import styles from "./form.module.css";
+import logo from "../../assets/Recurso 1.png";
 import { Link } from "react-router-dom";
+import Validation from "./validacion";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
@@ -56,7 +57,8 @@ export default function FormRegister() {
     Validation(
       { ...input, [e.target.name]: e.target.value },
       setErrors,
-      errors
+      errors,
+      e
     );
   };
 
@@ -98,22 +100,23 @@ export default function FormRegister() {
     <div className={styles.allForm}>
       <img src={logo} alt="" className={styles.tukimark} />
       <div className={styles.div}>
-        <div className={styles.divH1}>
-          <h1>Register</h1>
-        </div>
         <form
           onSubmit={(e) => handleSubmit(e)}
           className={styles.divForm}
           action="/create"
           method="POST"
         >
+          <div className={styles.divH1}>
+            <h1>Registrarse</h1>
+          </div>
+
           <div className={styles.divAlreadyRegister}>
             <input
               type="text"
               name="email"
               value={input.email}
               onChange={handleChange}
-              placeholder="Email address"
+              placeholder="Correo Electronico"
               className={styles.inputLarge}
             />
             {<span>{errors.email}</span>}
@@ -124,7 +127,7 @@ export default function FormRegister() {
               value={input.name}
               onChange={handleChange}
               name="name"
-              placeholder="Name"
+              placeholder="Nombre"
               className={styles.inputsmall}
             />
             {<span>{errors.name}</span>}
@@ -133,7 +136,7 @@ export default function FormRegister() {
               value={input.lastName}
               onChange={handleChange}
               name="lastName"
-              placeholder="Last Name"
+              placeholder="Apellido"
               className={styles.inputsmall}
             />
             {<span>{errors.lastName}</span>}
@@ -144,7 +147,7 @@ export default function FormRegister() {
               value={input.nickname}
               onChange={handleChange}
               name="nickname"
-              placeholder="Nick Name"
+              placeholder="Nombre de Usuario"
               className={styles.inputsmall}
             />
             {<span>{errors.nickname}</span>}
@@ -153,7 +156,6 @@ export default function FormRegister() {
               value={input.birthDate}
               onChange={handleChange}
               name="birthDate"
-              placeholder="dd/mm/aaaa"
               className={styles.inputsmall}
             />
             {<span>{errors.birthDate}</span>}
@@ -164,7 +166,7 @@ export default function FormRegister() {
               value={input.password}
               onChange={handleChange}
               name="password"
-              placeholder="Password"
+              placeholder="Contraseña"
               className={styles.inputLarge}
             />
             {<span>{errors.password}</span>}
@@ -175,7 +177,7 @@ export default function FormRegister() {
               value={input.passwordRepit}
               onChange={handleChange}
               name="passwordRepit"
-              placeholder="Repeat Password"
+              placeholder="Validar Contraseña"
               className={styles.inputLarge}
             />
             {<span>{errors.passwordRepit}</span>}
@@ -186,7 +188,7 @@ export default function FormRegister() {
               value={input.street}
               onChange={handleChange}
               name="street"
-              placeholder="Street"
+              placeholder="Calle"
               className={styles.inputsmall}
             />
             {<span>{errors.street}</span>}
@@ -195,27 +197,27 @@ export default function FormRegister() {
               value={input.number}
               onChange={handleChange}
               name="number"
-              placeholder="Number"
+              placeholder="Numero"
               className={styles.inputsmall}
             />
             {<span>{errors.number}</span>}
           </div>
           <div className={styles.divAlreadyRegister}>
-            <h6> Are you already registered ?</h6>
+            <h6>Ya tienes una cuenta ?</h6>
             <button className={styles.buttonAlreadyRegister}>
               <Link to="/formLogin" className={styles.link}>
-                Login
+                Iniciar Sesión
               </Link>
             </button>
           </div>
           <div className={styles.divAlreadyRegister}>
             <button type="submit" className={styles.buttonCreate}>
-              Create User
+              Crear Usuario
             </button>
           </div>
           <div className={styles.divAlreadyRegister}>
             <button className={styles.buttonHome}>
-              <Link to="/" className={styles.link}>
+              <Link to="/" className={styles.link1}>
                 Continuar como Invitado
               </Link>
             </button>

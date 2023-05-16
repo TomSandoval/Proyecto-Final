@@ -1,4 +1,4 @@
-import "../Publicidad/Publicidad.css";
+import "./Carrousel.css";
 import { useState, useEffect } from "react";
 
 const background_image = [
@@ -8,7 +8,7 @@ const background_image = [
   "https://http2.mlstatic.com/D_NQ_875375-MLA69362854298_052023-OO.webp",
 ];
 
-export default function Publicidad() {
+export default function Carrousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextImage = () => {
@@ -23,9 +23,7 @@ export default function Publicidad() {
   }, [currentIndex]);
 
   return (
-    <div
-      className="carousel"
-    >
+    <div className="carousel">
       {background_image.map((image, index) => (
         <img
           key={index}

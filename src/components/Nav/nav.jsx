@@ -8,9 +8,7 @@ import { useDispatch } from "react-redux";
 import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
 
-
-export default function SearchBar({view}) {
-
+export default function SearchBar({ view }) {
   const [name, setName] = useState("");
 
   const dispatch = useDispatch();
@@ -41,34 +39,36 @@ export default function SearchBar({view}) {
           <img className={styles.logoImg} src={logo} alt="TukiMarket" />
         </Link>
       </div>
-      { view ? <div className={styles.divInput}>
-        <input
-          type="search"
-          value={name}
-          placeholder="¿Que vas a llevar hoy?"
-          onChange={(e) => handleInput(e)}
-          onKeyDown={(e) => handleKeyDown(e)}
-          className={styles.input}
-        />
+      {view ? (
+        <div className={styles.divInput}>
+          <input
+            type="search"
+            value={name}
+            placeholder="¿Que vas a llevar hoy?"
+            onChange={(e) => handleInput(e)}
+            onKeyDown={(e) => handleKeyDown(e)}
+            className={styles.input}
+          />
 
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>
-        </div> : null}
+        </div>
+      ) : null}
 
       <div className={styles.divUser}>
         <div>
           <button className={styles.buttonLogin}>
             <Link to="/formLogin" className={styles.link}>
-              <span>Login</span>
+              <span>Iniciar Sesión</span>
             </Link>
             <span className={styles.span1}>|</span>
             <Link to="/formRegister" className={styles.link}>
-              <span>Register</span>
+              <span>Registrarse</span>
             </Link>
             <span className={styles.span1}>|</span>
             <Link to="/formCreateProduct" className={styles.link}>
-              <span>Create</span>
+              <span>Crear</span>
             </Link>
           </button>
         </div>
