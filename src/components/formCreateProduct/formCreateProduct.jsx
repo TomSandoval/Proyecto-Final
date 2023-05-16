@@ -227,7 +227,6 @@ export default function FormCreateProducs() {
                  </select>
                  {<span>{errors.category}</span>}
             </div>
-            <div className={styles.divAlreadyRegister}>
 
                 <div className={styles.divAlreadyRegister}>
                 <label className={styles.options} htmlFor="">Categorías: </label>

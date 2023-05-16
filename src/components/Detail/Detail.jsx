@@ -19,7 +19,7 @@ export default function Detail() {
     dispatch(getDetail(id));
   }, [dispatch]);
 
-  if (!productDetail) {
+  if (!productDetail.name) {
     return <p>Cargando informacion</p>;
   }
 

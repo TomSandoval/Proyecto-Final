@@ -14,6 +14,7 @@ import {
   FILTER_PRODUCTS,
 
   POST_CREATE,
+  GET_PRODUCT_BY_NAME,
 
 
 
@@ -72,6 +73,12 @@ const rootReducer = (state = initialState, action) => {
         productDetail: {},
       };
     case GET_PRODUCTS_CATEGORY: {
+      return {
+        ...state,
+        products: action.payload
+      }
+    }
+    case GET_PRODUCT_BY_NAME: {
       return {
         ...state,
         products: action.payload
