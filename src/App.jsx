@@ -8,7 +8,7 @@ import Detail from "./components/Detail/Detail";
 import FormUserLogin from "./components/formUserLogin/formUserLogin";
 
 import FormCreateProducs from "./components/formCreateProduct/formCreateProduct";
-
+import Paypal from "./components/PayPal/Paypal";
 import About from "./components/About/About";
 import "./App.css";
 //Para el bot
@@ -18,6 +18,7 @@ import config from "./components/Bot/Config";
 import ActionProvider from "./components/Bot/ActionProvider";
 import MessageParser from "./components/Bot/MessageParser";
 import bubble from "../src/assets/bubblechat.png";
+
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -59,6 +60,7 @@ function App() {
         <Route path="/Detail/:id" element={<Detail />} />
         <Route path="/formCreateProduct" element={<FormCreateProducs />} />
         <Route path="/about" element={<About />} />
+        <Route path="/paypal" element={<Paypal />} />
       </Routes>
     </>
   );
