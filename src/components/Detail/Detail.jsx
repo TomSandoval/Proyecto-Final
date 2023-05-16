@@ -27,7 +27,7 @@ export default function Detail() {
     <div className="allContainer">
       <SearchBar view={false} />
       <Link to="/">
-        <button className="btn btn-outline-danger button-back">Back</button>
+        <button className="btn btn-outline-danger button-back">Volver</button>
       </Link>
       {productDetail?.name ? (
         <div className="detail-container">
@@ -36,11 +36,11 @@ export default function Detail() {
               <h1>{productDetail.name}</h1>
             </div>
             <div className="description-text">
-              <h2>Description:</h2>
+              <h2>Descripción:</h2>
               <p>{productDetail.description}</p>
             </div>
             <div className="info-block">
-              <h2>Stock: {productDetail.stock}</h2>
+              <h2>Disponibles: {productDetail.stock}</h2>
               <div>
                 <h3 className="price">${productDetail.price}</h3>
                 <button className="button-container-new">
