@@ -1,17 +1,15 @@
 import "../About/About.css";
-import image from "../../assets/home-regular-24.png";
 import { Link } from "react-router-dom";
 
 export default function About() {
   return (
     <div className="container-about">
+      <div className="container-h1">
+        <h1>Sobre Nosotros</h1>
+      </div>
       <Link to="/">
-        <button className="btn btn-outline-success">Home</button>
+        <button className="btn btn-outline-success">Hogar</button>
       </Link>
-      {/* <Link className={`Detail/${params?.id}`}>
-        <button>Back</button>
-      </Link> */}
-      <h1>About Us</h1>
       <div className="About">
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores

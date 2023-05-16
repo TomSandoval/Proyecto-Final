@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/home";
 import FormRegister from "./components/form/form";
@@ -25,26 +25,30 @@ function App() {
   const [visible, setVisible] = useState(false);
   const toggleVisibility = () => {
     setVisible(!visible);
-    const bubbleChat = document.querySelector('.bubble_chat');
+    const bubbleChat = document.querySelector(".bubble_chat");
     if (visible) {
       bubbleChat.style.display = "block";
     } else {
       bubbleChat.style.display = "none";
     }
-  }
+  };
   return (
     <>
-      <img src={bubble} alt="bubblechat" className="bubble_chat"/>
-      <span className="chat_with">Chat with <br />me!!</span>
-      <button className='tuki_chat' onClick={toggleVisibility}>🐸</button>
-      
-      
+      <img src={bubble} alt="bubblechat" className="bubble_chat" />
+      <span className="chat_with">
+        Chatea <br />
+        Conmigo!!
+      </span>
+      <button className="tuki_chat" onClick={toggleVisibility}>
+        🐸
+      </button>
+
       {visible && (
         <Chatbot
           config={config}
           messageParser={MessageParser}
           actionProvider={ActionProvider}
-          placeholderText='Escribeme un Tuki mensaje!!'
+          placeholderText="Escribeme un Tuki mensaje!!"
         />
       )}
       <Routes>

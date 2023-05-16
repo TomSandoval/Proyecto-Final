@@ -16,18 +16,18 @@ export default function Categories() {
 
   return (
     <>
-    <SearchBar/>    
-    <main className="main">
-        <h1>Categorias</h1>
-      <div className="buttons-container">
-        {allCategories?.map((c, index) => (
-          <Link to={`/categories/${c.name}`} key={index} className="buttons">
-            <img className="image-button" src={c.img} alt={c.name}></img>
-            <p>{c.name}</p>
-          </Link>
-        ))}
-      </div>
-    </main>
+      <SearchBar />
+      <main className="main">
+        <h1>Categorías</h1>
+        <div className="buttons-container">
+          {allCategories?.map((c, index) => (
+            <Link to={`/categories/${c.name}`} key={index} className="buttons">
+              <img className="image-button" src={c.img} alt={c.name}></img>
+              <p>{c.name}</p>
+            </Link>
+          ))}
+        </div>
+      </main>
     </>
   );
 }

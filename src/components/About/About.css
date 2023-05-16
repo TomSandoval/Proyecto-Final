@@ -5,15 +5,16 @@
   background-size: cover;
 }
 
+.container-h1 {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  font-size: 90%;
+}
+
 .btn-outline-success {
   position: absolute;
   right: 15%;
-  top: 12%;
-}
-
-.btn-outline-warning {
-  position: absolute;
-  right: 20%;
   top: 12%;
 }
 
