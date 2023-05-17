@@ -8,12 +8,21 @@ import CardList from '../Products/CardList';
 import Footer from '../Footer/Footer';
 import Paginate from '../Paginate/Paginate';
 
+export default function SearchProduct() {
+  const { name } = useParams();
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
-export default function SearchProduct(){
+  useEffect(() => {
+    dispatch(getProductByName(name));
+  }, []);
 
-    const {name} = useParams();
-    const products = useSelector(state => state.products);
-    const dispatch = useDispatch();
+  const handleChange = (e) => {
+    setPriceFilters({
+      ...priceFilters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
     const [currentPage, setCurrentPage] = useState(1)
     const [priceFilters,setPriceFilters] = useState({
@@ -88,9 +97,31 @@ export default function SearchProduct(){
           <div className="price-container">
             <label className="label">Precio:</label>
             <div className="input-container">
-            <input name="min" onChange={handleChange} className="inputs" type="number" placeholder="mínimo"/>
-            <input name="max" onChange={handleChange} className="inputs" type="number" placeholder="máximo"/>
-            <button onClick={handleSubmit} className="button-price"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{fill: 'rgba(0, 0, 0, 1)'}}><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path></svg></button>
+              <input
+                name="min"
+                onChange={handleChange}
+                className="inputs"
+                type="number"
+                placeholder="mínimo"
+              />
+              <input
+                name="max"
+                onChange={handleChange}
+                className="inputs"
+                type="number"
+                placeholder="máximo"
+              />
+              <button onClick={handleSubmit} className="button-price">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  style={{ fill: "rgba(0, 0, 0, 1)" }}
+                >
+                  <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path>
+                </svg>
+              </button>
             </div>
           </div>
           <div className="alphabetic-container">
@@ -120,8 +151,7 @@ export default function SearchProduct(){
           <Paginate totalProducts={products.count} currentPage={currentPage} changePage={changePage} productsPerPage={6}/>
         </div>
       </main>
-        </>
-    )
+      <Footer />
+    </>
+  );
 }
-
-

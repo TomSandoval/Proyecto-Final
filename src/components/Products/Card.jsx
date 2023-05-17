@@ -2,13 +2,29 @@ import React from "react";
 import cart from "../../assets/cartShop.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch , useSelector} from "react-redux";
+import {setCarrito , aumentarCantidad} from "../../redux/actions";
 
 export default function Card (props){
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const carrito=useSelector((state) => state.carrito);
   const handleNavigate = () => {
     navigate(`Detail/${props.id}`);
   }
+  
+  const buyProduct = (e, productDetail) => {
+    e.preventDefault();
+    const foundProduct = carrito.find((p) => p.id === productDetail.id);
+    if (foundProduct) {
+      dispatch(aumentarCantidad(foundProduct.id));
+    } else {
+      const newProduct = { ...productDetail, cantidad: 1 };
+      dispatch(setCarrito(newProduct));
+    }
+    console.log(carrito);
+  }
+
 
 
   return (
@@ -19,7 +35,7 @@ export default function Card (props){
         <hr></hr>
         <div className="buy-info">
           <p className="card-price">${props.price} </p>
-          <button type="button" className="button-buy">
+          <button type="button" className="button-buy" onClick={(e) => buyProduct(e,props)}>
             <img src={cart} alt="buy" />
           </button>
         </div>

@@ -4,6 +4,7 @@ import styles from "./form.module.css";
 import logo from "../../assets/Recurso 1.png";
 import { Link } from "react-router-dom";
 import Validation from "./validacion";
+import Footer from "../Footer/Footer";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
