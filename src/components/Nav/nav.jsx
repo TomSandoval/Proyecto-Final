@@ -4,13 +4,14 @@ import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
 import logo from "../../assets/Recurso 1.png";
-import { useDispatch, useSelector } from "react-redux";
 import { getProductByName, darkMode } from "../../redux/actions";
+import { useDispatch , useSelector} from "react-redux";
 import styles from "./searchBar.module.css";
 
 export default function SearchBar({ view }) {
   const [name, setName] = useState("");
   const navigate = useNavigate();
+  const carrito=useSelector((state) => state.carrito);
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state?.darkModes);
 
@@ -121,6 +122,7 @@ export default function SearchBar({ view }) {
           <Link to="/carroBuy">
             <img src={logoCarro} className={styles.img2} />
           </Link>
+            <span>{carrito.length}</span>
         </button>
         <button className={styles.button}>
           <Link to="/formLogin">

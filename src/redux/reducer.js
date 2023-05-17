@@ -1,4 +1,5 @@
 import {
+  SET_CARRITO,
   POST_FORM_REGISTER,
   AXIOS_PRODUCTS_BY_CATEGORY_REQUEST,
   AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS,
@@ -12,10 +13,14 @@ import {
   GET_PRODUCTS_CATEGORY,
   CLEAN_PRODUCTS,
   FILTER_PRODUCTS,
-  CHANGE_PAGES_PRODUCTS,
   POST_CREATE,
   GET_PRODUCT_BY_NAME,
   DARK_MODE,
+  DELETE_PRODUCT,
+  AUMENTAR_CANTIDAD,
+  TOTAL_DE_COMPRA,
+  DISMINUIR_CANTIDAD,
+  CHANGE_PAGES_PRODUCTS,
 } from "./actions";
 
 const initialState = {
@@ -27,6 +32,9 @@ const initialState = {
   error: null,
   errorMail: null,
   darkModes: false,
+  errorMail:null,
+  carrito:JSON.parse(localStorage.getItem('carrito')) ||[],
+  totalDeCompra:'',
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -111,6 +119,79 @@ const rootReducer = (state = initialState, action) => {
         products: action.payload,
       };
     }
+
+    case TOTAL_DE_COMPRA: {
+      return {
+        ...state,
+        totalDeCompra: action.payload
+      }
+    }
+    case SET_CARRITO: {
+      localStorage.setItem('carrito', JSON.stringify([...state.carrito , action.payload]))
+      return {
+        ...state,
+        carrito: [...state.carrito , action.payload]
+      }
+    }
+    case DELETE_PRODUCT: {
+      localStorage.setItem('carrito', JSON.stringify(state.carrito.filter((carritoId) => {
+        return carritoId.id !== action.payload
+      })))
+      return {
+        ...state,
+        carrito:state.carrito.filter((carritoId) => {
+          return carritoId.id !== action.payload
+        })
+      }
+    }
+    case AUMENTAR_CANTIDAD: {
+      localStorage.setItem('carrito', JSON.stringify(state.carrito.map((producto) => {
+        if (producto.id === action.payload) {
+          return {
+            ...producto,
+            cantidad: producto.cantidad + 1
+          };
+        }
+        return producto;
+      })))
+      return {
+        ...state,
+        carrito:state.carrito.map((producto) => {
+          if (producto.id === action.payload) {
+            return {
+              ...producto,
+              cantidad: producto.cantidad + 1
+            };
+          }
+          return producto;
+        })
+      }
+    }
+    case DISMINUIR_CANTIDAD: {
+      console.log('hola');
+      localStorage.setItem('carrito', JSON.stringify(state.carrito.map((producto) => {
+        if (producto.id === action.payload) {
+          return {
+            ...producto,
+            cantidad: producto.cantidad - 1
+          };
+        }
+        return producto;
+      })))
+      return {
+        ...state,
+        carrito:state.carrito.map((producto) => {
+          if (producto.id === action.payload) {
+            return {
+              ...producto,
+              cantidad: producto.cantidad - 1
+            };
+          }
+          return producto;
+        })
+      }
+    }
+    
     case CHANGE_PAGES_PRODUCTS: {
       return {
         ...state,
@@ -123,6 +204,7 @@ const rootReducer = (state = initialState, action) => {
         darkModes: action.payload,
       };
     }
+
     default:
       return state;
   }
