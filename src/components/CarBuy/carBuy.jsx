@@ -31,10 +31,16 @@ export default function CarBuy() {
     }
     return carrito.length> 0 ?(
         <div>
+            <h1>{totalDeCompra}</h1>
             {carrito?.map((p, index) => (
                 <div key={index}>
                     <button onClick={(e)=>eliminarProducto(e,p.id)}>❌</button>
-                    <h3>Cantidad: <button onClick={(e)=>disminuir(e,p)}>-</button>{p.cantidad}<button onClick={(e)=>aumentar(e,p.id)}>+</button></h3>
+                    <div>
+                        <h3>Cantidad :</h3>
+                        <button onClick={(e)=>disminuir(e,p)}>-</button>
+                        <h3>{`Cantidad: ${p.cantidad}`}</h3>
+                        <button onClick={(e)=>aumentar(e,p.id)}>+</button>
+                    </div>
                     <Card
                       key={index}
                       name={p.name}
@@ -46,7 +52,7 @@ export default function CarBuy() {
                     
                 </div>
           ))}
-            <h1>${totalDeCompra}</h1>
+            <h1>{`Total :$ ${totalDeCompra}`}</h1>
 
         </div>
     ):(

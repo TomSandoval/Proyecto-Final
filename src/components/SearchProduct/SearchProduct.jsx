@@ -17,12 +17,6 @@ export default function SearchProduct() {
     dispatch(getProductByName(name));
   }, []);
 
-  const handleChange = (e) => {
-    setPriceFilters({
-      ...priceFilters,
-      [e.target.name]: e.target.value,
-    });
-  };
 
     const [currentPage, setCurrentPage] = useState(1)
     const [priceFilters,setPriceFilters] = useState({
