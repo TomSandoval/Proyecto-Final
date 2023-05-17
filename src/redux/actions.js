@@ -18,7 +18,11 @@ export const ERROR_MAIL = 'ERROR_MAIL';
 export const CLEAN_PRODUCTS = 'CLEAN_PRODUCTS'
 export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
 export const POST_CREATE = 'POST_CREATE';
-
+export const SET_CARRITO = 'SET_CARRITO';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const AUMENTAR_CANTIDAD = 'AUMENTAR_CANTIDAD';
+export const DISMINUIR_CANTIDAD = 'DISMINUIR_CANTIDAD';
+export const TOTAL_DE_COMPRA = 'TOTAL_DE_COMPRA';
 
 
 
@@ -30,7 +34,6 @@ export const postForm = (payload) => {
       return dispatch({
           type:POST_FORM_REGISTER,
           payload:json,
-          
       });
     } catch (error) {
       console.log(error);
@@ -133,7 +136,6 @@ export const postLogin = (payload) => {
 }
 };
 export const postCreate = (payload) => {
-  console.log(payload);
   return async function(dispatch){
     try {
       var json=await axios.post('http://localhost:3001/product',payload);
@@ -183,6 +185,37 @@ export const filterByCategory = (name,min,max) => async (dispatch) => {
   }
 }
 
+export const setCarrito = (payload) => {
+  return({
+    type: SET_CARRITO,
+    payload:payload
+  })
+}
+
+export const deleteProduct = (id) => {
+  return({
+    type: DELETE_PRODUCT,
+    payload:id
+  })
+}
+export const aumentarCantidad = (id) => {
+  return({
+    type: AUMENTAR_CANTIDAD,
+    payload:id
+  })
+}
+export const disminuirCantidad = (id) => {
+  return({
+    type: DISMINUIR_CANTIDAD,
+    payload:id
+  })
+}
+export const total = (total) => {
+  return({
+    type: TOTAL_DE_COMPRA,
+    payload:total
+  })
+}
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
 

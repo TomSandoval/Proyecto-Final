@@ -3,16 +3,18 @@ import SearchBar from "../Nav/nav";
 import Loading from "../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getDetail, cleanDetail } from "../../redux/actions";
+import { getDetail, cleanDetail , setCarrito ,aumentarCantidad} from "../../redux/actions";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
 
 export default function Detail() {
   const productDetail = useSelector((state) => state.productDetail);
+  const carrito = useSelector((state) => state.carrito);
   const [selectImage, setSelectImage] = useState(0);
   const dispatch = useDispatch();
   const { id } = useParams();
+  
 
   useEffect(() => {
     dispatch(cleanDetail());
@@ -21,6 +23,17 @@ export default function Detail() {
 
   if (!productDetail.name) {
     return <p>Cargando informacion</p>;
+  }
+
+  const buyProduct = (e, productDetail) => {
+    e.preventDefault();
+    const foundProduct = carrito.find((p) => p.id === productDetail.id);
+    if (foundProduct) {
+      dispatch(aumentarCantidad(foundProduct.id));
+    } else {
+      const newProduct = { ...productDetail, cantidad: 1 };
+      dispatch(setCarrito(newProduct));
+    }
   }
 
   return (
@@ -43,7 +56,7 @@ export default function Detail() {
               <h2>Disponibles: {productDetail.stock}</h2>
               <div>
                 <h3 className="price">${productDetail.price}</h3>
-                <button className="button-container-new">
+                <button className="button-container-new" onClick={(e) => buyProduct(e,productDetail)}>
                   AGREGAR{" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

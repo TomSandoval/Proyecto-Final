@@ -4,13 +4,13 @@ import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
 import logoSearch from "../../assets/search-alt-regular-24.png";
 import logo from "../../assets/Recurso 1.png";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector} from "react-redux";
 import { getProductByName } from "../../redux/actions";
 import styles from "./searchBar.module.css";
 
 export default function SearchBar({ view }) {
   const [name, setName] = useState("");
-
+  const carrito=useSelector((state) => state.carrito);
   const navigate = useNavigate()
 
   const dispatch = useDispatch();
@@ -79,6 +79,7 @@ export default function SearchBar({ view }) {
           <Link to="/carroBuy">
             <img src={logoCarro} className={styles.img2} />
           </Link>
+            <span>{carrito.length}</span>
         </button>
         <button className={styles.button}>
           <Link to="/formLogin">
