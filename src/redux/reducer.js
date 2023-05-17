@@ -12,11 +12,9 @@ import {
   GET_PRODUCTS_CATEGORY,
   CLEAN_PRODUCTS,
   FILTER_PRODUCTS,
-
+  CHANGE_PAGES_PRODUCTS,
   POST_CREATE,
   GET_PRODUCT_BY_NAME,
-
-
 
 } from "./actions";
 
@@ -108,6 +106,12 @@ const rootReducer = (state = initialState, action) => {
       }
     } 
     case FILTER_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload
+      }
+    }
+    case CHANGE_PAGES_PRODUCTS: {
       return {
         ...state,
         products: action.payload
