@@ -1,12 +1,17 @@
-import { useParams } from 'react-router-dom';
-import './SearchProduct.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { changePagesName, getProductByName, filterByName, sortAlphabeticProducts } from '../../redux/actions';
-import SearchBar from '../Nav/nav';
-import CardList from '../Products/CardList';
-import Footer from '../Footer/Footer';
-import Paginate from '../Paginate/Paginate';
+import { useParams } from "react-router-dom";
+import "./SearchProduct.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import {
+  changePagesName,
+  getProductByName,
+  filterByName,
+  sortAlphabeticProducts,
+} from "../../redux/actions";
+import SearchBar from "../Nav/nav";
+import CardList from "../Products/CardList";
+import Footer from "../Footer/Footer";
+import Paginate from "../Paginate/Paginate";
 
 export default function SearchProduct() {
   const { name } = useParams();
@@ -17,36 +22,35 @@ export default function SearchProduct() {
     dispatch(getProductByName(name));
   }, []);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [priceFilters, setPriceFilters] = useState({
+    min: 0,
+    max: 0,
+  });
+  const [filters, setFilters] = useState("");
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const [priceFilters,setPriceFilters] = useState({
-      min: 0,
-      max: 0
-    })
-    const [filters, setFilters] = useState("");
+  const changePage = (value) => {
+    setCurrentPage(value);
+    if (currentPage == value) return null;
+    dispatch(changePagesName(name, value));
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
-  
-    const changePage = (value) => {
-      setCurrentPage(value)
-      if(currentPage == value) return null
-      dispatch(changePagesName(name, value))
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    }
+  useEffect(() => {
+    dispatch(getProductByName(name));
+  }, []);
 
-    useEffect(()=>{
-        dispatch(getProductByName(name))
-    },[])
+  const handleChange = (e) => {
+    setPriceFilters({
+      ...priceFilters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const handleChange = (e) => {
-        setPriceFilters({
-          ...priceFilters,
-          [e.target.name] : e.target.value
-        })
-      }
-    
+
       const handleSubmit = () => {
         let min = priceFilters.min;
         let max = priceFilters.max;
@@ -56,23 +60,24 @@ export default function SearchProduct() {
         setFilters("Precio")
       }
 
-      const cleanFilter = () => {
-        setFilters("")
-        dispatch(getProductByName(name))
-      }
 
-      const handleSort = (e) => {
-        const value = e.target.value;
-        dispatch(sortAlphabeticProducts(name,value))
-      } 
+  const cleanFilter = () => {
+    setFilters("");
+    dispatch(getProductByName(name));
+  };
 
-    return (
-        <>
-        <SearchBar view={true}/>
-        <main className="main-category">
+  const handleSort = (e) => {
+    const value = e.target.value;
+    dispatch(sortAlphabeticProducts(name, value));
+  };
+
+  return (
+    <>
+      <SearchBar view={true} />
+      <main className="main-category">
         <div className="filters-container">
           <h4>Filtros</h4>
-          { filters &&
+          {filters && (
             <h5 className="filters-applied">
               {filters}
               <button onClick={cleanFilter} className="button-filters-applied">
@@ -87,7 +92,7 @@ export default function SearchProduct() {
                 </svg>
               </button>
             </h5>
-          }
+          )}
           <div className="price-container">
             <label className="label">Precio:</label>
             <div className="input-container">
@@ -121,8 +126,20 @@ export default function SearchProduct() {
           <div className="alphabetic-container">
             <label>Orden Alfabetico:</label>
             <div>
-              <button value="asc" onClick={handleSort} className="buttons-filter">ASC</button>
-              <button value="desc" onClick={handleSort} className="buttons-filter">DESC</button>
+              <button
+                value="asc"
+                onClick={handleSort}
+                className="buttons-filter"
+              >
+                ASC
+              </button>
+              <button
+                value="desc"
+                onClick={handleSort}
+                className="buttons-filter"
+              >
+                DESC
+              </button>
             </div>
           </div>
         </div>
@@ -138,11 +155,16 @@ export default function SearchProduct() {
                 category={p?.Categories[0]?.name}
                 stock={p.stock}
                 price={p.price}
-                dataAos={index % 2 == 0 ? "fade-left" : 'fade-right'}
+                dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}
               />
             ))}
           </div>
-          <Paginate totalProducts={products.count} currentPage={currentPage} changePage={changePage} productsPerPage={6}/>
+          <Paginate
+            totalProducts={products.count}
+            currentPage={currentPage}
+            changePage={changePage}
+            productsPerPage={6}
+          />
         </div>
       </main>
       <Footer />
