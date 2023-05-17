@@ -6,11 +6,11 @@ import CategoriesProduct from "./components/CategoriesProduct/CategoriesProduct"
 import Categories from "./components/Categories/Categories";
 import Detail from "./components/Detail/Detail";
 import FormUserLogin from "./components/formUserLogin/formUserLogin";
-
 import FormCreateProducs from "./components/formCreateProduct/formCreateProduct";
 import Paypal from "./components/PayPal/Paypal";
 import About from "./components/About/About";
 import "./App.css";
+import CarBuy from "./components/CarBuy/carBuy";
 //Para el bot
 import Chatbot from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
@@ -54,7 +54,6 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/carroBuy" />
         <Route path="/formRegister" element={<FormRegister />} />
         <Route path="/formLogin" element={<FormUserLogin />} />
         <Route path="/categories/:name" element={<CategoriesProduct />} />
@@ -64,6 +63,7 @@ function App() {
         <Route path="/formCreateProduct" element={<FormCreateProducs />} />
         <Route path="/about" element={<About />} />
         <Route path="/paypal" element={<Paypal />} />
+        <Route path="/carroBuy" element={<CarBuy />} />
       </Routes>
     </>
   );

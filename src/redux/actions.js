@@ -14,13 +14,19 @@ export const GET_PRODUCTS_CATEGORY = "GET_PRODUCTS_CATEGORY";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
-export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
-export const SET_PRODUCTS_HOME = "SET_PRODUCTS_HOME";
-export const ERROR_MAIL = "ERROR_MAIL";
-export const CLEAN_PRODUCTS = "CLEAN_PRODUCTS";
-export const FILTER_PRODUCTS = "FILTER_PRODUCTS";
-export const POST_CREATE = "POST_CREATE";
+export const GET_PRODUCT_BY_NAME = 'GET_PRODUCT_BY_NAME';
+export const SET_PRODUCTS_HOME = 'SET_PRODUCTS_HOME' 
+export const ERROR_MAIL = 'ERROR_MAIL';
+export const CLEAN_PRODUCTS = 'CLEAN_PRODUCTS'
+export const FILTER_PRODUCTS = 'FILTER_PRODUCTS'
+export const POST_CREATE = 'POST_CREATE';
+export const SET_CARRITO = 'SET_CARRITO';
+export const DELETE_PRODUCT = 'DELETE_PRODUCT';
+export const AUMENTAR_CANTIDAD = 'AUMENTAR_CANTIDAD';
+export const DISMINUIR_CANTIDAD = 'DISMINUIR_CANTIDAD';
+export const TOTAL_DE_COMPRA = 'TOTAL_DE_COMPRA';
 export const CHANGE_PAGES_PRODUCTS = "CHANGE_PAGES_PRODUCTS";
+
 
 export const postForm = (payload) => {
   return async function (dispatch) {
@@ -139,8 +145,7 @@ export const postLogin = (payload) => {
   };
 };
 export const postCreate = (payload) => {
-  console.log(payload);
-  return async function (dispatch) {
+  return async function(dispatch){
     try {
       var json = await axios.post("http://localhost:3001/product", payload);
       return dispatch({
@@ -247,5 +252,36 @@ export const sortAlphabeticProducts = (name,value) => async (dispatch) => {
   }
 }
 
+export const setCarrito = (payload) => {
+  return({
+    type: SET_CARRITO,
+    payload:payload
+  })
+}
+
+export const deleteProduct = (id) => {
+  return({
+    type: DELETE_PRODUCT,
+    payload:id
+  })
+}
+export const aumentarCantidad = (id) => {
+  return({
+    type: AUMENTAR_CANTIDAD,
+    payload:id
+  })
+}
+export const disminuirCantidad = (id) => {
+  return({
+    type: DISMINUIR_CANTIDAD,
+    payload:id
+  })
+}
+export const total = (total) => {
+  return({
+    type: TOTAL_DE_COMPRA,
+    payload:total
+  })
+}
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
