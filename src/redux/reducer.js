@@ -15,7 +15,7 @@ import {
   CHANGE_PAGES_PRODUCTS,
   POST_CREATE,
   GET_PRODUCT_BY_NAME,
-
+  DARK_MODE,
 } from "./actions";
 
 const initialState = {
@@ -25,12 +25,12 @@ const initialState = {
   categories: [],
   productDetail: {},
   error: null,
-  errorMail:null,
+  errorMail: null,
+  darkModes: false,
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    
     case AXIOS_PRODUCTS_BY_CATEGORY_REQUEST:
       return { ...state, isLoading: true };
     case AXIOS_PRODUCTS_BY_CATEGORY_SUCCESS:
@@ -44,15 +44,15 @@ const rootReducer = (state = initialState, action) => {
       };
     case AXIOS_PRODUCTS_BY_CATEGORY_FAILURE:
       return { ...state, isLoading: false, error: action.error };
-      
+
     case SET_PRODUCTS_HOME: {
       return {
         ...state,
         products: {
           ...state.products,
-          [action.payload.value]: action.payload.products
-        }
-      }
+          [action.payload.value]: action.payload.products,
+        },
+      };
     }
     case GET_CATEGORIES: {
       return {
@@ -73,49 +73,55 @@ const rootReducer = (state = initialState, action) => {
     case GET_PRODUCTS_CATEGORY: {
       return {
         ...state,
-        products: action.payload
-      }
+        products: action.payload,
+      };
     }
     case GET_PRODUCT_BY_NAME: {
       return {
         ...state,
-        products: action.payload
-      }
+        products: action.payload,
+      };
     }
     case POST_FORM_REGISTER:
       return {
-        ...state, 
+        ...state,
       };
     case POST_FORM_LOGIN:
-      return{
-        ...state
-      }
+      return {
+        ...state,
+      };
     case POST_CREATE:
-      return{
-        ...state
-      }
+      return {
+        ...state,
+      };
     case ERROR_MAIL:
       return {
         ...state,
-        errorMail:true,
-      }
+        errorMail: true,
+      };
     case CLEAN_PRODUCTS: {
       return {
-        ...state, 
-        products: []
-      }
-    } 
+        ...state,
+        products: [],
+      };
+    }
     case FILTER_PRODUCTS: {
       return {
         ...state,
-        products: action.payload
-      }
+        products: action.payload,
+      };
     }
     case CHANGE_PAGES_PRODUCTS: {
       return {
         ...state,
-        products: action.payload
-      }
+        products: action.payload,
+      };
+    }
+    case DARK_MODE: {
+      return {
+        ...state,
+        darkModes: action.payload,
+      };
     }
     default:
       return state;
