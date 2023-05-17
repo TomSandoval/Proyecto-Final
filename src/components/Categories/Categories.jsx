@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import { Link } from "react-router-dom";
+import Footer from "../Footer/Footer";
 
 export default function Categories() {
   const allCategories = useSelector((state) => state.categories);
@@ -28,6 +29,7 @@ export default function Categories() {
           ))}
         </div>
       </main>
+      <Footer />
     </>
   );
 }
