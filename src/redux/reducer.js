@@ -19,7 +19,7 @@ import {
   AUMENTAR_CANTIDAD,
   TOTAL_DE_COMPRA,
   DISMINUIR_CANTIDAD,
-  
+  CHANGE_PAGES_PRODUCTS,
 } from "./actions";
 
 const initialState = {
@@ -117,6 +117,7 @@ const rootReducer = (state = initialState, action) => {
         products: action.payload
       }
     }
+
     case TOTAL_DE_COMPRA: {
       return {
         ...state,
@@ -189,6 +190,13 @@ const rootReducer = (state = initialState, action) => {
       }
     }
     
+    case CHANGE_PAGES_PRODUCTS: {
+      return {
+        ...state,
+        products: action.payload
+      }
+    }
+
     default:
       return state;
   }

@@ -1,100 +1,122 @@
 .container-cardList {
-    width: 1000px;
-    height: 340px;
-    display: flex;
-    gap: 3em;
-    border: 2px solid #eee;
-    border-radius: 3em;
-    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-    padding: 1em;
-    position: relative;
-    transition: transform .3s ;
+  width: 1000px;
+  height: 340px;
+  display: flex;
+  gap: 3em;
+  border: 2px solid #eee;
+  border-radius: 3em;
+  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+  padding: 1em;
+  position: relative;
+  transition: transform 0.3s;
 }
 
 .container-cardList:hover {
-    transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .image-container-card {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-
 .image {
-    max-width: 270px;
-    max-height: 270px;
-    border-radius: 3em;
+  max-width: 270px;
+  max-height: 270px;
+  border-radius: 3em;
 }
 
 .about-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
 }
 
 .title-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
-    text-align: center;
-    margin: 2px;
+  text-align: center;
+  margin: 2px;
 }
 
 .rating-container {
-    position: absolute;
-    right: 2%;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-} 
+  position: absolute;
+  right: 2%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 
 .rating-container p {
-    margin: 0;
+  margin: 0;
 }
 
 .category-text {
-    color: #a9a9a9;
-    font-size: 16px;
+  color: #a9a9a9;
+  font-size: 16px;
 }
 .category-container {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
 }
 
 .description-container {
     margin-bottom: 3em;
+    max-height: 110px;
 }
 
 .description-container p {
-    text-align: center;
+  text-align: center;
 }
 
 .stock {
-    color: #FF9F1C;
+    color: #1caa00;
     margin: 0;
+    font-size: 1.4em;
 }
 
 .bottom-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .button-list {
-    padding: 8px 32px;
+  padding: 8px 32px;
 }
 
 .link {
     text-decoration: none;
     color: #000;
+}
+
+.filters-applied {
+    padding: 4px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    position: relative;
+    background-color: #ddd;
+}
+
+.button-filters-applied {
+    position: absolute;
+    border: none;
+    background-color: #ff0000;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    left: 80%;
+    top: -10px;
 }
