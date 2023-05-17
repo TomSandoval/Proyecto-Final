@@ -70,7 +70,8 @@
 }
 
 .description-container {
-  margin-bottom: 3em;
+    margin-bottom: 3em;
+    max-height: 110px;
 }
 
 .description-container p {
@@ -78,8 +79,9 @@
 }
 
 .stock {
-  color: #ff9f1c;
-  margin: 0;
+    color: #1caa00;
+    margin: 0;
+    font-size: 1.4em;
 }
 
 .bottom-container {
@@ -94,6 +96,27 @@
 }
 
 .link {
-  text-decoration: none;
-  color: #000;
+    text-decoration: none;
+    color: #000;
+}
+
+.filters-applied {
+    padding: 4px;
+    border: 2px solid #888;
+    border-radius: 10px;
+    position: relative;
+    background-color: #ddd;
+}
+
+.button-filters-applied {
+    position: absolute;
+    border: none;
+    background-color: #ff0000;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    left: 80%;
+    top: -10px;
 }

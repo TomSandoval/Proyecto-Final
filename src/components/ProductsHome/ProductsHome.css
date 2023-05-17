@@ -58,6 +58,10 @@
   grid-area: 1 / 5 / 2 / 6;
 }
 
+.container-sections {
+  width: 80%;
+}
+
 @font-face {
     font-family: "Kameron";
     src: url('/public/fonts/Kameron-Regular.ttf');
