@@ -3,6 +3,7 @@ import axios from "axios";
 export const POST_FORM_LOGIN = "POST_FORM_LOGIN";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME = "GET_NAME";
+export const DARK_MODE = "DARK_MODE";
 export const POST_FORM_REGISTER = "POST_FORM_REGISTER";
 export const AXIOS_PRODUCTS_BY_CATEGORY_REQUEST =
   "AXIOS_PRODUCTS_BY_CATEGORY_REQUEST";
@@ -210,47 +211,53 @@ export const changePagesCategory = (name, value) => async (dispatch) => {
 export const changePagesName = (name, value) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product/?name=${name}&page=${value-1}`
+      `http://localhost:3001/product/?name=${name}&page=${value - 1}`
     );
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
+      payload: response.data,
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const filterByName = (name,min,max) => async (dispatch) => {
+export const filterByName = (name, min, max) => async (dispatch) => {
   try {
     const response = await axios.get(
       `http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}`
-    )
+    );
     const products = {
       count: "Filtrados",
       rows: response.data,
     };
     dispatch({
       type: FILTER_PRODUCTS,
-      payload: products
-    })
+      payload: products,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const sortAlphabeticProducts = (name,value) => async (dispatch) => {
+export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/product/order/name/nameproduct?name=${name}&orders=${value}`)
+    const response = await axios.get(
+      `http://localhost:3001/product/order/name/nameproduct?name=${name}&orders=${value}`
+    );
 
     dispatch({
       type: FILTER_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    
-  }
-}
+      payload: response.data,
+    });
+  } catch (error) {}
+};
+export const darkMode = (payload) => {
+  return {
+    type: "DARK_MODE",
+    payload: payload,
+  };
+};
 
 export const setCarrito = (payload) => {
   return({
