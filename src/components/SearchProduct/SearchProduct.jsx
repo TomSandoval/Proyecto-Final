@@ -50,14 +50,16 @@ export default function SearchProduct() {
     });
   };
 
-  const handleSubmit = () => {
-    let min = priceFilters.min;
-    let max = priceFilters.max;
-    max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
-    min === "" ? (min = 0) : (min = priceFilters.min);
-    dispatch(filterByName(name, min, max));
-    setFilters("Precio");
-  };
+
+      const handleSubmit = () => {
+        let min = priceFilters.min;
+        let max = priceFilters.max;
+        max === 0 || max === "" ? max = 999999999 : max = priceFilters.max
+        min === "" ? min = 0 : min = priceFilters.min
+        dispatch(filterByName(name,min,max))
+        setFilters("Precio")
+      }
+
 
   const cleanFilter = () => {
     setFilters("");
