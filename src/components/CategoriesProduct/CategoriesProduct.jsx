@@ -16,6 +16,7 @@ export default function CategoriesProduct() {
   const products = useSelector((state) => state.products);
   const { name } = useParams();
   const dispatch = useDispatch();
+  const darkModes = useSelector((state) => state.darkModes);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
@@ -30,8 +31,8 @@ export default function CategoriesProduct() {
     dispatch(changePagesCategory(name, value));
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
-    })
+      behavior: "smooth",
+    });
   };
 
   useEffect(() => {
@@ -56,8 +57,8 @@ export default function CategoriesProduct() {
 
   const cleanFilter = () => {
     setFilters("");
-    dispatch(getProductByCategory(name))
-  }
+    dispatch(getProductByCategory(name));
+  };
 
   if (!products.rows) {
     return <></>;
@@ -67,9 +68,11 @@ export default function CategoriesProduct() {
     <div>
       <SearchBar view={true} />
       <main className="main-category">
-        <div className="filters-container">
+        <div
+          className={darkModes ? "filters-container-dark" : "filters-container"}
+        >
           <h4>Filtros</h4>
-          { filters &&
+          {filters && (
             <h5 className="filters-applied">
               {filters}
               <button onClick={cleanFilter} className="button-filters-applied">
@@ -84,7 +87,7 @@ export default function CategoriesProduct() {
                 </svg>
               </button>
             </h5>
-          }
+          )}
           <div className="price-container">
             <label className="label">Precio:</label>
             <div className="input-container">

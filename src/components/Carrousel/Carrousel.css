@@ -1,9 +1,23 @@
 .carousel {
   overflow: hidden;
-  height: 400px;
+  height: 326px;
   width: 100vw;
   max-width: 100%;
   margin-bottom: 4em;
+  position: relative;
+  top: 80px;
+}
+
+.carousel:hover button {
+  opacity: 1;
+}
+
+.carousel:hover {
+  overflow: hidden;
+  height: 326px;
+  margin-bottom: 4em;
+  width: 100vw;
+  max-width: 100%;
   position: relative;
   top: 80px;
 }
@@ -17,4 +31,38 @@
 
 .carousel-image.active {
   opacity: 1;
+}
+
+.buton-carousel {
+  left: 0%;
+  top: 34%;
+  position: absolute;
+  height: 3.5em;
+  width: 1.8em;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0em 3em 3em 0em;
+  background-color: #eee;
+  border: 0.1px solid #000;
+  border-left: none;
+  opacity: 0;
+  z-index: 200;
+}
+.buton-carousel1 {
+  top: 34%;
+  right: 0%;
+  position: absolute;
+  height: 3.5em;
+  width: 1.8em;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3em 0em 0em 3em;
+  background-color: #eee;
+  border: 0.1px solid #000;
+  border-right: none;
+  opacity: 0;
 }
