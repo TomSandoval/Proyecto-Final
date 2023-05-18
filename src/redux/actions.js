@@ -3,6 +3,7 @@ import axios from "axios";
 export const POST_FORM_LOGIN = "POST_FORM_LOGIN";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_NAME = "GET_NAME";
+export const DARK_MODE = "DARK_MODE";
 export const POST_FORM_REGISTER = "POST_FORM_REGISTER";
 export const AXIOS_PRODUCTS_BY_CATEGORY_REQUEST =
   "AXIOS_PRODUCTS_BY_CATEGORY_REQUEST";
@@ -271,6 +272,13 @@ export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {}
+};
+
+export const darkMode = (payload) => {
+  return {
+    type: "DARK_MODE",
+    payload: payload,
+  };
 };
 
 export const setCarrito = (payload) => {
