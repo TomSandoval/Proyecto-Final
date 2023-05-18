@@ -19,6 +19,7 @@ import ActionProvider from "./components/Bot/ActionProvider";
 import MessageParser from "./components/Bot/MessageParser";
 import bubble from "../src/assets/bubblechat.png"
 import SearchProduct from "./components/SearchProduct/SearchProduct";
+import Contact from "./components/Contact/Contact";
 
 
 
@@ -64,6 +65,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/paypal" element={<Paypal />} />
         <Route path="/carroBuy" element={<CarBuy />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </>
   );
