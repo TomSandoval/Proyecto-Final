@@ -5,12 +5,10 @@ import { postLogin } from "../../redux/actions.js";
 import styles from "./form.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
-import Footer from "../Footer/Footer";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
     if (objeto[clave] !== "") {
-      console.log(objeto);
       return false;
     }
   }
@@ -21,11 +19,11 @@ export default function FormUserLogin() {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
-    nickName: "",
+    nickname: "",
     password: "",
   });
   const [errors, setErrors] = useState({
-    nickName: "",
+    nickname: "",
     password: "",
   });
 
@@ -44,19 +42,7 @@ export default function FormUserLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const verificar = verificarObjeto(errors);
-    if (verificar) {
       dispatch(postLogin(input));
-      setInput({
-        nickName: "",
-        password: "",
-      });
-      setErrors({
-        nickName: "*",
-        password: "*",
-      });
-    } else {
-      alert("Completa correctamente los campos");
-    }
   };
 
   return (
@@ -75,8 +61,8 @@ export default function FormUserLogin() {
             <div className={styles.userNameInput}>
               <input
                 type="text"
-                name="nickName"
-                value={input.nickName}
+                name="nickname"
+                value={input.nickname}
                 onChange={handleChange}
                 placeholder="Nombre"
                 className={styles.inputMail}
