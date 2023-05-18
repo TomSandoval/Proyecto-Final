@@ -1,10 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import styles from "./form.module.css";
 import logo from "../../assets/Recurso 1.png";
 import { Link } from "react-router-dom";
 import Validation from "./validacion";
 import Footer from "../Footer/Footer";
+import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
@@ -17,6 +18,7 @@ function verificarObjeto(objeto) {
 
 export default function FormRegister() {
   const dispatch = useDispatch();
+  const darkModes = useSelector((state) => state.darkModes);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -98,9 +100,13 @@ export default function FormRegister() {
   };
 
   return (
-    <div className={styles.allForm}>
-      <img src={logo} alt="" className={styles.tukimark} />
-      <div className={styles.div}>
+    <div className={darkModes ? styles.allFormDark : styles.allForm}>
+      <img
+        src={darkModes ? logoTukiDark : logo}
+        alt=""
+        className={darkModes ? styles.tukimarkdark : styles.tukimark}
+      />
+      <div className={darkModes ? styles.divDark : styles.div}>
         <form
           onSubmit={(e) => handleSubmit(e)}
           className={styles.divForm}
