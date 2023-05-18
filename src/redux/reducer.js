@@ -130,7 +130,7 @@ const rootReducer = (state = initialState, action) => {
       localStorage.setItem('carrito', JSON.stringify([...state.carrito , action.payload]))
       return {
         ...state,
-        carrito: [...state.carrito , action.payload]
+        carrito: JSON.parse(localStorage.getItem('carrito'))
       }
     }
     case DELETE_PRODUCT: {
