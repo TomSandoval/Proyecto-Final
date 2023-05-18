@@ -146,6 +146,8 @@ export default function ProductsHome() {
               price={p.price}
               img={p.img[0]}
               id={p.id}
+              stock={p.stock}
+              userId={p.userId}
             ></Card>
           ))}
 
@@ -191,6 +193,8 @@ export default function ProductsHome() {
               price={p.price}
               img={p.img[0]}
               id={p.id}
+              stock={p.stock}
+              userId={p.userId}
             ></Card>
           ))}
           <div className="button-container next">
@@ -234,6 +238,8 @@ export default function ProductsHome() {
               price={p.price}
               img={p.img[0]}
               id={p.id}
+              stock={p.stock}
+              userId={p.userId}
             ></Card>
           ))}
           <div className="button-container next">

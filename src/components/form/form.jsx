@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./form.module.css";
 import logo from "../../assets/Recurso 1.png";
 import { Link } from "react-router-dom";
 import Validation from "./validacion";
 import Footer from "../Footer/Footer";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
+import { postForm } from "../../redux/actions";
+import UserCreateError from "./UserCreateError/UserCreateError";
+import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
@@ -19,6 +22,28 @@ function verificarObjeto(objeto) {
 export default function FormRegister() {
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
+  const userCreateError = useSelector((state) => state.userCreateError);
+  const userCreateSuccesfull = useSelector(
+    (state) => state.userCreateSuccesfull
+  );
+
+
+  useEffect(()=>{
+    if(userCreateSuccesfull) {
+      setInput({
+        email: "",
+        name: "",
+        lastName: "",
+        nickname: "",
+        birthDate: "",
+        password: "",
+        passwordRepit: "",
+        street: "",
+        number: "",
+        address: "",
+      })
+    }
+  },[])
 
   const [errors, setErrors] = useState({
     email: "",
@@ -70,194 +95,185 @@ export default function FormRegister() {
     const verificar = verificarObjeto(errors);
     if (verificar) {
       dispatch(postForm(input));
-      alert("Usuario Creado Con Exito");
-      setInput({
-        email: "",
-        name: "",
-        lastName: "",
-        nickname: "",
-        birthDate: "",
-        password: "",
-        passwordRepit: "",
-        street: "",
-        number: "",
-        address: "",
-      });
-      setErrors({
-        email: "*",
-        name: "*",
-        lastName: "*",
-        nickname: "*",
-        birthDate: "*",
-        password: "*",
-        passwordRepit: "*",
-        street: "*",
-        number: "*",
-      });
-    } else {
-      alert("Completa correctamente los campos");
     }
   };
 
   return (
+
     <div className={darkModes ? styles.allFormDark : styles.allForm}>
       <img
         src={darkModes ? logoTukiDark : logo}
         alt=""
         className={darkModes ? styles.tukimarkdark : styles.tukimark}
       />
-      <div className={darkModes ? styles.divDark : styles.div}>
-        <form
-          onSubmit={(e) => handleSubmit(e)}
-          className={styles.divForm}
-          action="/create"
-          method="POST"
-        >
-          <div className={styles.divH1}>
-            <h1>Registrarse</h1>
-          </div>
+      {userCreateSuccesfull !== null ? (
+        <UserCreateSuccesFull />
+      ) : (
+        <div className={darkModes ? styles.divDark : styles.div}>
+          {userCreateError  ? (
+            <UserCreateError/>
+          ) : (
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className={styles.divForm}
+              action="/create"
+              method="POST"
+            >
+              <div className={styles.divH1}>
+                <h1>Registrarse</h1>
+              </div>
 
-          <div className={styles.allInputs}>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.inputEmail}>
-                <input
-                  type="text"
-                  name="email"
-                  value={input.email}
-                  onChange={handleChange}
-                  placeholder="Correo Electronico"
-                  className={styles.inputLarge}
-                />
-                {<span className={styles.errors}>{errors.email}</span>}
-              </div>
-            </div>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.inputNames}>
-                <div>
-                  <input
-                    type="text"
-                    value={input.name}
-                    onChange={handleChange}
-                    name="name"
-                    placeholder="Nombre"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.name}</span>}
+              <div className={styles.allInputs}>
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.inputEmail}>
+                    <input
+                      type="text"
+                      name="email"
+                      value={input.email}
+                      onChange={handleChange}
+                      placeholder="Correo Electronico"
+                      className={styles.inputLarge}
+                    />
+                    {<span className={styles.errors}>{errors.email}</span>}
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="text"
-                    value={input.lastName}
-                    onChange={handleChange}
-                    name="lastName"
-                    placeholder="Apellido"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.lastName}</span>}
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.inputNames}>
+                    <div>
+                      <input
+                        type="text"
+                        value={input.name}
+                        onChange={handleChange}
+                        name="name"
+                        placeholder="Nombre"
+                        className={styles.inputsmall}
+                      />
+                      {<span className={styles.errors}>{errors.name}</span>}
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        value={input.lastName}
+                        onChange={handleChange}
+                        name="lastName"
+                        placeholder="Apellido"
+                        className={styles.inputsmall}
+                      />
+                      {<span className={styles.errors}>{errors.lastName}</span>}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.secondGroup}>
+                    <div className={styles.inputNickname}>
+                      <input
+                        type="text"
+                        value={input.nickname}
+                        onChange={handleChange}
+                        name="nickname"
+                        placeholder="Nombre de Usuario"
+                        className={styles.inputsmall}
+                      />
+                      {<span className={styles.errors}>{errors.nickname}</span>}
+                    </div>
+                    <div>
+                      <input
+                        type="date"
+                        value={input.birthDate}
+                        onChange={handleChange}
+                        name="birthDate"
+                        className={styles.inputsmall}
+                      />
+                      {
+                        <span className={styles.errors}>
+                          {errors.birthDate}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.inputPassword}>
+                    <input
+                      type="password"
+                      value={input.password}
+                      onChange={handleChange}
+                      name="password"
+                      placeholder="Contraseña"
+                      className={styles.inputLarge}
+                    />
+                    {<span className={styles.errors}>{errors.password}</span>}
+                  </div>
+                </div>
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.inputPassword}>
+                    <input
+                      type="password"
+                      value={input.passwordRepit}
+                      onChange={handleChange}
+                      name="passwordRepit"
+                      placeholder="Validar Contraseña"
+                      className={styles.inputLarge}
+                    />
+                    {
+                      <span className={styles.errors}>
+                        {errors.passwordRepit}
+                      </span>
+                    }
+                  </div>
+                </div>
+                <div className={styles.divAlreadyRegister}>
+                  <div className={styles.addressInputs}>
+                    <div className={styles.streetInput}>
+                      <input
+                        type="text"
+                        value={input.street}
+                        onChange={handleChange}
+                        name="street"
+                        placeholder="Calle"
+                        className={styles.inputsmall}
+                      />
+                      {<span className={styles.errors}>{errors.street}</span>}
+                    </div>
+                    <div className={styles.streetInput}>
+                      <input
+                        type="text"
+                        value={input.number}
+                        onChange={handleChange}
+                        name="number"
+                        placeholder="Numero"
+                        className={styles.inputsmall}
+                      />
+                      {<span className={styles.errors}>{errors.number}</span>}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.secondGroup}>
-                <div className={styles.inputNickname}>
-                  <input
-                    type="text"
-                    value={input.nickname}
-                    onChange={handleChange}
-                    name="nickname"
-                    placeholder="Nombre de Usuario"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.nickname}</span>}
-                </div>
-                <div>
-                  <input
-                    type="date"
-                    value={input.birthDate}
-                    onChange={handleChange}
-                    name="birthDate"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.birthDate}</span>}
-                </div>
-              </div>
-            </div>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.inputPassword}>
-                <input
-                  type="password"
-                  value={input.password}
-                  onChange={handleChange}
-                  name="password"
-                  placeholder="Contraseña"
-                  className={styles.inputLarge}
-                />
-                {<span className={styles.errors}>{errors.password}</span>}
-              </div>
-            </div>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.inputPassword}>
-                <input
-                  type="password"
-                  value={input.passwordRepit}
-                  onChange={handleChange}
-                  name="passwordRepit"
-                  placeholder="Validar Contraseña"
-                  className={styles.inputLarge}
-                />
-                {<span className={styles.errors}>{errors.passwordRepit}</span>}
-              </div>
-            </div>
-            <div className={styles.divAlreadyRegister}>
-              <div className={styles.addressInputs}>
-                <div className={styles.streetInput}>
-                  <input
-                    type="text"
-                    value={input.street}
-                    onChange={handleChange}
-                    name="street"
-                    placeholder="Calle"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.street}</span>}
-                </div>
-                <div className={styles.streetInput}>
-                  <input
-                    type="text"
-                    value={input.number}
-                    onChange={handleChange}
-                    name="number"
-                    placeholder="Numero"
-                    className={styles.inputsmall}
-                  />
-                  {<span className={styles.errors}>{errors.number}</span>}
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div className={styles.divAlreadyRegister}>
-            <h6>Ya tienes una cuenta ?</h6>
-            <button className={styles.buttonAlreadyRegister}>
-              <Link to="/formLogin" className={styles.link}>
-                Iniciar Sesión
-              </Link>
-            </button>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <button type="submit" className={styles.buttonCreate}>
-              Crear Usuario
-            </button>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <button className={styles.buttonHome}>
-              <Link to="/" className={styles.link1}>
-                Continuar como Invitado
-              </Link>
-            </button>
-          </div>
-        </form>
-      </div>
+              <div className={styles.divAlreadyRegister}>
+                <h6>Ya tienes una cuenta ?</h6>
+                <button className={styles.buttonAlreadyRegister}>
+                  <Link to="/formLogin" className={styles.link}>
+                    Iniciar Sesión
+                  </Link>
+                </button>
+              </div>
+              <div className={styles.divAlreadyRegister}>
+                <button type="submit" className={styles.buttonCreate}>
+                  Crear Usuario
+                </button>
+              </div>
+              <div className={styles.divAlreadyRegister}>
+                <button className={styles.buttonHome}>
+                  <Link to="/" className={styles.link1}>
+                    Continuar como Invitado
+                  </Link>
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -21,6 +21,7 @@ import {
   TOTAL_DE_COMPRA,
   DISMINUIR_CANTIDAD,
   CHANGE_PAGES_PRODUCTS,
+  USER_CREATE,
 } from "./actions";
 
 const initialState = {
@@ -30,6 +31,8 @@ const initialState = {
   categories: [],
   productDetail: {},
   error: null,
+  userCreateError:null,
+  userCreateSuccesfull: null,
   errorMail: null,
   darkModes: false,
   errorMail:null,
@@ -99,14 +102,39 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     case POST_CREATE:
+      return{
+        ...state
+      }
+    case "EMAIL_ERROR": {
       return {
         ...state,
-      };
-    case ERROR_MAIL:
+        userCreateError: action.payload
+      }
+    }
+    case "NICKNAME_ERROR": {
       return {
         ...state,
-        errorMail: true,
-      };
+        userCreateError: action.payload
+      }
+    }
+    case "CREATE_USER_ERROR": {
+      return {
+        ...state,
+        userCreateError: action.payload
+      }
+    }
+    case "CLEAN_USER_ERROR": {
+      return {
+        ...state,
+        userCreateError: action.payload
+      }
+    }
+    case USER_CREATE : {
+      return {
+        ...state,
+        userCreateSuccesfull: "Usuario Creado con exito"
+      }
+    }
     case CLEAN_PRODUCTS: {
       return {
         ...state,
@@ -130,7 +158,7 @@ const rootReducer = (state = initialState, action) => {
       localStorage.setItem('carrito', JSON.stringify([...state.carrito , action.payload]))
       return {
         ...state,
-        carrito: [...state.carrito , action.payload]
+        carrito: JSON.parse(localStorage.getItem('carrito'))
       }
     }
     case DELETE_PRODUCT: {
@@ -168,7 +196,6 @@ const rootReducer = (state = initialState, action) => {
       }
     }
     case DISMINUIR_CANTIDAD: {
-      console.log('hola');
       localStorage.setItem('carrito', JSON.stringify(state.carrito.map((producto) => {
         if (producto.id === action.payload) {
           return {

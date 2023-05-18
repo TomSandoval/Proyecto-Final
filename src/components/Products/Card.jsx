@@ -2,8 +2,8 @@ import React from "react";
 import cart from "../../assets/cartShop.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setCarrito, aumentarCantidad } from "../../redux/actions";
+import { useDispatch , useSelector} from "react-redux";
+import {setCarrito , aumentarCantidad, getDetail} from "../../redux/actions";
 
 export default function Card(props) {
   const navigate = useNavigate();
@@ -15,16 +15,25 @@ export default function Card(props) {
   };
 
   const buyProduct = (e, productDetail) => {
+  const carrito=useSelector((state) => state.carrito);
+
+  const handleNavigate = () => {
+    navigate(`Detail/${props.id}`);
+  }
+  
+  const buyProduct = async (e, props) => {
     e.preventDefault();
-    const foundProduct = carrito.find((p) => p.id === productDetail.id);
-    if (foundProduct) {
+    const foundProduct = carrito.find((p) => p.id === props.id);
+    if (foundProduct ) {
       dispatch(aumentarCantidad(foundProduct.id));
     } else {
-      const newProduct = { ...productDetail, cantidad: 1 };
+      const newProduct = { ...props, cantidad: 1 };
       dispatch(setCarrito(newProduct));
     }
     console.log(carrito);
   };
+  }
+    
 
   return (
     <div className={darkModes ? "container-card-Darks" : "container-card"}>

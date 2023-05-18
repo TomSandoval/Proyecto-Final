@@ -20,6 +20,7 @@ export default function Categories() {
       <SearchBar />
       <main className="main">
         <h1>Categorías</h1>
+        <div className="hr"></div>
         <div className="buttons-container">
           {allCategories?.map((c, index) => (
             <Link to={`/categories/${c.name}`} key={index} className="buttons">
