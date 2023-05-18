@@ -51,6 +51,12 @@ export default function SearchProduct() {
   };
 
 
+    useEffect(()=>{
+        dispatch(getProductByName(name))
+    },[])
+
+    
+
       const handleSubmit = () => {
         let min = priceFilters.min;
         let max = priceFilters.max;
