@@ -10,9 +10,6 @@ export default function Card(props) {
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
   const carrito = useSelector((state) => state.carrito);
-  const handleNavigate = () => {
-    navigate(`Detail/${props.id}`);
-  };
 
 
   const buyProduct = async (e, props) => {
@@ -26,7 +23,7 @@ export default function Card(props) {
     }
     console.log(carrito);
   };
-  
+
     
 
   return (

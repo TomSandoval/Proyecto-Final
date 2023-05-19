@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./Categories.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../../redux/actions";
+import { checkExpiration, getCategories } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
@@ -13,6 +13,7 @@ export default function Categories() {
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(checkExpiration())
   }, [dispatch]);
 
   return (

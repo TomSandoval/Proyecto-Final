@@ -22,7 +22,11 @@ import {
   DISMINUIR_CANTIDAD,
   CHANGE_PAGES_PRODUCTS,
   USER_CREATE,
-  DELETE_ALL_CART
+  USER_LOGIN,
+  CLOSE_SESION,
+  CHECK_SESION,
+  DELETE_ALL_CART,
+
 } from "./actions";
 
 const initialState = {
@@ -34,6 +38,8 @@ const initialState = {
   error: null,
   userCreateError:null,
   userCreateSuccesfull: null,
+  userLogin: false,
+  userData: null,
   errorMail: null,
   darkModes: false,
   errorMail:null,
@@ -135,6 +141,27 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userCreateSuccesfull: "Usuario Creado con exito"
+      }
+    }
+    case USER_LOGIN: {
+      return {
+        ...state,
+        userLogin: true,
+        userData: action.payload
+      }
+    }
+    case CHECK_SESION: {
+      return {
+        ...state,
+        userLogin: true,
+        userData: action.payload
+      }
+    }
+    case CLOSE_SESION: {
+      return {
+        ...state,
+        userLogin: false,
+        userData: null
       }
     }
     case CLEAN_PRODUCTS: {

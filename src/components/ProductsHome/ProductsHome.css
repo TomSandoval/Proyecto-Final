@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .container {
   width: 100vw;
   max-width: 100%;
@@ -59,7 +63,12 @@
 }
 
 .container-sections {
-  width: 80%;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 @font-face {
