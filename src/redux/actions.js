@@ -28,6 +28,7 @@ export const DISMINUIR_CANTIDAD = "DISMINUIR_CANTIDAD";
 export const TOTAL_DE_COMPRA = "TOTAL_DE_COMPRA";
 export const CHANGE_PAGES_PRODUCTS = "CHANGE_PAGES_PRODUCTS";
 export const USER_CREATE = "USER_CREATE";
+export const DELETE_ALL_CART = "DELETE_ALL_CART";
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -313,5 +314,12 @@ export const total = (total) => {
     payload: total,
   };
 };
+export const deleteAllCart = () => {
+  return {
+    type: ' DELETE_ALL_CART',
+  };
+};
+
+
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
