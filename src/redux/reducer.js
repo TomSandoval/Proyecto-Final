@@ -23,6 +23,10 @@ import {
   CHANGE_PAGES_PRODUCTS,
   USER_CREATE,
   ENVIO_DETALLES,
+  USER_LOGIN,
+  CLOSE_SESION,
+  CHECK_SESION,
+  DELETE_ALL_CART,
 } from "./actions";
 
 const initialState = {
@@ -34,11 +38,14 @@ const initialState = {
   error: null,
   userCreateError:null,
   userCreateSuccesfull: null,
+  userLogin: false,
+  userData: null,
   errorMail: null,
   darkModes: false,
   errorMail:null,
   carrito:JSON.parse(localStorage.getItem('carrito')) ||[],
   totalDeCompra:'',
+  carritoTotal:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -134,6 +141,27 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userCreateSuccesfull: "Usuario Creado con exito"
+      }
+    }
+    case USER_LOGIN: {
+      return {
+        ...state,
+        userLogin: true,
+        userData: action.payload
+      }
+    }
+    case CHECK_SESION: {
+      return {
+        ...state,
+        userLogin: true,
+        userData: action.payload
+      }
+    }
+    case CLOSE_SESION: {
+      return {
+        ...state,
+        userLogin: false,
+        userData: null
       }
     }
     case CLEAN_PRODUCTS: {
@@ -237,6 +265,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     }
+  case 'DELETE_ALL_CART':
+    return {
+      ...state,
+      carritoTotal: [],
+      totalDeCompra: 0,
+    };
 
     default:
       return state;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/home/home";
 import FormRegister from "./components/form/form";
@@ -17,14 +17,17 @@ import "react-chatbot-kit/build/main.css";
 import config from "./components/Bot/Config";
 import ActionProvider from "./components/Bot/ActionProvider";
 import MessageParser from "./components/Bot/MessageParser";
-import bubble from "../src/assets/bubblechat.png"
+import bubble from "../src/assets/bubblechat.png";
 import SearchProduct from "./components/SearchProduct/SearchProduct";
+import { useDispatch, useSelector } from "react-redux";
 import Contact from "./components/Contact/Contact";
-
-
+import { checkSesion, closeSesion } from "./redux/actions";
 
 function App() {
   const [visible, setVisible] = useState(false);
+  const darkModes = useSelector((state) => state.darkModes);
+
+
   const toggleVisibility = () => {
     setVisible(!visible);
     const bubbleChat = document.querySelector(".bubble_chat");
@@ -37,7 +40,7 @@ function App() {
   return (
     <>
       <img src={bubble} alt="bubblechat" className="bubble_chat" />
-      <span className="chat_with">
+      <span className={darkModes ? "chat_with_dark" : "chat_with"}>
         Chatea <br />
         Conmigo!!
       </span>
@@ -60,7 +63,7 @@ function App() {
         <Route path="/categories/:name" element={<CategoriesProduct />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/Detail/:id" element={<Detail />} />
-        <Route path="/Search/:name" element={<SearchProduct/>}/>
+        <Route path="/Search/:name" element={<SearchProduct />} />
         <Route path="/formCreateProduct" element={<FormCreateProducs />} />
         <Route path="/about" element={<About />} />
         <Route path="/paypal" element={<Paypal />} />

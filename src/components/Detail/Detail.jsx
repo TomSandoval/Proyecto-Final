@@ -3,7 +3,7 @@ import SearchBar from "../Nav/nav";
 import Loading from "../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getDetail, cleanDetail , setCarrito ,aumentarCantidad} from "../../redux/actions";
+import { getDetail, cleanDetail , setCarrito ,aumentarCantidad, checkExpiration} from "../../redux/actions";
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
@@ -17,9 +17,12 @@ export default function Detail() {
   
 
   useEffect(() => {
+    dispatch(checkExpiration())
     dispatch(cleanDetail());
     dispatch(getDetail(id));
   }, [dispatch]);
+
+
   if (!productDetail.name) {
     return <p>Cargando informacion</p>;
   }

@@ -1,4 +1,5 @@
-.footer {
+.footer,
+.footer-dark {
   width: 100vw;
   max-width: 100%;
   height: 80px;
@@ -11,6 +12,11 @@
   align-items: center;
   position: relative;
   z-index: 100;
+}
+.footer-dark {
+  background-color: #232323;
+  color: white;
+  transition: all 1s ease-in-out;
 }
 
 .contact-block,
@@ -38,6 +44,36 @@
   text-align: center;
 }
 
-.footer-logo {
-  width: 200px;
+.footer-logo,
+.footer-logo-dark {
+  width: 230px;
+}
+
+.footer-logo-dark {
+  mix-blend-mode: lighten;
+  transition: all 1s ease-in-out;
+}
+
+.redirect-links-dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.redirect-links-dark div ul {
+  display: flex;
+  list-style-type: none;
+  gap: 12px;
+  color: aliceblue;
+  padding: 0;
+}
+
+.redirect-links-dark div ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.redirect-links-dark div ul li {
+  width: 70px;
+  text-align: center;
 }

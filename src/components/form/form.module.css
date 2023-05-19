@@ -1,4 +1,5 @@
-.allForm {
+.allForm,
+.allFormDark {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,7 +11,16 @@
   color: #fff;
 }
 
-.div {
+.allFormDark {
+  background: linear-gradient(
+    243.18deg,
+    #09080c 0%,
+    rgba(23, 62, 104, 0.87) 100%
+  );
+}
+
+.div,
+.divDark {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,6 +34,12 @@
   border: 3px solid #000000;
   min-width: 500px;
   min-height: 600px;
+}
+
+.divDark {
+  background: #213743;
+  box-shadow: 0px 4px 4px rgba(125, 113, 113, 0.25);
+  border: 1px solid rgb(148, 136, 136);
 }
 
 .divH1 {
@@ -130,6 +146,14 @@
   text-decoration: none;
   color: #efe9e9;
   font-size: 17px;
+}
+
+.tukimarkdark {
+  position: absolute;
+  mix-blend-mode: lighten;
+  transition: all 1s ease-in-out;
+  width: 18%;
+  top: 2%;
 }
 
 @media screen and (max-width: 900px) {
@@ -355,7 +379,6 @@ input {
   justify-content: center;
   align-items: center;
 }
-
 
 .allInputs {
   display: flex;

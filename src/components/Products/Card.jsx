@@ -5,15 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch , useSelector} from "react-redux";
 import {setCarrito , aumentarCantidad, getDetail} from "../../redux/actions";
 
-export default function Card (props){
+export default function Card(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const carrito=useSelector((state) => state.carrito);
+  const darkModes = useSelector((state) => state.darkModes);
+  const carrito = useSelector((state) => state.carrito);
 
-  const handleNavigate = () => {
-    navigate(`Detail/${props.id}`);
-  }
-  
+
   const buyProduct = async (e, props) => {
     e.preventDefault();
     const foundProduct = carrito.find((p) => p.id === props.id);
@@ -23,25 +21,35 @@ export default function Card (props){
       const newProduct = { ...props, cantidad: 1 };
       dispatch(setCarrito(newProduct));
     }
-  }
+    console.log(carrito);
+  };
+
     
 
   return (
-    <div className="container-card" >
-      <img src={props.img} onClick={handleNavigate} className="card-img-top card-image" alt={props.name} />
+    <div className={darkModes ? "container-card-Darks" : "container-card"}>
+      <img
+        src={props.img}
+        onClick={handleNavigate}
+        className="card-img-top card-image"
+        alt={props.name}
+      />
       <div className="container-info">
         <h5 className="card-title">{props.name}</h5>
         <hr></hr>
         <div className="buy-info">
           <p className="card-price">${props.price} </p>
-          <button type="button" className="button-buy" onClick={(e) => buyProduct(e,props)}>
+          <button
+            type="button"
+            className="button-buy"
+            onClick={(e) => buyProduct(e, props)}
+          >
             <img src={cart} alt="buy" />
           </button>
         </div>
       </div>
     </div>
   );
-};
-
+}
 
 //agregar el onClick={

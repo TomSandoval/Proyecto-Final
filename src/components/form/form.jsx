@@ -4,6 +4,8 @@ import styles from "./form.module.css";
 import logo from "../../assets/Recurso 1.png";
 import { Link } from "react-router-dom";
 import Validation from "./validacion";
+import Footer from "../Footer/Footer";
+import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 import { postForm } from "../../redux/actions";
 import UserCreateError from "./UserCreateError/UserCreateError";
 import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
@@ -19,6 +21,7 @@ function verificarObjeto(objeto) {
 
 export default function FormRegister() {
   const dispatch = useDispatch();
+  const darkModes = useSelector((state) => state.darkModes);
   const userCreateError = useSelector((state) => state.userCreateError);
   const userCreateSuccesfull = useSelector(
     (state) => state.userCreateSuccesfull
@@ -96,12 +99,17 @@ export default function FormRegister() {
   };
 
   return (
-    <div className={styles.allForm}>
-      <img src={logo} alt="" className={styles.tukimark} />
+
+    <div className={darkModes ? styles.allFormDark : styles.allForm}>
+      <img
+        src={darkModes ? logoTukiDark : logo}
+        alt=""
+        className={darkModes ? styles.tukimarkdark : styles.tukimark}
+      />
       {userCreateSuccesfull !== null ? (
         <UserCreateSuccesFull />
       ) : (
-        <div className={styles.div}>
+        <div className={darkModes ? styles.divDark : styles.div}>
           {userCreateError  ? (
             <UserCreateError/>
           ) : (

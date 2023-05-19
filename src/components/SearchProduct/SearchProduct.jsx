@@ -7,6 +7,7 @@ import {
   getProductByName,
   filterByName,
   sortAlphabeticProducts,
+  checkExpiration,
 } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import CardList from "../Products/CardList";
@@ -19,6 +20,7 @@ export default function SearchProduct() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(checkExpiration())
     dispatch(getProductByName(name));
   }, []);
 
