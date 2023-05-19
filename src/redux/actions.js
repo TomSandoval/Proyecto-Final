@@ -31,7 +31,7 @@ export const USER_CREATE = "USER_CREATE";
 export const USER_LOGIN = "USER_LOGIN";
 export const CLOSE_SESION = "CLOSE_SESION";
 export const CHECK_SESION = "CHECK_SESION";
-
+export const DELETE_ALL_CART = "DELETE_ALL_CART";
 
 
 export const postForm = (form) => {
@@ -353,5 +353,12 @@ export const total = (total) => {
     payload: total,
   };
 };
+export const deleteAllCart = () => {
+  return {
+    type: ' DELETE_ALL_CART',
+  };
+};
+
+
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };

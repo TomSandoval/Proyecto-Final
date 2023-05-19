@@ -12,12 +12,6 @@ export default function Card(props) {
   const carrito = useSelector((state) => state.carrito);
 
 
-
-
-  const handleNavigate = () => {
-    navigate(`Detail/${props.id}`);
-  }
-  
   const buyProduct = async (e, props) => {
     e.preventDefault();
     const foundProduct = carrito.find((p) => p.id === props.id);
@@ -29,6 +23,7 @@ export default function Card(props) {
     }
     console.log(carrito);
   };
+
     
 
   return (

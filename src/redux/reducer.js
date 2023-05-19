@@ -25,6 +25,7 @@ import {
   USER_LOGIN,
   CLOSE_SESION,
   CHECK_SESION,
+  DELETE_ALL_CART,
 
 } from "./actions";
 
@@ -44,6 +45,7 @@ const initialState = {
   errorMail:null,
   carrito:JSON.parse(localStorage.getItem('carrito')) ||[],
   totalDeCompra:'',
+  carritoTotal:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -258,6 +260,12 @@ const rootReducer = (state = initialState, action) => {
         darkModes: action.payload,
       };
     }
+  case 'DELETE_ALL_CART':
+    return {
+      ...state,
+      carritoTotal: [],
+      totalDeCompra: 0,
+    };
 
     default:
       return state;
