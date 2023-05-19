@@ -24,7 +24,6 @@ export default function CarBuy() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(checkExpiration())
         dispatch(total(carrito.reduce((acc, el) => acc + (parseFloat(el.price) * parseFloat(el.cantidad)), 0)));
     }, [dispatch, totalDeCompra, carrito]);
 

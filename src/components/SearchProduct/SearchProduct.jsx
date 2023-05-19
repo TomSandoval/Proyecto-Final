@@ -20,7 +20,6 @@ export default function SearchProduct() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(checkExpiration())
     dispatch(getProductByName(name));
   }, []);
 
