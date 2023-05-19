@@ -12,21 +12,8 @@ const background_image = [
 
 export default function Carrousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [imagenesPorPagina, setImagenesPorPagina] = useState(1);
 
-  const [activePage, setActivePage] = useState(1);
-
-  const nextImage = (delta) => {
-    const next = activePage + delta;
-    if (
-      next > 0 &&
-      next <= Math.ceil(background_image.length / imagenesPorPagina)
-    ) {
-      setActivePage(next);
-      setCurrentPage(next);
-    }
-
+  const nextImage = () => {
     setCurrentIndex(
       currentIndex === background_image.length - 1 ? 0 : currentIndex + 1
     );
@@ -39,7 +26,14 @@ export default function Carrousel() {
 
   return (
     <div className="carousel">
-      <button className="buton-carousel" onClick={() => nextImage(-1)}>
+      <button
+        className="buton-carousel"
+        onClick={() =>
+          setCurrentIndex(
+            currentIndex === 0 ? background_image.length - 1 : currentIndex - 1
+          )
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -58,7 +52,14 @@ export default function Carrousel() {
           className={`carousel-image ${index === currentIndex ? "active" : ""}`}
         />
       ))}
-      <button className="buton-carousel1" onClick={() => nextImage(2)}>
+      <button
+        className="buton-carousel1"
+        onClick={() =>
+          setCurrentIndex(
+            currentIndex === background_image.length - 1 ? 0 : currentIndex + 1
+          )
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

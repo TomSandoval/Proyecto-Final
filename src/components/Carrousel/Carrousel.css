@@ -27,11 +27,40 @@
   opacity: 0;
   transition: opacity 0.9s ease-in-out;
   width: 100%;
+  /* transform: translateX(100%); */
 }
 
 .carousel-image.active {
+  /* transform: translateX(0); */
   opacity: 1;
 }
+
+@keyframes slideAnimation {
+  0% {
+    transform: translateX(100%); /* Mueve la imagen actual hacia la derecha */
+  }
+  20% {
+    transform: translateX(0); /* Mantiene la imagen actual visible */
+  }
+  33% {
+    transform: translateX(0); /* Mantiene la imagen actual visible */
+  }
+  53% {
+    transform: translateX(
+      -100%
+    ); /* Mueve la imagen actual hacia la izquierda */
+  }
+  100% {
+    transform: translateX(
+      -100%
+    ); /* Mueve la imagen actual fuera del contenedor */
+  }
+}
+
+/* Configura la animación para el slideshow */
+/* .carousel {
+  animation: slideAnimation 5s infinite;
+} */
 
 .buton-carousel {
   left: 0%;
