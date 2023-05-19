@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect , useState } from "react";
-import { deleteProduct, aumentarCantidad, total, disminuirCantidad, checkExpiration } from "../../redux/actions";
+import { deleteProduct, aumentarCantidad, total, disminuirCantidad, checkExpiration, envioDetalle } from "../../redux/actions";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import paypal2 from '../../assets/paypal2.png';
 import SearchBar from "../Nav/nav";
@@ -58,9 +58,24 @@ export default function CarBuy() {
         e.preventDefault();
         dispatch(deleteProduct(id))
     }
+
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+    const detalles={
+        fecha:`${currentDay}-${currentMonth}-${currentYear}`,
+        comprador:'feli.zarratea99@gmail.com',
+        total:totalDeCompra,
+        metodoDePago:'Paypal',
+        productos:carrito,
+    }
+
     const reloadPage = () => {
         window.location.reload();
     };
+
     
 
     return carrito.length > 0 ? (
@@ -80,7 +95,6 @@ export default function CarBuy() {
                                                 <h6 className="mb-0 text-muted">{`${carrito.length} items`}</h6>
                                             </div>
                                             <hr className="my-4" />
-
                                             {carrito?.map((p, index) => (
                                                 <div className="row mb-4 d-flex justify-content-between align-items-center" key={index}>
                                                     <div className="col-md-2 col-lg-2 col-xl-2">
@@ -156,6 +170,8 @@ export default function CarBuy() {
                                                         onApprove={(data, actions) => {
                                                             return actions.order.capture().then((details) => {
                                                                 console.log(details);
+                                                                detalles.detallesDeCompra=details,
+                                                                dispatch(envioDetalle(detalles));
                                                                 window.alert("Pago completado ¡Gracias por tu compra!");
                                                             });
                                                         }}

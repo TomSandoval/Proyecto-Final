@@ -22,11 +22,11 @@ import {
   DISMINUIR_CANTIDAD,
   CHANGE_PAGES_PRODUCTS,
   USER_CREATE,
+  ENVIO_DETALLES,
   USER_LOGIN,
   CLOSE_SESION,
   CHECK_SESION,
   DELETE_ALL_CART,
-
 } from "./actions";
 
 const initialState = {
@@ -258,6 +258,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         darkModes: action.payload,
+      };
+    }
+    case ENVIO_DETALLES: {
+      return {
+        ...state,
       };
     }
   case 'DELETE_ALL_CART':
