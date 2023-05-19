@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect , useState } from "react";
-import { deleteProduct, aumentarCantidad, total, disminuirCantidad } from "../../redux/actions";
+import { deleteProduct, aumentarCantidad, total, disminuirCantidad, checkExpiration } from "../../redux/actions";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import paypal from '../../assets/paypal.png';
 
@@ -20,6 +20,7 @@ export default function CarBuy() {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        dispatch(checkExpiration())
         dispatch(total(carrito.reduce((acc, el) => acc + (parseFloat(el.price) * parseFloat(el.cantidad)), 0)));
     }, [dispatch, totalDeCompra, carrito]);
 

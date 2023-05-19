@@ -6,13 +6,14 @@ import "../home/Home.css";
 import Footer from "../Footer/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { cleanProducts } from "../../redux/actions";
+import { checkExpiration, cleanProducts } from "../../redux/actions";
 
 export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(cleanProducts());
+    dispatch(checkExpiration())
   }, []);
 
   return (

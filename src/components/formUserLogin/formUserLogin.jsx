@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Validation from "./validation";
-import { postLogin } from "../../redux/actions.js";
+import { postLogin } from '../../redux/actions'
 import styles from "./form.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
@@ -9,6 +9,7 @@ import logo from "../../assets/Recurso 1.png";
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
     if (objeto[clave] !== "") {
+      console.log(objeto);
       return false;
     }
   }
@@ -43,6 +44,7 @@ export default function FormUserLogin() {
     e.preventDefault();
     const verificar = verificarObjeto(errors);
       dispatch(postLogin(input));
+ 
   };
 
   return (

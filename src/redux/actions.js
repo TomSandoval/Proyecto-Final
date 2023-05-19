@@ -28,6 +28,11 @@ export const DISMINUIR_CANTIDAD = "DISMINUIR_CANTIDAD";
 export const TOTAL_DE_COMPRA = "TOTAL_DE_COMPRA";
 export const CHANGE_PAGES_PRODUCTS = "CHANGE_PAGES_PRODUCTS";
 export const USER_CREATE = "USER_CREATE";
+export const USER_LOGIN = "USER_LOGIN";
+export const CLOSE_SESION = "CLOSE_SESION";
+export const CHECK_SESION = "CHECK_SESION";
+
+
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -160,13 +165,48 @@ export const nextPageHome = (value, page) => async (dispatch) => {
 export const postLogin = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/login", payload);
-      console.log(json);
+      const response = await axios.post("http://localhost:3001/login", payload);
+      window.localStorage.setItem('token', JSON.stringify(response.data.token))
+      window.localStorage.setItem('tokenExpiration', JSON.stringify(response.data.exp))
+      window.localStorage.setItem('username', response.data.nickname)
+      const user = {
+        username: response.data?.nickname
+      }
+      dispatch({
+        type: USER_LOGIN,
+        payload: user
+      })
     } catch (error) {
       console.log(error);
     }
   };
 };
+
+export const closeSesion = () => {
+  window.localStorage.removeItem('token');
+  window.localStorage.removeItem('tokenExpiration')
+  return {
+    type: CLOSE_SESION
+  }
+}
+export const checkSesion = () => {
+  const username = localStorage.getItem('username');
+  const user = {
+    username: username
+  }
+  return {
+    type: CHECK_SESION,
+    payload: user
+  }
+}
+
+export const checkExpiration = () => {
+  const tokenExpiration = window.localStorage.getItem('tokenExpiration');
+  if(Date.now() >= tokenExpiration) {
+    closeSesion();
+  }
+}
+
 export const postCreate = (payload) => {
   return async function (dispatch) {
     try {
