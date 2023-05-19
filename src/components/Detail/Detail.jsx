@@ -17,7 +17,6 @@ export default function Detail() {
   
 
   useEffect(() => {
-    dispatch(checkExpiration())
     dispatch(cleanDetail());
     dispatch(getDetail(id));
   }, [dispatch]);

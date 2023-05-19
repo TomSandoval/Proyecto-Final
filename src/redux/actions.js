@@ -203,8 +203,9 @@ export const checkSesion = () => {
 export const checkExpiration = () => {
   const tokenExpiration = window.localStorage.getItem('tokenExpiration');
   if(Date.now() >= tokenExpiration) {
-    closeSesion();
+    return closeSesion();
   }
+  return null
 }
 
 export const postCreate = (payload) => {
