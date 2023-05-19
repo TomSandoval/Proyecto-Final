@@ -22,6 +22,7 @@ import {
   DISMINUIR_CANTIDAD,
   CHANGE_PAGES_PRODUCTS,
   USER_CREATE,
+  ENVIO_DETALLES,
 } from "./actions";
 
 const initialState = {
@@ -229,6 +230,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         darkModes: action.payload,
+      };
+    }
+    case ENVIO_DETALLES: {
+      return {
+        ...state,
       };
     }
 

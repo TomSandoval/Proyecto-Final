@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect , useState } from "react";
-import { deleteProduct, aumentarCantidad, total, disminuirCantidad } from "../../redux/actions";
+import { deleteProduct, aumentarCantidad, total, disminuirCantidad, envioDetalle } from "../../redux/actions";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import paypal from '../../assets/paypal.png';
 
@@ -45,6 +45,18 @@ export default function CarBuy() {
         e.preventDefault();
         dispatch(deleteProduct(id))
     }
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+    const detalles={
+        fecha:`${currentDay}-${currentMonth}-${currentYear}`,
+        comprador:'feli.zarratea99@gmail.com',
+        total:totalDeCompra,
+        metodoDePago:'Paypal',
+        productos:carrito,
+    }
     
     return carrito.length > 0 ? (
         <div>
@@ -55,21 +67,14 @@ export default function CarBuy() {
                         <button onClick={(e) => eliminarProducto(e, p.id)}>❌</button>
                     </div>
 
-                    <div>
                         <img src={p.img} alt="" style={{ width: '200px', height: 'auto' }}/>
+                    <div>
                         <button onClick={(e)=>disminuir(e,p)}>-</button>
                         <h3>{`Cantidad: ${p.cantidad}`}</h3>
                         <button onClick={(e)=>aumentar(e,p)}>+</button>
 
                     </div>
 
-{                    /*<Card
-                        key={index}
-                        name={p.name}
-                        price={p.price}
-                        img={p.img}
-                        id={p.id}
-                    ></Card>*/}
                     <h3>Total por Producto: ${parseFloat(p.price) * parseFloat(p.cantidad)}</h3>
 
                 </div>
@@ -111,10 +116,11 @@ export default function CarBuy() {
                     onApprove={function (data, actions) {
                         return actions.order.capture().then(function (details) {
                             // mensaje que muestra la compra aprobada
-                            console.log(details);
                             alert(
                                 `Pago realizado por ${details.payer.name.given_name} de $${totalDeCompra}`
                             )
+                            detalles.detallesDeCompra=details,
+                            dispatch(envioDetalle(detalles));
                         });
                     }}
                 />

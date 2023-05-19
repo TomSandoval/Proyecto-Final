@@ -28,6 +28,7 @@ export const DISMINUIR_CANTIDAD = "DISMINUIR_CANTIDAD";
 export const TOTAL_DE_COMPRA = "TOTAL_DE_COMPRA";
 export const CHANGE_PAGES_PRODUCTS = "CHANGE_PAGES_PRODUCTS";
 export const USER_CREATE = "USER_CREATE";
+export const ENVIO_DETALLES = "ENVIO_DETALLES";
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -313,5 +314,21 @@ export const total = (total) => {
     payload: total,
   };
 };
+
+export const envioDetalle = (detalles) => {
+  console.log(detalles);
+  return async function (dispatch) {
+    try {
+      var json = await axios.post("http://localhost:3001/login", detalles);
+      return {
+        type: ENVIO_DETALLES,
+        payload: detalles,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
