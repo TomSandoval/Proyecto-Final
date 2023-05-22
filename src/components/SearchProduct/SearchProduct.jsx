@@ -158,7 +158,7 @@ export default function SearchProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                category={p?.Categories?.name}
+                category={p?.Categories[0].name}
                 stock={p.stock}
                 price={p.price}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}
