@@ -5,7 +5,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import paypal2 from '../../assets/paypal2.png';
 import Footer from "../Footer/Footer";
 import "./carBuyst.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from 'sonner'
 
     //! NO PROBAR CON SUS DATOS REALES PORQUE PODRIA GENERARLES UN COBRO REAL!!!!!!
@@ -21,8 +21,10 @@ import { Toaster, toast } from 'sonner'
 export default function CarBuy() {
     const carrito = useSelector((state) => state.carrito);
     const totalDeCompra = useSelector((state) => state.totalDeCompra)
+    const userLogin = useSelector((state) => state.userLogin);
     const [showPayPal, setShowPayPal] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     useEffect(() => {
         const token = window.localStorage.getItem('token');
         if (token) {
@@ -146,8 +148,6 @@ export default function CarBuy() {
                                            {/* <div className="text-center my-3" style={{ marginTop: '50px' }}>
                                                 <button className="btn btn-primary btn-lg" ><Link to={'/buy'} style={{ textDecoration: 'none', color: '#efe9e9' }}> Comprar 🚚 </Link></button>
                                             </div>*/}
-
-                                            /*
                                             <div className="mt-3">
                                                 <img src={paypal2} alt="PayPal" className="img-fluid" />
                                             </div>
@@ -155,7 +155,7 @@ export default function CarBuy() {
                                                 <button className="btn btn-primary btn-lg" onClick={() => reloadPage()}>PayPal</button>
                                             </div>
                                             <div className="text-center my-3">
-                                                <button className="btn btn-primary btn-lg" onClick={() => setShowPayPal(true)}>Proceed to Checkout</button>
+                                                <button className="btn btn-primary btn-lg" onClick={() => userLogin ? setShowPayPal(true) : navigate('/formLogin')}>Proceed to Checkout</button>
                                             </div>
 
                                             {showPayPal && (

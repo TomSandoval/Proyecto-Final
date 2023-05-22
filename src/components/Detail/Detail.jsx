@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SearchBar from "../Nav/nav";
 import Loading from "../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +21,7 @@ export default function Detail() {
   const [selectImage, setSelectImage] = useState(0);
   const dispatch = useDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(cleanDetail());
@@ -45,12 +46,14 @@ export default function Detail() {
     }
   }
 
+  const handleNavigate = () => {
+    navigate(-1)
+  }
+
   return (
     <div className="allContainer">
       <SearchBar view={true} />
-      <Link to="/">
-        <button className="btn btn-outline-danger button-back">Volver</button>
-      </Link>
+        <button onClick={handleNavigate} className="btn btn-outline-danger button-back">Volver</button>
       <div className="detail-container">
         <div className="feactures-container">
           <div className="name-container">
