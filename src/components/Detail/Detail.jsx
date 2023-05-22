@@ -7,6 +7,7 @@ import { getDetail, cleanDetail , setCarrito ,aumentarCantidad, checkExpiration}
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
+import { Toaster, toast } from 'sonner'
 
 export default function Detail() {
   const productDetail = useSelector((state) => state.productDetail);
@@ -34,6 +35,9 @@ export default function Detail() {
     } else {
       const newProduct = { ...productDetail, cantidad: 1 };
       dispatch(setCarrito(newProduct));
+    }
+    toast.success(`Se agrego ${productDetail.name} al carrito`),{
+
     }
   }
 
