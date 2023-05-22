@@ -149,11 +149,12 @@
 }
 
 .tukimarkdark {
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   mix-blend-mode: lighten;
   transition: all 1s ease-in-out;
-  width: 18%;
-  top: 2%;
 }
 
 @media screen and (max-width: 900px) {

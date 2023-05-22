@@ -27,9 +27,8 @@ export default function FormRegister() {
     (state) => state.userCreateSuccesfull
   );
 
-
-  useEffect(()=>{
-    if(userCreateSuccesfull) {
+  useEffect(() => {
+    if (userCreateSuccesfull) {
       setInput({
         email: "",
         name: "",
@@ -41,9 +40,9 @@ export default function FormRegister() {
         street: "",
         number: "",
         address: "",
-      })
+      });
     }
-  },[])
+  }, []);
 
   const [errors, setErrors] = useState({
     email: "",
@@ -99,10 +98,10 @@ export default function FormRegister() {
   };
 
   return (
-
     <div className={darkModes ? styles.allFormDark : styles.allForm}>
       <img
         src={darkModes ? logoTukiDark : logo}
+        style={{ width: "320px" }}
         alt=""
         className={darkModes ? styles.tukimarkdark : styles.tukimark}
       />
@@ -110,8 +109,8 @@ export default function FormRegister() {
         <UserCreateSuccesFull />
       ) : (
         <div className={darkModes ? styles.divDark : styles.div}>
-          {userCreateError  ? (
-            <UserCreateError/>
+          {userCreateError ? (
+            <UserCreateError />
           ) : (
             <form
               onSubmit={(e) => handleSubmit(e)}

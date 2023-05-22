@@ -1,10 +1,11 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Validation from "./validation";
-import { postLogin } from '../../redux/actions'
-import styles from "./form.module.css";
+import { postLogin } from "../../redux/actions";
+import styles from "./formLogin.module.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
+import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
@@ -18,6 +19,7 @@ function verificarObjeto(objeto) {
 
 export default function FormUserLogin() {
   const dispatch = useDispatch();
+  const darkModes = useSelector((state) => state.darkModes);
 
   const [input, setInput] = useState({
     nickname: "",
@@ -43,16 +45,21 @@ export default function FormUserLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const verificar = verificarObjeto(errors);
-      dispatch(postLogin(input));
- 
+    dispatch(postLogin(input));
   };
 
   return (
-    <div className={styles.container}>
+    <div className={darkModes ? styles.containerDark : styles.container}>
       <Link to={"/"}>
-        <img src={logo} alt="logo" className={styles.logo} />
+        <img
+          src={darkModes ? logoTukiDark : logo}
+          alt="logo"
+          style={{ width: "340px" }}
+          className={darkModes ? styles.logoDark : styles.logo}
+        />
       </Link>
-      <div className={styles.div}>
+      <div className={darkModes ? styles.divDark : styles.div}>
+        <h1 className={styles.register}>Ingreso</h1>
         <form
           action="/login"
           method="POST"
@@ -85,8 +92,6 @@ export default function FormUserLogin() {
               />
               {<span className={styles.errors}>{errors.password}</span>}
             </div>
-
-            <span className={styles.register}>Ingreso</span>
           </div>
           <div className={styles.divAlreadyRegister}>
             <button className={styles.buttonHome}>Ingresar</button>

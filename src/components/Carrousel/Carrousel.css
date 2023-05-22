@@ -1,6 +1,6 @@
 .carousel {
   overflow: hidden;
-  height: 326px;
+  height: 45.3vh;
   width: 100vw;
   max-width: 100%;
   margin-bottom: 4em;
@@ -14,7 +14,7 @@
 
 .carousel:hover {
   overflow: hidden;
-  height: 326px;
+  height: 45.3vh;
   margin-bottom: 4em;
   width: 100vw;
   max-width: 100%;
@@ -95,3 +95,48 @@
   border-right: none;
   opacity: 0;
 }
+
+/* @media screen and (max-width: 600px) {
+  .carousel {
+    overflow: hidden;
+    height: 15.3vh;
+    width: 100vw;
+    max-width: 100%;
+    margin-bottom: 4em;
+    position: relative;
+    top: 80px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .carousel {
+    overflow: hidden;
+    height: 15.3vh;
+    width: 100vw;
+    max-width: 100%;
+    margin-bottom: 4em;
+    position: relative;
+    top: 80px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .carousel {
+    overflow: hidden;
+    height: 25.3vh;
+    width: 100vw;
+    max-width: 100%;
+    margin-bottom: 4em;
+    position: relative;
+    top: 80px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .carousel {
+    overflow: hidden;
+    height: 36.3vh;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 4em;
+    position: relative;
+    top: 80px;
+  }
+} */

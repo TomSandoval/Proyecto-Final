@@ -17,6 +17,7 @@ import Paginate from "../Paginate/Paginate";
 export default function SearchProduct() {
   const { name } = useParams();
   const products = useSelector((state) => state.products);
+  const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -51,22 +52,18 @@ export default function SearchProduct() {
     });
   };
 
+  useEffect(() => {
+    dispatch(getProductByName(name));
+  }, []);
 
-    useEffect(()=>{
-        dispatch(getProductByName(name))
-    },[])
-
-    
-
-      const handleSubmit = () => {
-        let min = priceFilters.min;
-        let max = priceFilters.max;
-        max === 0 || max === "" ? max = 999999999 : max = priceFilters.max
-        min === "" ? min = 0 : min = priceFilters.min
-        dispatch(filterByName(name,min,max))
-        setFilters("Precio")
-      }
-
+  const handleSubmit = () => {
+    let min = priceFilters.min;
+    let max = priceFilters.max;
+    max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
+    min === "" ? (min = 0) : (min = priceFilters.min);
+    dispatch(filterByName(name, min, max));
+    setFilters("Precio");
+  };
 
   const cleanFilter = () => {
     setFilters("");
@@ -82,7 +79,9 @@ export default function SearchProduct() {
     <>
       <SearchBar view={true} />
       <main className="main-category">
-        <div className="filters-container">
+        <div
+          className={darkModes ? "filters-container-dark" : "filters-container"}
+        >
           <h4>Filtros</h4>
           {filters && (
             <h5 className="filters-applied">
@@ -159,7 +158,7 @@ export default function SearchProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                category={p?.Categories[0]?.name}
+                category={p?.Categories?.name}
                 stock={p.stock}
                 price={p.price}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}

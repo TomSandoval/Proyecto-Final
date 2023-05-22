@@ -8,6 +8,7 @@ import { postCreate } from "../../redux/actions";
 import { FormGroup, Input } from "reactstrap";
 import axios from "axios";
 import logo from "../../assets/Recurso 1.png";
+import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
@@ -23,6 +24,7 @@ export default function FormCreateProducs() {
   const allCategories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const darkModes = useSelector((state) => state.darkModes);
 
   useEffect(() => {
     dispatch(getCategories());
@@ -141,11 +143,16 @@ export default function FormCreateProducs() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={darkModes ? styles.containerdark : styles.container}>
       <Link to={"/"}>
-        <img src={logo} alt="logo" className={styles.logo} />
+        <img
+          src={darkModes ? logoTukiDark : logo}
+          alt="logo"
+          style={{ width: "340px" }}
+          className={darkModes ? styles.logoDark : styles.logo}
+        />
       </Link>
-      <div className={styles.div}>
+      <div className={darkModes ? styles.divDark : styles.div}>
         <span className={styles.register}>Ingresa tu producto</span>
         <form
           action="/create"
@@ -208,10 +215,16 @@ export default function FormCreateProducs() {
             {<span className={styles.errors}>{errors.stock}</span>}
           </div>
 
-          <label className={styles.options} htmlFor="isOnSale">
+          <label className={styles.options} for="myCheckbox" htmlFor="isOnSale">
             ¿Está en oferta?
           </label>
-          <input type="checkbox" name="isOnSale" onChange={handleChange} />
+          <input
+            id="myCheckbox"
+            type="checkbox"
+            name="isOnSale"
+            onChange={handleChange}
+            className={styles.chek}
+          />
 
           <input
             type="text"
@@ -222,7 +235,10 @@ export default function FormCreateProducs() {
             style={{ display: input.isOnSale ? "block" : "none" }}
           />
           {
-            <span className={styles.errors} style={{ display: input.isOnSale ? "block" : "none" }}>
+            <span
+              className={styles.errors}
+              style={{ display: input.isOnSale ? "block" : "none" }}
+            >
               {input.isOnSale === "none"
                 ? setErrors({ ...errors, salePrice: "" })
                 : errors.salePrice}
@@ -237,24 +253,23 @@ export default function FormCreateProducs() {
             id=""
             onChange={handleChange}
           >
-            <option  value="Estado">
-              Seleccionar Estado
-            </option>
-            <option  value="USADO">
-              Usado
-            </option>
-            <option  value="NUEVO">
-              Nuevo
-            </option>
+            <option value="Estado">Seleccionar Estado</option>
+            <option value="USADO">Usado</option>
+            <option value="NUEVO">Nuevo</option>
           </select>
           {<span className={styles.errors}>{errors.status}</span>}
 
           <label className={styles.options} htmlFor="">
             Categorías:{" "}
           </label>
-          <select defaultValue='Categorias' name="categories" id="" onChange={handleChange}>
+          <select
+            defaultValue="Categorias"
+            name="categories"
+            id=""
+            onChange={handleChange}
+          >
             <option value="Categorias">Seleccionar Categorias</option>
-            {allCategories?.map((e,index) => (
+            {allCategories?.map((e, index) => (
               <option key={index} value={e.name}>
                 {e.name}
               </option>
@@ -280,14 +295,12 @@ export default function FormCreateProducs() {
           </FormGroup>
 
           <button className={styles.buttonHome}>Crea tu producto</button>
-        </form>
-        <div className={styles.divAlreadyRegister}>
           <button className={styles.buttonHome}>
             <Link to="/" className={styles.link}>
               Home
             </Link>
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );
