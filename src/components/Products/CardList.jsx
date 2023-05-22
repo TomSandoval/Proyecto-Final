@@ -43,7 +43,7 @@ export default function CardList(props) {
         </Link>
       <div className="about-container">
         <div className="title-container">
-          <h2 className="title">{props.title}</h2>
+          <h2 className="title-card">{props.title}</h2>
         </div>
         <div className="category-container">
           <h5 className="category-text">{props.category}</h5>
