@@ -43,6 +43,9 @@ const MessageParser = ({ children, actions }) => {
     ) {
       actions.categories();
     }
+    if (message.toLowerCase().includes("contacto")) {
+      actions.contact();
+    }
     if (
       message.toLowerCase().includes("modo oscuro") ||
       message.toLowerCase().includes("Modo oscuro") ||

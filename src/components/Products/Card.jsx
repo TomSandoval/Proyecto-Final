@@ -32,7 +32,6 @@ export default function Card(props) {
   };
   
 
-
   return (
     <div className={darkModes ? "container-card-Darks" : "container-card"}>
       

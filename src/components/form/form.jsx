@@ -10,6 +10,8 @@ import { postForm } from "../../redux/actions";
 import UserCreateError from "./UserCreateError/UserCreateError";
 import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
 
+
+
 function verificarObjeto(objeto) {
   for (let clave in objeto) {
     if (objeto[clave] !== "") {
