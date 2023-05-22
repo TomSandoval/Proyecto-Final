@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect , useState } from "react";
-import { deleteProduct, aumentarCantidad, total, disminuirCantidad, checkExpiration, envioDetalle } from "../../redux/actions";
+import { deleteProduct, aumentarCantidad, total, disminuirCantidad, checkExpiration, envioDetalle, deleteAllCart } from "../../redux/actions";
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import paypal2 from '../../assets/paypal2.png';
-import SearchBar from "../Nav/nav";
 import Footer from "../Footer/Footer";
 import "./carBuyst.css";
+import { Link } from "react-router-dom";
+import { Toaster, toast } from 'sonner'
 
     //! NO PROBAR CON SUS DATOS REALES PORQUE PODRIA GENERARLES UN COBRO REAL!!!!!!
 
@@ -22,12 +23,9 @@ export default function CarBuy() {
     const totalDeCompra = useSelector((state) => state.totalDeCompra)
     const [showPayPal, setShowPayPal] = useState(false);
     const dispatch = useDispatch();
-
     useEffect(() => {
-        dispatch(checkExpiration())
-        dispatch(total(carrito.reduce((acc, el) => acc + (parseFloat(el.price) * parseFloat(el.cantidad)), 0)));
+        dispatch(total(carrito.reduce((acc, el) => acc + ((parseFloat(el.price) * parseFloat(el.cantidad))), 0)));
     }, [dispatch, totalDeCompra, carrito]);
-
     const aumentar = (e, p) => {
         e.preventDefault();
         if (p.cantidad === p.stock) {
@@ -35,28 +33,28 @@ export default function CarBuy() {
         } else {
             dispatch(aumentarCantidad(p.id))
         }
-        window.location.reload();
     }
     const disminuir = (e, p) => {
         e.preventDefault();
         if (p.cantidad > 1) {
             dispatch(disminuirCantidad(p.id))
         } else {
+            toast.error(`${p.name} fue eliminado de tu carrito`)
             dispatch(deleteProduct(p.id))
         }
-        window.location.reload();
     }
     const borrarCompra = (e) => {
         e.preventDefault();
+        localStorage.removeItem('carrito')
         dispatch(deleteAllCart());
-        
     }
 
     const currency = 'USD';
 
-    const eliminarProducto = (e, id) => {
+    const eliminarProducto = (e,p) => {
         e.preventDefault();
-        dispatch(deleteProduct(id))
+        dispatch(deleteProduct(p.id));
+        toast.error(`${p.name} fue eliminado de tu carrito`)
     }
 
 
@@ -111,7 +109,7 @@ export default function CarBuy() {
                                                     </div>
                                                     <div className="col-md-4 col-lg-3 col-xl-2">
                                                         <h6 className="text-muted">Total: ${parseFloat(p.price) * parseFloat(p.cantidad)} </h6>
-                                                        <button className="btn btn-link text-danger text-decoration-none" onClick={(e) => eliminarProducto(e, p.id)}>Remove</button>
+                                                        <button className="btn btn-link text-danger text-decoration-none" onClick={(e) => eliminarProducto(e, p)}>Remove</button>
                                                     </div>
                                                 </div>
                                             ))}
@@ -131,21 +129,26 @@ export default function CarBuy() {
                                             <h1 className="fw-bold mb-0 text-black">Checkout</h1>
                                             <hr className="my-5" />
                                             <div className="d-flex justify-content-between align-items-center mb-3">
-                                                <h6 className="text-black mb-0">Total productos:</h6>
-                                                <h6 className="text-black mb-0">{`${carrito.length} items`}</h6>
+                                                <h4 className="text-black mb-0">Total productos:</h4>
+                                                <h4 className="text-black mb-0">{`${carrito.length} items`}</h4>
                                             </div>
                                             
 
 
                                             <div className="d-flex justify-content-between align-items-center mb-3">
-                                                <h6 className="text-black mb-0">Total</h6>
-                                                <h6 className="text-black mb-0">{`$${totalDeCompra}`}</h6>
+                                                <h3 className="text-black mb-0">Total</h3>
+                                                <h3 className="text-black mb-0">{`$${totalDeCompra}`}</h3>
                                             </div>
+                                           {/* <div className="text-center my-3" style={{ marginTop: '50px' }}>
+                                                <button className="btn btn-primary btn-lg" ><Link to={'/buy'} style={{ textDecoration: 'none', color: '#efe9e9' }}> Comprar 🚚 </Link></button>
+                                            </div>*/}
+
+                                            /*
                                             <div className="mt-3">
                                                 <img src={paypal2} alt="PayPal" className="img-fluid" />
                                             </div>
                                             <div className="text-center my-3">
-                                                <button className="btn btn-primary btn-lg" onClick={reloadPage}>Click to Accept</button>
+                                                <button className="btn btn-primary btn-lg" onClick={() => reloadPage()}>PayPal</button>
                                             </div>
                                             <div className="text-center my-3">
                                                 <button className="btn btn-primary btn-lg" onClick={() => setShowPayPal(true)}>Proceed to Checkout</button>
@@ -177,7 +180,7 @@ export default function CarBuy() {
                                                         }}
                                                     />
                                                 </PayPalScriptProvider>
-                                            )}
+                                                    )}
 
                                         </div>
                                     </div>

@@ -13,7 +13,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(cleanProducts());
-    dispatch(checkExpiration())
+
   }, []);
 
   return (

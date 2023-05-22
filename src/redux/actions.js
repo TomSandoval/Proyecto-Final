@@ -371,7 +371,7 @@ export const envioDetalle = (detalles) => {
 
 export const deleteAllCart = () => {
   return {
-    type: ' DELETE_ALL_CART',
+    type:DELETE_ALL_CART,
   };
 };
 

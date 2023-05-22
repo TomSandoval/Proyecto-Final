@@ -4,6 +4,8 @@ import "./Card.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch , useSelector} from "react-redux";
 import {setCarrito , aumentarCantidad, getDetail} from "../../redux/actions";
+import { Toaster, toast } from 'sonner'
+
 
 export default function Card(props) {
   const navigate = useNavigate();
@@ -11,6 +13,9 @@ export default function Card(props) {
   const darkModes = useSelector((state) => state.darkModes);
   const carrito = useSelector((state) => state.carrito);
 
+  const handleNavigate = () => {
+    navigate(`Detail/${props.id}`);
+  }
 
   const buyProduct = async (e, props) => {
     e.preventDefault();
@@ -21,13 +26,17 @@ export default function Card(props) {
       const newProduct = { ...props, cantidad: 1 };
       dispatch(setCarrito(newProduct));
     }
-    console.log(carrito);
+    toast.success(`Se agrego ${props.name} al carrito`),{
+
+    }
   };
+  
 
     
 
   return (
     <div className={darkModes ? "container-card-Darks" : "container-card"}>
+      
       <img
         src={props.img}
         onClick={handleNavigate}
