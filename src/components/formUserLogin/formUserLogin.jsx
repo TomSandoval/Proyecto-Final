@@ -66,7 +66,7 @@ export default function FormUserLogin() {
     }
   };
   const googleHandle = () => {
-    window.open("https://proyecto-final-back-production-dfbd.up.railway.app/auth/google", "_self");
+    window.open("https://proyecto-final-back-production-dfbd.up.railway.app/auth/google/redirect", "_self");
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = decodeURIComponent(urlParams.get("token"));
