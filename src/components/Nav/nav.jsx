@@ -7,16 +7,19 @@ import logoSearch from "../../assets/search-alt-regular-24.png";
 import logo from "../../assets/Recurso 1.png";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 import logoWhite from "../../assets/cart-white-alt-regular-24.png";
-import { getProductByName, darkMode } from "../../redux/actions";
+import { getProductByName, darkMode, closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./searchBar.module.css";
 
 export default function SearchBar({ view }) {
-  const [name, setName] = useState("");
-  const navigate = useNavigate();
   const carrito = useSelector((state) => state.carrito);
-  const dispatch = useDispatch();
   const darkModes = useSelector((state) => state?.darkModes);
+  const userLogin = useSelector((state) => state.userLogin);
+  const userData = useSelector((state) => state.userData);
+  const [name, setName] = useState("");
+  const [viewMenu, setViewMenu] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function handleInput(e) {
     setName(e.target.value);
@@ -54,6 +57,42 @@ export default function SearchBar({ view }) {
       : body.classList.remove("dark-theme");
   });
 
+  const handleMenu = () => {
+    setViewMenu(!viewMenu);
+  };
+
+  const handleSession = () => {
+    dispatch(closeSesion());
+  };
+
+  const buttonsUnlogin = () => {
+    return (
+      <div>
+        <button className={styles.buttonLogin}>
+          <Link to="/formLogin" className={styles.linkMenu}>
+            Iniciar Sesión
+          </Link>
+          <span className={styles.span1}>|</span>
+          <Link to="/formRegister" className={styles.link}>
+            Registrarse
+          </Link>
+        </button>
+      </div>
+    );
+  };
+
+  const buttonsLogin = () => {
+    return (
+      <div>
+        <div className={styles.buttonLogin}>
+          <Link to="/formCreateProduct" className={styles.link}>
+            Publicar un producto
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={darkModes ? styles.divSearchBar_dark : styles.divSearchBar}>
       <div className={styles.logoContainer}>
@@ -64,39 +103,6 @@ export default function SearchBar({ view }) {
             alt="TukiMarket"
           />
         </Link>
-      </div>
-      <div>
-        <span>Change Themes</span>
-        {darkModes ? (
-          <div className="button-container">
-            <button onClick={handleChangeOff}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                style={{ fill: "rgba(0, 0, 0, 1)" }}
-              >
-                <path d="M16 6H8c-3.296 0-5.982 2.682-6 5.986v.042A6.01 6.01 0 0 0 8 18h8c3.309 0 6-2.691 6-6s-2.691-6-6-6zm0 9c-1.627 0-3-1.373-3-3s1.373-3 3-3 3 1.373 3 3-1.373 3-3 3z"></path>
-              </svg>
-            </button>
-          </div>
-        ) : (
-          <div className="button-container">
-            <button onClick={handleChangeOn}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                style={{ fill: "rgba(0, 0, 0, 1)" }}
-              >
-                <path d="M8 9c-1.628 0-3 1.372-3 3s1.372 3 3 3 3-1.372 3-3-1.372-3-3-3z"></path>
-                <path d="M16 6H8c-3.3 0-5.989 2.689-6 6v.016A6.01 6.01 0 0 0 8 18h8a6.01 6.01 0 0 0 6-5.994V12c-.009-3.309-2.699-6-6-6zm0 10H8a4.006 4.006 0 0 1-4-3.99C4.004 9.799 5.798 8 8 8h8c2.202 0 3.996 1.799 4 4.006A4.007 4.007 0 0 1 16 16zm4-3.984.443-.004.557.004h-1z"></path>
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
       {view ? (
         <div className={styles.divInput}>
@@ -115,22 +121,8 @@ export default function SearchBar({ view }) {
         </div>
       ) : null}
 
-      <div className={styles.divUser}>
-        <div>
-          <button className={styles.buttonLogin}>
-            <Link to="/formLogin" className={styles.link}>
-              Iniciar Sesión
-            </Link>
-            <span className={styles.span1}>|</span>
-            <Link to="/formRegister" className={styles.link}>
-              Registrarse
-            </Link>
-            <span className={styles.span1}>|</span>
-            <Link to="/formCreateProduct" className={styles.link}>
-              Crear
-            </Link>
-          </button>
-        </div>
+      <div className={darkModes ? styles.divUserDark : styles.divUser}>
+        {userLogin ? buttonsLogin() : buttonsUnlogin()}
         <button className={styles.button}>
           <Link to="/carroBuy">
             <img
@@ -141,13 +133,72 @@ export default function SearchBar({ view }) {
           <span>{carrito.length}</span>
         </button>
         <button className={styles.button}>
-          <Link to="/formLogin">
+          <button onClick={handleMenu} className={styles.button}>
             <img
               src={darkModes ? logoUserWhite : logoUser}
               className={styles.img2}
             />
-          </Link>
+          </button>
         </button>
+        <div className={viewMenu ? styles.menuUser : styles.menuUserHidden}>
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="34"
+              height="34"
+              viewBox="0 0 24 24"
+              style={{
+                fill: darkModes ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)",
+              }}
+            >
+              <path d="M12 2A10.13 10.13 0 0 0 2 12a10 10 0 0 0 4 7.92V20h.1a9.7 9.7 0 0 0 11.8 0h.1v-.08A10 10 0 0 0 22 12 10.13 10.13 0 0 0 12 2zM8.07 18.93A3 3 0 0 1 11 16.57h2a3 3 0 0 1 2.93 2.36 7.75 7.75 0 0 1-7.86 0zm9.54-1.29A5 5 0 0 0 13 14.57h-2a5 5 0 0 0-4.61 3.07A8 8 0 0 1 4 12a8.1 8.1 0 0 1 8-8 8.1 8.1 0 0 1 8 8 8 8 0 0 1-2.39 5.64z"></path>
+              <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
+            </svg>
+            <Link to="/profile" className={styles.linkMenu}>
+              Perfil
+            </Link>
+          </div>
+          <div>
+            <span className={styles.themeTitle}>Change Themes</span>
+            {darkModes ? (
+              <div className="button-container">
+                <button onClick={handleChangeOff}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    style={{ fill: "rgba(0, 0, 0, 1)" }}
+                  >
+                    <path d="M16 6H8c-3.296 0-5.982 2.682-6 5.986v.042A6.01 6.01 0 0 0 8 18h8c3.309 0 6-2.691 6-6s-2.691-6-6-6zm0 9c-1.627 0-3-1.373-3-3s1.373-3 3-3 3 1.373 3 3-1.373 3-3 3z"></path>
+                  </svg>
+                </button>
+              </div>
+            ) : (
+              <div className="button-container">
+                <button onClick={handleChangeOn}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    style={{ fill: "rgba(0, 0, 0, 1)" }}
+                  >
+                    <path d="M8 9c-1.628 0-3 1.372-3 3s1.372 3 3 3 3-1.372 3-3-1.372-3-3-3z"></path>
+                    <path d="M16 6H8c-3.3 0-5.989 2.689-6 6v.016A6.01 6.01 0 0 0 8 18h8a6.01 6.01 0 0 0 6-5.994V12c-.009-3.309-2.699-6-6-6zm0 10H8a4.006 4.006 0 0 1-4-3.99C4.004 9.799 5.798 8 8 8h8c2.202 0 3.996 1.799 4 4.006A4.007 4.007 0 0 1 16 16zm4-3.984.443-.004.557.004h-1z"></path>
+                  </svg>
+                </button>
+              </div>
+            )}
+          </div>
+          <div>
+            { userLogin && 
+              <button onClick={handleSession} className={styles.logoutButton}>
+                Cerrar Sesión
+              </button>
+            }
+          </div>
+        </div>
       </div>
     </div>
   );

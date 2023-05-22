@@ -10,6 +10,8 @@
   position: fixed;
   z-index: 100000;
   background-color: #ff9f1c;
+  transition: all 1s ease-in-out;
+  border-bottom: 2px solid #fff;
 }
 
 .divSearchBar_dark {
@@ -33,10 +35,19 @@
   display: flex;
 }
 
-.divUser {
+.divUser, .divUserDark {
+  background-color: #ff9f1c;
+  align-items: center;
+  display: flex;
+  transition: all 1s ease-in-out;
+}
+
+.divUserDark {
+  background-color: #232323;
   align-items: center;
   display: flex;
 }
+
 
 .containerInput {
   flex: 1 1 0%;
@@ -115,17 +126,14 @@
 .button {
   background: none;
   border: none;
-  width: 5vh;
-  height: 5vh;
-  margin: 5px;
-  margin-right: 25px;
+  margin-right: 25px
 }
 
 .link {
   font-size: 20px;
   text-decoration: none;
   color: #efe9e9;
-  height: 5vh;
+  margin-right: 100px;
 }
 
 .link:hover {
@@ -189,4 +197,65 @@
   text-decoration: none;
   color: #efe9e9;
   height: 5vh;
+}
+
+
+.logoutButton {
+  background: none;
+  border: none;
+  margin: 5px;
+  margin-right: 25px;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.themeTitle {
+  transition: all 0s;
+  color: #fff;
+  margin: 12px;
+}
+
+.menuUser, .menuUserHidden {
+  background-color: inherit;
+  width: 300px;
+  height: 400px;
+  position: absolute;
+  bottom: -400px;
+  right: 0;
+  transition: right .4s ease-in;
+  border-bottom-left-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 7px 15px 13px -4px #ffffff1b;
+  border: 2px solid #fff;
+
+}
+
+
+.menuUserHidden {
+  background-color: inherit;
+  width: 300px;
+  height: 400px;
+  position: absolute;
+  bottom: -400px;
+  right: -300px;
+  transition: right .4s ease-in;
+}
+
+.menuUser div, .menuUserHidden div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.linkMenu {
+  text-decoration: none;
+  color: #000;
+  font-size: 1.2em;
+  margin: 10px;
+  color: #fff;
 }
