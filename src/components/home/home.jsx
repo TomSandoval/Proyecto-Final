@@ -12,8 +12,12 @@ export default function Home() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(cleanProducts());
+    const token = window.localStorage.getItem('token');
 
+    if(token){
+      dispatch(checkExpiration())
+    }
+    dispatch(cleanProducts());
   }, []);
 
   return (

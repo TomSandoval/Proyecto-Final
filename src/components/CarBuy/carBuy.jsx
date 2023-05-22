@@ -24,7 +24,11 @@ export default function CarBuy() {
     const [showPayPal, setShowPayPal] = useState(false);
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(total(carrito.reduce((acc, el) => acc + ((parseFloat(el.price) * parseFloat(el.cantidad))), 0)));
+        const token = window.localStorage.getItem('token');
+        if (token) {
+            dispatch(checkExpiration())
+        }
+        dispatch(total(carrito.reduce((acc, el) => acc + (parseFloat(el.price) * parseFloat(el.cantidad)), 0)));
     }, [dispatch, totalDeCompra, carrito]);
     const aumentar = (e, p) => {
         e.preventDefault();

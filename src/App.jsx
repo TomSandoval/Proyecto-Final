@@ -24,6 +24,7 @@ import Contact from "./components/Contact/Contact";
 import { checkSesion, closeSesion } from "./redux/actions";
 import PaymentOptions from "./components/ComponenteDePago/pago";
 import { Toaster} from 'sonner'
+import PruebaGoogle from "./components/prueba/PruebaGoogle";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -79,6 +80,7 @@ function App() {
         <Route path="/carroBuy" element={<CarBuy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/buy" element={<PaymentOptions />} />
+        <Route path="/loginGoogle" element={<PruebaGoogle />} />
       </Routes>
     </>
   );
