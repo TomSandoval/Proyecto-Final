@@ -22,6 +22,7 @@ import SearchProduct from "./components/SearchProduct/SearchProduct";
 import { useDispatch, useSelector } from "react-redux";
 import Contact from "./components/Contact/Contact";
 import { checkSesion, closeSesion } from "./redux/actions";
+import PruebaGoogle from "./components/prueba/PruebaGoogle";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -69,6 +70,7 @@ function App() {
         <Route path="/paypal" element={<Paypal />} />
         <Route path="/carroBuy" element={<CarBuy />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/loginGoogle" element={<PruebaGoogle />} />
       </Routes>
     </>
   );

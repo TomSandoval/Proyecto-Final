@@ -39,7 +39,7 @@ export default function Detail() {
 
   return (
     <div className="allContainer">
-      <SearchBar view={false} />
+      <SearchBar view={true} />
       <Link to="/">
         <button className="btn btn-outline-danger button-back">Volver</button>
       </Link>
