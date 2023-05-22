@@ -35,13 +35,18 @@ export default function Detail() {
     e.preventDefault();
     const foundProduct = carrito.find((p) => p.id === productDetail.id);
     if (foundProduct) {
-      dispatch(aumentarCantidad(foundProduct.id));
+      if (foundProduct.cantidad === productDetail.stock) {
+        alert(`No hay mas stock de ${productDetail.name}`)
+      }else{
+        dispatch(aumentarCantidad(foundProduct.id));
+        toast.success(`Se agrego ${productDetail.name} al carrito`),{
+        }
+      }
     } else {
       const newProduct = { ...productDetail, cantidad: 1 };
       dispatch(setCarrito(newProduct));
-    }
-    toast.success(`Se agrego ${productDetail.name} al carrito`),{
-
+      toast.success(`Se agrego ${productDetail.name} al carrito`),{
+      }
     }
   }
 
