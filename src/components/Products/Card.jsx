@@ -3,7 +3,7 @@ import cart from "../../assets/cartShop.png";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch , useSelector} from "react-redux";
-import {setCarrito , aumentarCantidad, getDetail} from "../../redux/actions";
+import {setCarrito , aumentarCantidad} from "../../redux/actions";
 import { Toaster, toast } from 'sonner'
 
 
@@ -21,13 +21,18 @@ export default function Card(props) {
     e.preventDefault();
     const foundProduct = carrito.find((p) => p.id === props.id);
     if (foundProduct ) {
-      dispatch(aumentarCantidad(foundProduct.id));
+      if (foundProduct.cantidad === props.stock) {
+        alert(`No hay mas stock de ${props.name}`)
+      }else{
+        dispatch(aumentarCantidad(foundProduct.id));
+        toast.success(`Se agrego ${props.name} al carrito`),{
+        }
+      }
     } else {
       const newProduct = { ...props, cantidad: 1 };
       dispatch(setCarrito(newProduct));
-    }
-    toast.success(`Se agrego ${props.name} al carrito`),{
-
+      toast.success(`Se agrego ${props.name} al carrito`),{
+      }
     }
   };
   

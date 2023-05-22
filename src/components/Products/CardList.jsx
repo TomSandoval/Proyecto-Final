@@ -4,12 +4,35 @@ import { Link } from "react-router-dom";
 import Aos from "aos";
 import 'aos/dist/aos.css';
 import { useEffect } from "react";
+import { useDispatch , useSelector} from "react-redux";
+import { Toaster, toast } from 'sonner'
+import {setCarrito , aumentarCantidad} from "../../redux/actions";
 
 export default function CardList(props) {
-
+  const dispatch = useDispatch();
+  const carrito = useSelector((state) => state.carrito);
   useEffect(()=>{
     Aos.init({duration: 1000})
   },[])
+
+  const buyProduct = async (e, props) => {
+    e.preventDefault();
+    const foundProduct = carrito.find((p) => p.id === props.id);
+    if (foundProduct ) {
+      if (foundProduct.cantidad === props.stock) {
+        alert(`No hay mas stock de este producto`)
+      }else{
+        dispatch(aumentarCantidad(foundProduct.id));
+        toast.success(`Se agrego ${props.name} al carrito`),{
+        }
+      }
+    } else {
+      const newProduct = { ...props, cantidad: 1 };
+      dispatch(setCarrito(newProduct));
+      toast.success(`Se agrego ${props.name} al carrito`),{
+    }
+    }
+  };
 
   return (
       <div className="container-cardList" data-aos={props.dataAos}>
@@ -30,7 +53,7 @@ export default function CardList(props) {
         </div>
         <div className="bottom-container ">
           <p className="stock">${props.price}</p>
-          <button type="button" className="button-buy button-list">
+          <button onClick={(e) => buyProduct(e, props)} type="button" className="button-buy button-list">
             <img src={cart} alt="buy" />
           </button>
         </div>
