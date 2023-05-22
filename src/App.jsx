@@ -22,6 +22,8 @@ import SearchProduct from "./components/SearchProduct/SearchProduct";
 import { useDispatch, useSelector } from "react-redux";
 import Contact from "./components/Contact/Contact";
 import { checkSesion, closeSesion } from "./redux/actions";
+import PaymentOptions from "./components/ComponenteDePago/pago";
+import { Toaster} from 'sonner'
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -39,6 +41,13 @@ function App() {
   };
   return (
     <>
+    <Toaster 
+    position="bottom-right" 
+    toastOptions={{
+      style: {
+        fontSize: '16px'}}}
+    richColors
+    />
       <img src={bubble} alt="bubblechat" className="bubble_chat" />
       <span className={darkModes ? "chat_with_dark" : "chat_with"}>
         Chatea <br />
@@ -69,6 +78,7 @@ function App() {
         <Route path="/paypal" element={<Paypal />} />
         <Route path="/carroBuy" element={<CarBuy />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/buy" element={<PaymentOptions />} />
       </Routes>
     </>
   );
