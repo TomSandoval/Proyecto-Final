@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
+import { Toaster, toast } from 'sonner'
 
 export default function Detail() {
   const productDetail = useSelector((state) => state.productDetail);
@@ -39,11 +40,14 @@ export default function Detail() {
       const newProduct = { ...productDetail, cantidad: 1 };
       dispatch(setCarrito(newProduct));
     }
-  };
+    toast.success(`Se agrego ${productDetail.name} al carrito`),{
+
+    }
+  }
 
   return (
     <div className="allContainer">
-      <SearchBar view={false} />
+      <SearchBar view={true} />
       <Link to="/">
         <button className="btn btn-outline-danger button-back">Volver</button>
       </Link>

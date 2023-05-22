@@ -180,7 +180,7 @@ const rootReducer = (state = initialState, action) => {
     case TOTAL_DE_COMPRA: {
       return {
         ...state,
-        totalDeCompra: action.payload
+        totalDeCompra: action.payload.toFixed(2)
       }
     }
     case SET_CARRITO: {
@@ -265,11 +265,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
       };
     }
-  case 'DELETE_ALL_CART':
+  case DELETE_ALL_CART:
     return {
       ...state,
-      carritoTotal: [],
-      totalDeCompra: 0,
+      carrito:[],
     };
 
     default:

@@ -37,7 +37,7 @@ export const DELETE_ALL_CART = "DELETE_ALL_CART";
 export const postForm = (form) => {
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/create", form);
+      var json = await axios.post("http://localhost:3001/user/create", form);
       console.log(json)
       dispatch({
         type: USER_CREATE,
@@ -45,6 +45,7 @@ export const postForm = (form) => {
       });
 
     } catch (error) {
+      console.log(error)
       const errors = {
         nicknameError: "Este nickname ya está en uso. Por favor, elija otro.",
         emailError: "El correo electrónico ya tiene una cuenta.",
@@ -69,6 +70,16 @@ export const postForm = (form) => {
     }
   };
 };
+
+
+export const googleLogin = () => async (dispatch) => {
+  try {
+    const response = axios.get("http://localhost:3001/auth/google")
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const cleanUserError = () => {
   return {
@@ -165,7 +176,7 @@ export const nextPageHome = (value, page) => async (dispatch) => {
 export const postLogin = (payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/login", payload);
+      const response = await axios.post("http://localhost:3001/user/login", payload);
       window.localStorage.setItem('token', JSON.stringify(response.data.token))
       window.localStorage.setItem('tokenExpiration', JSON.stringify(response.data.exp))
       window.localStorage.setItem('username', response.data.nickname)
@@ -185,6 +196,7 @@ export const postLogin = (payload) => {
 export const closeSesion = () => {
   window.localStorage.removeItem('token');
   window.localStorage.removeItem('tokenExpiration')
+  window.localStorage.removeItem('username')
   return {
     type: CLOSE_SESION
   }
@@ -205,7 +217,7 @@ export const checkExpiration = () => {
   if(Date.now() >= tokenExpiration) {
     return closeSesion();
   }
-  return null
+  return checkSesion()
 }
 
 export const postCreate = (payload) => {
@@ -248,13 +260,9 @@ export const filterByCategory = (name, min, max) => async (dispatch) => {
     const response = await axios.get(
       `http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}`
     );
-    const products = {
-      count: "Filtrados",
-      rows: response.data,
-    };
     dispatch({
       type: FILTER_PRODUCTS,
-      payload: products,
+      payload: response.data,
     });
   } catch (error) {}
 };
@@ -290,13 +298,9 @@ export const filterByName = (name, min, max) => async (dispatch) => {
     const response = await axios.get(
       `http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}`
     );
-    const products = {
-      count: "Filtrados",
-      rows: response.data,
-    };
     dispatch({
       type: FILTER_PRODUCTS,
-      payload: products,
+      payload: response.data,
     });
   } catch (error) {
     console.log(error);
@@ -372,7 +376,7 @@ export const envioDetalle = (detalles) => {
 
 export const deleteAllCart = () => {
   return {
-    type: ' DELETE_ALL_CART',
+    type:DELETE_ALL_CART,
   };
 };
 
