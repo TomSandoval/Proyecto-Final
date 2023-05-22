@@ -19,6 +19,7 @@
 
 .div,
 .divDark {
+  position: relative;
   background: #003049;
   display: flex;
   flex-direction: column;
@@ -75,12 +76,13 @@
 }
 
 .register {
+  top: 20px;
+  position: absolute;
   font-family: "Judson";
   font-style: normal;
   font-weight: 400;
   font-size: 42px;
-  line-height: 37px;
-  letter-spacing: 0.02em;
+  letter-spacing: 2px;
   color: #ffffff;
 }
 
@@ -121,6 +123,7 @@
   transition: 0.5s;
   color: #efe9e9;
   margin: 0.5vw;
+  text-decoration: none;
 }
 
 .buttonGuest:hover {
@@ -168,4 +171,22 @@
   font-size: 15px;
   text-align: center;
   color: #da0303;
+}
+
+
+.googleButton {
+  position: absolute;
+  background-color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  bottom: 40px;
+}
+
+.googleButton:hover {
+  background-color: #ddd;
 }
