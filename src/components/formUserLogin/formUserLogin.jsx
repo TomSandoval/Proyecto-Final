@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Validation from "./validation";
 import { checkExpiration, postLogin } from "../../redux/actions";
-import styles from "./form.module.css";
+import styles from "./formLogin.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
@@ -100,7 +100,6 @@ export default function FormUserLogin() {
         />
       </Link>
       <div className={darkModes ? styles.divDark : styles.div}>
-        <h1 className={styles.register}>Ingreso</h1>
         <form
           action="/login"
           method="POST"
@@ -151,7 +150,6 @@ export default function FormUserLogin() {
           </div>
         </form>
         <button className={styles.googleButton} onClick={googleHandle}>
-          {" "}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="34"
