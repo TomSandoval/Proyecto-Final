@@ -5,6 +5,7 @@ import { checkExpiration, postLogin } from "../../redux/actions";
 import styles from "./form.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
+import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 
 const verificarFormulario = (errores) => {
   let respuesta = true;
@@ -20,6 +21,7 @@ export default function FormUserLogin() {
   const userLogin = useSelector((state) => state.userLogin);
 
   const dispatch = useDispatch();
+  const darkModes = useSelector((state) => state.darkModes);
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
@@ -88,11 +90,17 @@ export default function FormUserLogin() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={darkModes ? styles.containerDark : styles.container}>
       <Link to={"/"}>
-        <img src={logo} alt="logo" className={styles.logo} />
+        <img
+          src={darkModes ? logoTukiDark : logo}
+          alt="logo"
+          style={{ width: "340px" }}
+          className={darkModes ? styles.logoDark : styles.logo}
+        />
       </Link>
-      <div className={styles.div}>
+      <div className={darkModes ? styles.divDark : styles.div}>
+        <h1 className={styles.register}>Ingreso</h1>
         <form
           action="/login"
           method="POST"

@@ -5,9 +5,10 @@ const Loading = () => {
     <div className={styles.container}>
       <img
         className={styles.imagen}
-        src="https://venturebeat.com/wp-content/uploads/2014/10/loading_desktop_by_brianmccumber-d41z4h6.gif?w=1200&strip=all"
+        src="https://cdn.dribbble.com/users/2046015/screenshots/5973727/media/a603779536f0491b4be24ba2d03903e1.gif"
         alt="gif"
       ></img>
+      <h1>CARGANDO CONTENIDO...</h1>
     </div>
   );
 };

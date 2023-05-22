@@ -11,6 +11,7 @@ import {
 import CardList from "../Products/CardList";
 import Footer from "../Footer/Footer";
 import Paginate from "../Paginate/Paginate";
+import Loading from "../Loading/Loading";
 
 export default function CategoriesProduct() {
   const products = useSelector((state) => state.products);
@@ -61,7 +62,7 @@ export default function CategoriesProduct() {
   };
 
   if (!products.rows) {
-    return <></>;
+    return <Loading />;
   }
 
   return (
