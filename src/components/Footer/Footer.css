@@ -13,6 +13,11 @@
   position: relative;
   z-index: 100;
 }
+
+.contact{ 
+  text-decoration: none;
+  color: black;
+}
 .footer-dark {
   background-color: #232323;
   color: white;

@@ -31,11 +31,6 @@ export default function Card(props) {
     }
   };
   
-
-  const handleNavigate = () => {
-    navigate(`Detail/${props.id}`);
-  }
-
   return (
     <div className={darkModes ? "container-card-Darks" : "container-card"}>
       

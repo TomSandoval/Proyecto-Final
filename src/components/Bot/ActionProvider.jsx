@@ -73,6 +73,23 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       }));
     };
   };
+  const contact = () => {
+    const botMessage = createChatBotMessage("Vamos al contacto");
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+    setTimeout(() => {
+      window.location.href = "http://localhost:5173/contact";
+    }, 1500);
+    const handleHello = () => {
+      const botMessage = createChatBotMessage("Bienvenido a TukiMarket");
+      setState((prev) => ({
+        ...prev,
+        messages: [...prev.messages, botMessage],
+      }));
+    };
+  };
   const dark = () => {
     const botMessage = createChatBotMessage("Disfruta el Modo oscuro");
     setState((prev) => ({
@@ -98,6 +115,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             errorShipping,
             categories,
             dark,
+            contact
           },
         });
       })}

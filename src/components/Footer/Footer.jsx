@@ -39,7 +39,7 @@ export default function Footer() {
         alt="TukiMarket"
       ></img>
       <div className="contact-block">
-        <h4>Contactos</h4>
+        <h4><Link to="/contact" className="contact">Contáctanos</Link></h4>
         <div>
           <img src={darkModes ? logoDark : image} alt="mail" />
           <span>TukiMarket@gmail.com</span>
