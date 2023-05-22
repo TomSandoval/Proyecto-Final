@@ -146,7 +146,7 @@ export const getProductByName = (name) => async (dispatch) => {
 export const prevPageHome = (value, page) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `https://proyecto-final-back-production-dfbd.up.railway.app/${value}?page=${page}`
+      `https://proyecto-final-back-production-dfbd.up.railway.app/categories/${value}?page=${page}`
     );
     const products = response.data;
     dispatch({
@@ -161,7 +161,7 @@ export const prevPageHome = (value, page) => async (dispatch) => {
 export const nextPageHome = (value, page) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `https://proyecto-final-back-production-dfbd.up.railway.app/${value}?page=${page}`
+      `https://proyecto-final-back-production-dfbd.up.railway.app/categories/${value}?page=${page}`
     );
     const products = response.data;
     dispatch({
