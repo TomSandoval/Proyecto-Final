@@ -22,12 +22,21 @@ export default function Home() {
     
 
         // Guardar los datos en el localStorage
+        if(token){
         localStorage.setItem("token", token);
+        }
+        if(email){
         localStorage.setItem("email", email);
+        }
+        if(username){
         localStorage.setItem("username", username);
+        }
+        if(tokenExpiration){
         localStorage.setItem("tokenExpiration", tokenExpiration);
+        }
+        if(roll){
         localStorage.setItem("roll", roll);
-
+        }
         navigate("/")
 
     },[])
