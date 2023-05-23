@@ -195,8 +195,11 @@ export const postLogin = (payload) => {
 
 export const closeSesion = () => {
   window.localStorage.removeItem('token');
-  window.localStorage.removeItem('tokenExpiration')
-  window.localStorage.removeItem('username')
+  window.localStorage.removeItem('tokenExpiration');
+  window.localStorage.removeItem('username');
+  window.localStorage.removeItem('email');
+  window.localStorage.removeItem('roll');
+  window.localStorage.removeItem('nickname')
   return {
     type: CLOSE_SESION
   }
