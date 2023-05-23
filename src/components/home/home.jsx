@@ -26,16 +26,16 @@ export default function Home() {
         if(token !== "null"){
         localStorage.setItem("token", token);
         }
-        if(email){
+        if(email !== "null"){
         localStorage.setItem("email", email);
         }
-        if(username){
+        if(username !== "null"){
         localStorage.setItem("username", username);
         }
-        if(tokenExpiration){
+        if(tokenExpiration !== "null"){
         localStorage.setItem("tokenExpiration", tokenExpiration);
         }
-        if(roll){
+        if(roll !== "null"){
         localStorage.setItem("roll", roll);
         }
         navigate("/")
