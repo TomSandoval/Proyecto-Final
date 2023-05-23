@@ -20,7 +20,7 @@ export default function Home() {
         const tokenExpiration = decodeURIComponent(urlParams.get("tokenExpiration"));
         const roll = decodeURIComponent(urlParams.get("roll"));
         
-        console.log(token)
+        console.log(typeof token)
 
         // Guardar los datos en el localStorage
         if(token !== "null" || token !== "undefined"){
