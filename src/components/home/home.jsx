@@ -7,10 +7,11 @@ import Footer from "../Footer/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkExpiration, cleanProducts } from "../../redux/actions";
+import {useNavigate} from 'react-router-dom'
 
 export default function Home() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
       useEffect(()=>{
         const urlParams = new URLSearchParams(window.location.search);
         const token = decodeURIComponent(urlParams.get("token"));
