@@ -23,7 +23,7 @@ export default function Home() {
         console.log(typeof token)
 
         // Guardar los datos en el localStorage
-        if(token !== "null" || token !== "undefined"){
+        if(token !== "null"){
         localStorage.setItem("token", token);
         }
         if(email){
