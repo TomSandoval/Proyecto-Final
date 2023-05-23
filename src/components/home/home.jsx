@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkExpiration, cleanProducts } from "../../redux/actions";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
   const dispatch = useDispatch();
