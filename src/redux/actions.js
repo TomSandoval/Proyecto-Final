@@ -37,7 +37,7 @@ export const DELETE_ALL_CART = "DELETE_ALL_CART";
 export const postForm = (form) => {
   return async function (dispatch) {
     try {
-      var json = await axios.post("https://tuki-server.onrender.comuser/create", form);
+      var json = await axios.post("https://tuki-server.onrender.com/user/create", form);
       console.log(json)
       dispatch({
         type: USER_CREATE,
