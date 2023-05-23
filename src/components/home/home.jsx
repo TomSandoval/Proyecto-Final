@@ -39,11 +39,8 @@ export default function Home() {
         }
         navigate("/")
 
-    },[])
-
-  useEffect(() => {
-    const token = window.localStorage.getItem('token');
-    if(token){
+    const tokenUser = window.localStorage.getItem('token');
+    if(tokenUser){
       dispatch(checkExpiration())
     }
     dispatch(cleanProducts());
