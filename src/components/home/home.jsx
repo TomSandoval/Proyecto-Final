@@ -22,7 +22,7 @@ export default function Home() {
     
 
         // Guardar los datos en el localStorage
-        if(token){
+        if(token !== null){
         localStorage.setItem("token", token);
         }
         if(email){
