@@ -25,6 +25,10 @@ import { checkSesion, closeSesion } from "./redux/actions";
 import PaymentOptions from "./components/ComponenteDePago/pago";
 import { Toaster} from 'sonner'
 import PruebaGoogle from "./components/prueba/PruebaGoogle";
+import User from "./components/User/User";
+import Order from "./components/User/Order";
+import Payment from "./components/User/Payment";
+
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -81,6 +85,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/buy" element={<PaymentOptions />} />
         <Route path="/loginGoogle" element={<PruebaGoogle />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/user/orders" element={<Order />} />
+        <Route path="/user/payment" element={<Payment />} />
       </Routes>
     </>
   );
