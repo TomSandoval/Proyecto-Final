@@ -38,7 +38,7 @@ export const GET_PRODUC_BY_USER = "GET_PRODUC_BY_USER";
 export const postForm = (form) => {
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/user/create", form);
+      var json = await axios.post("https://tuki-server.onrender.com/user/create", form);
       console.log(json)
       dispatch({
         type: USER_CREATE,
@@ -75,7 +75,7 @@ export const postForm = (form) => {
 
 export const googleLogin = () => async (dispatch) => {
   try {
-    const response = axios.get("http://localhost:3001/auth/google")
+    const response = axios.get("https://tuki-server.onrender.com/auth/google")
     console.log(response)
   } catch (error) {
     console.log(error)
@@ -91,7 +91,7 @@ export const cleanUserError = () => {
 export const axiosProductsByCategory = (categoryName) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/categories/${categoryName}`
+      `https://tuki-server.onrender.com/categories/${categoryName}`
     );
     const products = response.data;
     dispatch({
@@ -106,7 +106,7 @@ export const axiosProductsByCategory = (categoryName) => async (dispatch) => {
 export const getCategories = () => {
   return async function (dispatch) {
     try {
-      const response = await axios.get("http://localhost:3001/categories");
+      const response = await axios.get("https://tuki-server.onrender.com/categories");
       return dispatch({
         type: GET_CATEGORIES,
         payload: response.data,
@@ -121,7 +121,7 @@ export const getCategories = () => {
 
 export const getDetail = (id) => {
   return async function (dispatch) {
-    const data = (await axios.get(`http://localhost:3001/product/${id}`)).data;
+    const data = (await axios.get(`https://tuki-server.onrender.com/product/${id}`)).data;
     return dispatch({ type: PRODUCT_DETAIL, payload: data });
   };
 };
@@ -134,7 +134,7 @@ export const cleanDetail = () => {
 export const getProductByName = (name) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product?name=${name}&size=6`
+      `https://tuki-server.onrender.com/product?name=${name}&size=6`
     );
 
     dispatch({
@@ -147,7 +147,7 @@ export const getProductByName = (name) => async (dispatch) => {
 export const prevPageHome = (value, page) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/categories/${value}?page=${page}`
+      `https://tuki-server.onrender.com/categories/${value}?page=${page}`
     );
     const products = response.data;
     dispatch({
@@ -162,7 +162,7 @@ export const prevPageHome = (value, page) => async (dispatch) => {
 export const nextPageHome = (value, page) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/categories/${value}?page=${page}`
+      `https://tuki-server.onrender.com/categories/${value}?page=${page}`
     );
     const products = response.data;
     dispatch({
@@ -177,7 +177,7 @@ export const nextPageHome = (value, page) => async (dispatch) => {
 export const postLogin = (payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/user/login", payload);
+      const response = await axios.post("https://tuki-server.onrender.com/user/login", payload);
       window.localStorage.setItem('token', JSON.stringify(response.data.token))
       window.localStorage.setItem('tokenExpiration', JSON.stringify(response.data.exp))
       window.localStorage.setItem('username', response.data.nickname)
@@ -224,7 +224,7 @@ export const checkExpiration = () => {
 export const postCreate = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/product", payload);
+      var json = await axios.post("https://tuki-server.onrender.com/product", payload);
       return dispatch({
         type: POST_CREATE,
         payload: json,
@@ -238,7 +238,7 @@ export const postCreate = (payload) => {
 export const getProductByCategory = (name) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/categories/${name}?page=0&size=6`
+      `https://tuki-server.onrender.com/categories/${name}?page=0&size=6`
     );
     const products = response.data;
     dispatch({
@@ -259,7 +259,7 @@ export const cleanProducts = () => {
 export const filterByCategory = (name, min, max) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}`
+      `https://tuki-server.onrender.com/product/pricerange/category/${name}?max=${max}&min=${min}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -271,7 +271,7 @@ export const filterByCategory = (name, min, max) => async (dispatch) => {
 export const changePagesCategory = (name, value) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/categories/${name}?page=${value - 1}&size=6`
+      `https://tuki-server.onrender.com/categories/${name}?page=${value - 1}&size=6`
     );
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
@@ -283,7 +283,7 @@ export const changePagesCategory = (name, value) => async (dispatch) => {
 export const changePagesName = (name, value) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product/?name=${name}&page=${value - 1}`
+      `https://tuki-server.onrender.com/product/?name=${name}&page=${value - 1}`
     );
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
@@ -297,7 +297,7 @@ export const changePagesName = (name, value) => async (dispatch) => {
 export const filterByName = (name, min, max) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}`
+      `https://tuki-server.onrender.com/product/pricerange/name/${name}?max=${max}&min=${min}`
     );
     dispatch({
       type: FILTER_PRODUCTS,
@@ -337,6 +337,7 @@ export const changePageFilterCategory = (name,min,max,value) => async (dispatch)
 export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   try {
     const response = await axios.get(
+      `https://tuki-server.onrender.com/product/order/name/nameproduct?name=${name}&orders=${value}`
       `http://localhost:3001/product/order/name/${name}?orders=${value}`
     );
 
@@ -432,7 +433,7 @@ export const envioDetalle = (detalles) => {
   console.log(detalles);
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/login", detalles);
+      var json = await axios.post("https://tuki-server.onrender.com/login", detalles);
       return {
         type: ENVIO_DETALLES,
         payload: detalles,
