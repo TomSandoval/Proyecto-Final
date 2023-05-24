@@ -3,6 +3,7 @@ import SearchBar from "../Nav/nav";
 import Loading from "../Loading/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { Review } from "../Review/Review";
 import {
   getDetail,
   cleanDetail,
@@ -13,7 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "../Detail/Detail.css";
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from "sonner";
 
 export default function Detail() {
   const productDetail = useSelector((state) => state.productDetail);
@@ -37,28 +38,31 @@ export default function Detail() {
     const foundProduct = carrito.find((p) => p.id === productDetail.id);
     if (foundProduct) {
       if (foundProduct.cantidad === productDetail.stock) {
-        alert(`No hay mas stock de ${productDetail.name}`)
-      }else{
+        alert(`No hay mas stock de ${productDetail.name}`);
+      } else {
         dispatch(aumentarCantidad(foundProduct.id));
-        toast.success(`Se agrego ${productDetail.name} al carrito`),{
-        }
+        toast.success(`Se agrego ${productDetail.name} al carrito`), {};
       }
     } else {
       const newProduct = { ...productDetail, cantidad: 1 };
       dispatch(setCarrito(newProduct));
-      toast.success(`Se agrego ${productDetail.name} al carrito`),{
-      }
+      toast.success(`Se agrego ${productDetail.name} al carrito`), {};
     }
-  }
+  };
 
   const handleNavigate = () => {
-    navigate(-1)
-  }
+    navigate(-1);
+  };
 
   return (
     <div className="allContainer">
       <SearchBar view={true} />
-        <button onClick={handleNavigate} className="btn btn-outline-danger button-back">Volver</button>
+      <button
+        onClick={handleNavigate}
+        className="btn btn-outline-danger button-back"
+      >
+        Volver
+      </button>
       <div className="detail-container">
         <div className="feactures-container">
           <div className="name-container">
@@ -116,6 +120,10 @@ export default function Detail() {
           <div className="hr-container"></div>
         </div>
       </div>
+      <div className="h2-review">
+        <h2>Reviews</h2>
+      </div>
+      <Review />
       <Footer />
     </div>
   );
