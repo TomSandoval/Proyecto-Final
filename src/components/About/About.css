@@ -19,14 +19,15 @@
 }
 
 .About {
-  width: 70vw;
+  width: 82vw;
+  height: 52vh;
   position: absolute;
   top: 61%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
   padding: 20px;
-  backdrop-filter: blur(55px);
+  backdrop-filter: blur(550px);
   -webkit-backdrop-filter: blur(15px);
 }
 

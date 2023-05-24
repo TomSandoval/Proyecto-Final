@@ -66,7 +66,7 @@ export default function FormUserLogin() {
     }
   };
   const googleHandle = () => {
-    window.open("http://localhost:3001/auth/google", "_self");
+    window.open("https://tuki-server.onrender.com/auth/google", "_self");
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = decodeURIComponent(urlParams.get("token"));

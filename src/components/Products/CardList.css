@@ -37,7 +37,8 @@
   align-items: center;
 }
 
-.title {
+.title-card {
+  color: #000;
   text-align: center;
   margin: 2px;
 }

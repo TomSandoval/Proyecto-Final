@@ -20,16 +20,16 @@ export default function CardList(props) {
     const foundProduct = carrito.find((p) => p.id === props.id);
     if (foundProduct ) {
       if (foundProduct.cantidad === props.stock) {
-        alert(`No hay mas stock de este producto`)
+        alert(`No hay mas stock de este producto ${props.title}}`)
       }else{
         dispatch(aumentarCantidad(foundProduct.id));
-        toast.success(`Se agrego ${props.name} al carrito`),{
+        toast.success(`Se agrego ${props.title} al carrito`),{
         }
       }
     } else {
       const newProduct = { ...props, cantidad: 1 };
       dispatch(setCarrito(newProduct));
-      toast.success(`Se agrego ${props.name} al carrito`),{
+      toast.success(`Se agrego ${props.title} al carrito`),{
     }
     }
   };

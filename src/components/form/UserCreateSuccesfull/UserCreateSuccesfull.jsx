@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import './UserCreateSuccesFull.css';
+import './UserCreateSuccesfull.css';
 import { Link } from 'react-router-dom';
 
 

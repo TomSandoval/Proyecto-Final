@@ -139,3 +139,20 @@
 .navigate-img img:hover {
   filter: opacity(1);
 }
+
+.h2-review {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 300px;
+  line-height: 133.4%;
+  color: rgba(0, 0, 0, 0.87);
+  flex: none;
+  order: 0;
+  margin: 2%;
+  flex-grow: 0;
+}
+
+.h2-review h2 {
+  font-size: 40px;
+}
