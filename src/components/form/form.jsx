@@ -9,7 +9,8 @@ import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 import { postForm } from "../../redux/actions";
 import UserCreateError from "./UserCreateError/UserCreateError";
 import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
-
+import { FormGroup, Input } from "reactstrap";
+import axios from "axios";
 
 
 function verificarObjeto(objeto) {
@@ -45,7 +46,7 @@ export default function FormRegister() {
       });
     }
   }, []);
-
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     name: "",
@@ -56,6 +57,7 @@ export default function FormRegister() {
     passwordRepit: "",
     street: "",
     number: "",
+    picture:'',
   });
   const [input, setInput] = useState({
     email: "",
@@ -97,6 +99,23 @@ export default function FormRegister() {
     if (verificar) {
       dispatch(postForm(input));
     }
+  };
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "tukimarquet");
+    setLoading(true);
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/diyccpins/image/upload",
+      data
+    );
+    const file = await res.data;
+    setInput({
+      ...input,
+      picture:file.secure_url,
+    });
+    setLoading(false);
   };
 
   return (
@@ -249,6 +268,22 @@ export default function FormRegister() {
                     </div>
                   </div>
                 </div>
+                  <div>
+                    <FormGroup>
+                     <Input
+                      type="file"
+                      name="picture"
+                      placeholder="Sube de perfil"
+                      accept="image/jpeg, image/jpg, image/webp, image/bmp, image/tiff, image/svg+xml"
+                      onChange={uploadImage}
+                      />
+                      {loading ? (
+                        <label htmlFor="">Loading Image</label>
+                      ) : (
+                        <img src={input.picture} style={{ width: "200px" }} />
+                      )}
+                    </FormGroup>
+                  </div>
               </div>
 
               <div className={styles.divAlreadyRegister}>

@@ -33,6 +33,7 @@ export const USER_LOGIN = "USER_LOGIN";
 export const CLOSE_SESION = "CLOSE_SESION";
 export const CHECK_SESION = "CHECK_SESION";
 export const DELETE_ALL_CART = "DELETE_ALL_CART";
+export const GET_PRODUC_BY_USER = "GET_PRODUC_BY_USER";
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -377,6 +378,24 @@ export const envioDetalle = (detalles) => {
 export const deleteAllCart = () => {
   return {
     type:DELETE_ALL_CART,
+  };
+};
+
+export const shoppinghistory = (payload) => {
+  return async function (dispatch) {
+    try {
+      var json = await axios.get("http://localhost:3001/user/shoppinghistory",{
+        params:{
+          email:payload,
+        }
+      });
+      return {
+        type: GET_PRODUC_BY_USER,
+        payload: json,
+      };
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
