@@ -27,6 +27,7 @@ import {
   CLOSE_SESION,
   CHECK_SESION,
   DELETE_ALL_CART,
+  GET_PRODUC_BY_USER
 } from "./actions";
 
 const initialState = {
@@ -46,6 +47,7 @@ const initialState = {
   carrito:JSON.parse(localStorage.getItem('carrito')) ||[],
   totalDeCompra:'',
   carritoTotal:[],
+  history:[],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -269,6 +271,12 @@ const rootReducer = (state = initialState, action) => {
     return {
       ...state,
       carrito:[],
+    };
+
+  case GET_PRODUC_BY_USER:
+    return {
+      ...state,
+      history:action.payload,
     };
 
     default:
