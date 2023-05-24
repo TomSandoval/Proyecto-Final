@@ -1,6 +1,7 @@
 .paginate-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 3em;
@@ -19,9 +20,15 @@
     border-radius: 5px;
     border: 1px solid #ddd;
     color: #000;
-    cursor: pointer;
 }
 
 .page-active {
     background-color: #2ca1c4;
+}
+
+.buttons-pages {
+    border : none;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 4px 8px;
 }

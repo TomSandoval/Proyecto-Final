@@ -7,6 +7,9 @@ import {
   getProductByCategory,
   filterByCategory,
   changePagesCategory,
+  changePageFilterCategory,
+  orderByCategory,
+  changePageOrderCategory,
 } from "../../redux/actions";
 import CardList from "../Products/CardList";
 import Footer from "../Footer/Footer";
@@ -27,8 +30,36 @@ export default function CategoriesProduct() {
   const [filters, setFilters] = useState("");
 
   const changePage = (value) => {
-    setCurrentPage(value);
+    if (filters == "Precio") {
+      setCurrentPage(value);
+      let min = priceFilters.min;
+      let max = priceFilters.max;
+      max === 0 || max === ""
+        ? (max = 999999999)
+        : (max = parseInt(priceFilters.max));
+      min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
+       dispatch(
+        changePageFilterCategory(name, min,max,value)
+         ); 
+         window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        })
+      return null;
+    }
+    if(filters.includes('alfabéticamente')){
+      let filter;
+      filters.includes('A-Z') ? filter = 'asc' : filter = 'desc'
+      setCurrentPage(value);
+      dispatch(changePageOrderCategory(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
     if (currentPage == value) return null;
+    setCurrentPage(value);
     dispatch(changePagesCategory(name, value));
     window.scrollTo({
       top: 0,
@@ -54,11 +85,22 @@ export default function CategoriesProduct() {
     min === "" ? (min = 0) : (min = priceFilters.min);
     dispatch(filterByCategory(name, min, max));
     setFilters("Precio");
+    setCurrentPage(1);
   };
 
   const cleanFilter = () => {
     setFilters("");
     dispatch(getProductByCategory(name));
+  };
+
+  const handleOrder = (e) => {
+    let order = e.target.value;
+    let mode;
+    order === 'asc' ? mode = 'A-Z' : mode = 'Z-A'
+    
+    setFilters(`Ordenado alfabéticamente ${mode}`);
+    dispatch(orderByCategory(name,order));
+    setCurrentPage(1);
   };
 
   if (!products.rows) {
@@ -122,8 +164,8 @@ export default function CategoriesProduct() {
           <div className="alphabetic-container">
             <label>Orden Alfabetico:</label>
             <div>
-              <button className="buttons-filter">ASC</button>
-              <button className="buttons-filter">DESC</button>
+              <button onClick={handleOrder} className="buttons-filter" value='asc'>A-Z</button>
+              <button onClick={handleOrder} className="buttons-filter" value='desc'>Z-A</button>
             </div>
           </div>
         </div>
