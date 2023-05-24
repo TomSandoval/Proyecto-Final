@@ -7,7 +7,8 @@ import {
   getProductByName,
   filterByName,
   sortAlphabeticProducts,
-  checkExpiration,
+  changePageFilterNames,
+  changePageOrderName,
 } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import CardList from "../Products/CardList";
@@ -20,8 +21,11 @@ export default function SearchProduct() {
   const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getProductByName(name));
+    useEffect(() => {
+    const filtro = window.sessionStorage.getItem('filtroNombre');
+    if (!filtro) {
+      dispatch(getProductByName(name));
+    }
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,8 +36,36 @@ export default function SearchProduct() {
   const [filters, setFilters] = useState("");
 
   const changePage = (value) => {
-    setCurrentPage(value);
+    if (filters == "Precio") {
+      setCurrentPage(value);
+      let min = priceFilters.min;
+      let max = priceFilters.max;
+      max === 0 || max === ""
+        ? (max = 999999999)
+        : (max = parseInt(priceFilters.max));
+      min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
+       dispatch(
+        changePageFilterNames(name, min,max,value)
+         ); 
+         window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        })
+      return null;
+    }
+    if(filters.includes('alfabéticamente')){
+      let filter;
+      filters.includes('A-Z') ? filter = 'asc' : filter = 'desc'
+      setCurrentPage(value);
+      dispatch(changePageOrderName(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
     if (currentPage == value) return null;
+    setCurrentPage(value);
     dispatch(changePagesName(name, value));
     window.scrollTo({
       top: 0,
@@ -41,9 +73,6 @@ export default function SearchProduct() {
     });
   };
 
-  useEffect(() => {
-    dispatch(getProductByName(name));
-  }, []);
 
   const handleChange = (e) => {
     setPriceFilters({
@@ -52,27 +81,35 @@ export default function SearchProduct() {
     });
   };
 
-  useEffect(() => {
-    dispatch(getProductByName(name));
-  }, []);
+
 
   const handleSubmit = () => {
     let min = priceFilters.min;
     let max = priceFilters.max;
-    max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
-    min === "" ? (min = 0) : (min = priceFilters.min);
+    max === 0 || max === ""
+      ? (max = 999999999)
+      : (max = parseInt(priceFilters.max));
+    min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
     dispatch(filterByName(name, min, max));
     setFilters("Precio");
+    setCurrentPage(1);
+    window.sessionStorage.setItem('filtroNombre',"precio")
   };
 
   const cleanFilter = () => {
     setFilters("");
     dispatch(getProductByName(name));
+    setCurrentPage(1);
+    window.sessionStorage.removeItem('filtroNombre')
   };
 
   const handleSort = (e) => {
     const value = e.target.value;
+    const filter = value === "asc" ? "A-Z" : "Z-A";
+    setFilters(`Ordenado alfabéticamente ${filter}`);
     dispatch(sortAlphabeticProducts(name, value));
+    setCurrentPage(1);
+    window.sessionStorage.setItem('filtroNombre',"alfabetico")
   };
 
   return (
@@ -137,14 +174,14 @@ export default function SearchProduct() {
                 onClick={handleSort}
                 className="buttons-filter"
               >
-                ASC
+                A-Z
               </button>
               <button
                 value="desc"
                 onClick={handleSort}
                 className="buttons-filter"
               >
-                DESC
+                Z-A
               </button>
             </div>
           </div>
@@ -158,7 +195,7 @@ export default function SearchProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                category={p?.Categories[0].name}
+                // category={p?.Categories[0]?.name}
                 stock={p.stock}
                 price={p.price}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}

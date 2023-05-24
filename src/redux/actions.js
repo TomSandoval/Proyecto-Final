@@ -307,10 +307,36 @@ export const filterByName = (name, min, max) => async (dispatch) => {
   }
 };
 
+export const changePageFilterNames = (name,min,max,value) => async (dispatch) => {
+  try {
+
+    const response = await axios.get(`http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}&page=${value-1}`)
+    dispatch({
+      type: CHANGE_PAGES_PRODUCTS,
+      payload: response.data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const changePageFilterCategory = (name,min,max,value) => async (dispatch) => {
+    try {
+        const response = await axios.get(`http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}&page=${value-1}`)
+        dispatch({ 
+            type: CHANGE_PAGES_PRODUCTS,
+            payload: response.data
+        })
+    } catch (error) {
+        console.log(error);      
+    }
+
+ } 
+
 export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   try {
     const response = await axios.get(
-      `http://localhost:3001/product/order/name/nameproduct?name=${name}&orders=${value}`
+      `http://localhost:3001/product/order/name/${name}?orders=${value}`
     );
 
     dispatch({
@@ -319,6 +345,48 @@ export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
     });
   } catch (error) {}
 };
+
+export const changePageOrderName = (name,filter,value) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value-1}`)
+    dispatch({
+      type: CHANGE_PAGES_PRODUCTS,
+      payload: response.data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+
+}
+
+export const orderByCategory = (name, value) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:3001/categories/order/category/${name}?orders=${value}`
+    );
+
+    dispatch({
+      type: FILTER_PRODUCTS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const changePageOrderCategory = (name,filter,value) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value-1}`)
+    dispatch({
+      type: CHANGE_PAGES_PRODUCTS,
+      payload: response.data
+    })
+  } catch (error) {
+    console.log(error)
+  }
+
+}
 
 export const darkMode = (payload) => {
   return {
