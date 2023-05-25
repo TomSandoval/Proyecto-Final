@@ -25,15 +25,12 @@ export default function SearchBar({ view }) {
     setName(e.target.value);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getName(name));
-  }
 
   function handleSubmit() {
     dispatch(getProductByName(name));
     setName("");
     navigate(`/Search/${name}`);
+    window.sessionStorage.removeItem('filtroNombre')
   }
 
   function handleKeyDown(e) {

@@ -1,13 +1,19 @@
 .container-cardList {
-  width: 1000px;
-  height: 340px;
-  display: flex;
-  gap: 3em;
-  border: 2px solid #eee;
-  border-radius: 3em;
-  box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-  padding: 1em;
-  position: relative;
+    width: 1000px;
+    height: 340px;
+    display: flex;
+    gap: 3em;
+    border: 2px solid #eee;
+    border-radius: 3em;
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+    padding: 1em;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    transition: transform 0.4s;
+}
+
+.container-cardList:hover {
+    transform: scale(1.05);
 }
 
 .image-container-card {

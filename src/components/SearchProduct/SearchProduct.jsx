@@ -9,6 +9,9 @@ import {
   sortAlphabeticProducts,
   changePageFilterNames,
   changePageOrderName,
+  sortPriceProducts,
+  changePageSortPriceName,
+
 } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import CardList from "../Products/CardList";
@@ -20,20 +23,40 @@ export default function SearchProduct() {
   const products = useSelector((state) => state.products);
   const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
-
-    useEffect(() => {
-    const filtro = window.sessionStorage.getItem('filtroNombre');
-    if (!filtro) {
-      dispatch(getProductByName(name));
-    }
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
     min: 0,
     max: 0,
   });
   const [filters, setFilters] = useState("");
+  
+  useEffect(() => {
+    window.sessionStorage.removeItem("filtroCategoria");
+    const filtro = window.sessionStorage.getItem("filtroNombre");
+    if (!filtro ) {
+      dispatch(getProductByName(name));
+      return;
+    }
+    if (filtro.includes('A partir de') || filtro.includes('Maximo') || filtro.includes('Entre')) {
+      setFilters(filtro);
+    }
+    if (filtro === "alfabetico") {
+      setFilters("Ordenado alfabéticamente");
+    }
+    if (filtro === "Menor precio") {
+      setFilters("Menor Precio");
+    }
+    if (filtro === "Mayor precio") {
+      setFilters("Mayor Precio");
+    }
+  }, [dispatch, name]);
+
+  useEffect(()=>{
+    const filtro = window.sessionStorage.getItem("filtroNombre");
+    if(!filtro){
+      setFilters("")
+    }
+  },[name])
 
   const changePage = (value) => {
     if (filters == "Precio") {
@@ -44,20 +67,29 @@ export default function SearchProduct() {
         ? (max = 999999999)
         : (max = parseInt(priceFilters.max));
       min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
-       dispatch(
-        changePageFilterNames(name, min,max,value)
-         ); 
-         window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        })
+      dispatch(changePageFilterNames(name, min, max, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       return null;
     }
-    if(filters.includes('alfabéticamente')){
+    if (filters.includes("alfabéticamente")) {
       let filter;
-      filters.includes('A-Z') ? filter = 'asc' : filter = 'desc'
+      filters.includes("A-Z") ? (filter = "asc") : (filter = "desc");
       setCurrentPage(value);
       dispatch(changePageOrderName(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
+    if(filters.includes("precio")){
+      setCurrentPage(value);
+      let filter;
+      filters.includes("Menor") ? (filter = "ascPrice") : (filter = "descPrice");
+      dispatch(changePageSortPriceName(name, filter, value));
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -73,15 +105,12 @@ export default function SearchProduct() {
     });
   };
 
-
   const handleChange = (e) => {
     setPriceFilters({
       ...priceFilters,
       [e.target.name]: e.target.value,
     });
   };
-
-
 
   const handleSubmit = () => {
     let min = priceFilters.min;
@@ -91,16 +120,26 @@ export default function SearchProduct() {
       : (max = parseInt(priceFilters.max));
     min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
     dispatch(filterByName(name, min, max));
-    setFilters("Precio");
+    if(min === 0){
+      setFilters(`Maximo $${max}`);
+      window.sessionStorage.setItem("filtroNombre", `Maximo $${max}`);
+    }
+    if(max === 999999999){
+      setFilters(`A partir de $${min}`);
+      window.sessionStorage.setItem("filtroNombre", `A partir de $${min}`);
+    }
+    if(min !== 0 && max !== 999999999){
+      setFilters(`Entre $${min} y $${max}`);
+      window.sessionStorage.setItem("filtroNombre", `Entre $${min} y $${max}`);
+    }
     setCurrentPage(1);
-    window.sessionStorage.setItem('filtroNombre',"precio")
   };
 
   const cleanFilter = () => {
     setFilters("");
     dispatch(getProductByName(name));
     setCurrentPage(1);
-    window.sessionStorage.removeItem('filtroNombre')
+    window.sessionStorage.removeItem("filtroNombre");
   };
 
   const handleSort = (e) => {
@@ -109,8 +148,17 @@ export default function SearchProduct() {
     setFilters(`Ordenado alfabéticamente ${filter}`);
     dispatch(sortAlphabeticProducts(name, value));
     setCurrentPage(1);
-    window.sessionStorage.setItem('filtroNombre',"alfabetico")
+    window.sessionStorage.setItem("filtroNombre", "alfabetico");
   };
+
+  const handleSortPrice = (e) => {
+    const value = e.target.value;
+    const filter = value === "ascPrice" ? "Menor precio" : "Mayor precio";
+    setFilters(filter);
+    dispatch(sortPriceProducts(name, value));
+    setCurrentPage(1);
+    window.sessionStorage.setItem("filtroNombre", filter);
+  }
 
   return (
     <>
@@ -185,6 +233,13 @@ export default function SearchProduct() {
               </button>
             </div>
           </div>
+          <div className="price-order-container">
+              <label>Orden por precio:</label>
+              <div>
+                <button onClick={handleSortPrice} className="buttons-filter" value="ascPrice">Menor Precio</button>
+                <button onClick={handleSortPrice} className="buttons-filter" value="descPrice">Mayor Precio</button>
+              </div>
+            </div>
         </div>
         <div className="all-container">
           <div className="list-container">

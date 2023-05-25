@@ -33,12 +33,13 @@ export default function CardList(props) {
   };
 
   return (
-    <div className="container-cardList" data-aos={props.dataAos}>
-      <Link className="link" to={`/detail/${props.id}`}>
-        <div className="image-container-card">
-          <img className="image" src={props.img} alt={props.description} />
-        </div>
-      </Link>
+      <div data-aos={props.dataAos}>
+      <div className="container-cardList" >
+        <Link className="link" to={`/detail/${props.id}`}>
+      <div className="image-container-card">
+        <img className="image" src={props.img} alt={props.description} />
+      </div>
+        </Link>
       <div className="about-container">
         <div className="title-container">
           <h2>{props.title}</h2>
@@ -60,6 +61,7 @@ export default function CardList(props) {
           </button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
