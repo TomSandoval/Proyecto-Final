@@ -20,7 +20,7 @@ import { Toaster, toast } from "sonner";
 
 //! NO PROBAR CON SUS DATOS REALES PORQUE PODRIA GENERARLES UN COBRO REAL!!!!!!
 
-//! VER EL MANEJO DE MONEDA, Y COMO AGREGAR EN AMOUNT EL MONTO AUTOMATICAMENTE
+//! VER EL MANEJO DE MONEDA
 //! https://www.currencyconverterapi.com O https://www.exchangerate-api.com => APIS PARA CONVERSION DE MONEDAS
 
 //? EMAIL ID PARA PRUEBA DE PAGO: sb-asjrj25998351@personal.example.com
