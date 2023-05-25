@@ -177,12 +177,14 @@ export const nextPageHome = (value, page) => async (dispatch) => {
 export const postLogin = (payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("https://tuki-server.onrender.com/user/login", payload);
+      const response = await axios.post("http://localhost:3001/user/login", payload);
       window.localStorage.setItem('token', JSON.stringify(response.data.token))
       window.localStorage.setItem('tokenExpiration', JSON.stringify(response.data.exp))
       window.localStorage.setItem('username', response.data.nickname)
+      window.localStorage.setItem('email', response.data.email)
       const user = {
-        username: response.data?.nickname
+        username: response.data?.nickname,
+        mail: response.data?.mail,
       }
       dispatch({
         type: USER_LOGIN,
@@ -204,8 +206,10 @@ export const closeSesion = () => {
 }
 export const checkSesion = () => {
   const username = localStorage.getItem('username');
+  const email = localStorage.getItem('email');
   const user = {
-    username: username
+    username: username,
+    email:email,
   }
   return {
     type: CHECK_SESION,
@@ -433,7 +437,7 @@ export const envioDetalle = (detalles) => {
   console.log(detalles);
   return async function (dispatch) {
     try {
-      var json = await axios.post("https://tuki-server.onrender.com/login", detalles);
+      var json = await axios.post("http://localhost:3001/order", detalles);
       return {
         type: ENVIO_DETALLES,
         payload: detalles,
@@ -453,15 +457,15 @@ export const deleteAllCart = () => {
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/user/shoppinghistory",{
+      var json = await axios.get("http://localhost:3001/users/shoppinghistory",{
         params:{
           email:payload,
         }
       });
-      return {
+      dispatch({ 
         type: GET_PRODUC_BY_USER,
-        payload: json,
-      };
+        payload: json.data,
+    })
     } catch (error) {
       console.log(error);
     }
