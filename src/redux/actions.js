@@ -209,7 +209,7 @@ export const checkSesion = () => {
   const email = localStorage.getItem('email');
   const user = {
     username: username,
-    email: email
+    email:email,
   }
   return {
     type: CHECK_SESION,
@@ -490,7 +490,7 @@ export const envioDetalle = (detalles) => {
   console.log(detalles);
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/login", detalles);
+      var json = await axios.post("http://localhost:3001/order", detalles);
       return {
         type: ENVIO_DETALLES,
         payload: detalles,
@@ -510,15 +510,15 @@ export const deleteAllCart = () => {
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/user/shoppinghistory",{
+      var json = await axios.get("http://localhost:3001/users/shoppinghistory",{
         params:{
           email:payload,
         }
       });
-      return {
+      dispatch({ 
         type: GET_PRODUC_BY_USER,
-        payload: json,
-      };
+        payload: json.data,
+    })
     } catch (error) {
       console.log(error);
     }
