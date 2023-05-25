@@ -119,3 +119,11 @@
 .buttons-filter:hover {
   background-color: #e9941d;
 }
+
+
+.price-order-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

@@ -28,6 +28,8 @@ export default function ProductsHome() {
 
   useEffect(() => {
     // Hacer un dispatch por cada categoría
+    window.sessionStorage.removeItem("filtroCategoria");
+    window.sessionStorage.removeItem('filtroNombre')
     categories.slice(0, 3).forEach((category) => {
       dispatch(axiosProductsByCategory(category.name));
       Aos.init({ duration: 1000 });
