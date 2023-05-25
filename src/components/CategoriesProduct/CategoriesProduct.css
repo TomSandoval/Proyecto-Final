@@ -37,6 +37,7 @@
   flex-direction: column;
   position: fixed;
   gap: 3em;
+  transition: all 1s ease-in-out;
 }
 
 .filters-container-dark {
