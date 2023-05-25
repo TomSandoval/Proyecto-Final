@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer"
 
 
 function Order() {
@@ -69,12 +70,26 @@ function Order() {
         color: "black",
         textDecoration: "none",
         fontSize: "14px",
-        
+
     }
-    
+
+    //! prueba
+    const compras = [
+        { id: 1, producto: 'Producto 1', fecha: '2023-05-20' },
+        { id: 2, producto: 'Producto 2', fecha: '2023-05-22' },
+        { id: 3, producto: 'Producto 3', fecha: '2023-05-23' },
+    ];
+
+
+
     return (
         <div style={background}>
-            <div class='container-fluid' >
+            <SearchBar/>
+            <br />
+            <br />
+            <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
+                <div className="col">
+                <div class='container-fluid' >
                 <Link to="/" style={linkColor2}>
                     Hogar &gt; &nbsp;
                 </Link>
@@ -84,9 +99,7 @@ function Order() {
                 <Link to="/user/orders" style={linkColor2}>
                     Pedidos
                 </Link>
-                </div>
-            <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
-                <div className="col">
+            </div>
                     <div className="card h-100 bg-secondary" style={firstCard}>
                         <div className="card-body">
                             <h5 className="card-title" style={titleButton} >Mi cuenta:</h5>
@@ -180,7 +193,25 @@ function Order() {
                             </nav>
                         </div>
                     </div>
+
+
+                    <div className="card h-100 bg-secondary">
+                        <div className="card-body">
+                            <h2>Compras realizadas por el usuario:</h2>
+                            <ul>
+                                {compras.map(compra => (
+                                    <li key={compra.id}>
+                                        <strong>Producto:</strong> {compra.producto}<br />
+                                        <strong>Fecha:</strong> {compra.fecha}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+
                 </div>
+
 
 
                 {/* <div className="row row-cols-1 row-cols-md-1 g-5">
@@ -204,6 +235,7 @@ function Order() {
 
 
             </div>
+            
         </div>
     );
 }

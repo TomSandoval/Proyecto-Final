@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
+import Footer from "../Footer/Footer";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
@@ -16,12 +17,15 @@ function User() {
         }
     }, []);
 
+    const username = localStorage.getItem('username');
+
     const perfilButtonStyle = {
         width: '100%',
         textAlign: 'left',
         padding: '0',
         margin: '0',
-        borderRadius: '0'
+        borderRadius: '0',
+        position: 'relative'
     };
     const titleButton = {
         textAlign: "left",
@@ -44,20 +48,26 @@ function User() {
         textDecoration: "none",
         fontSize: "14px"
     }
+
+    const activeIndicatorStyle = {
+        position: 'absolute',
+        right: '372px', // Ajusta la posición del rectángulo con respecto al botón
+        left: '-6px', // Ajustar la posición del span con respecto al borde izquierdo del botón
+        top: '0%',
+        height: '100%',
+        width: '5px',
+        backgroundColor: 'orange'
     
-    // const activeIndicatorStyle = {
-    //     position: 'absolute',
-    //     right: '372px', // Ajusta la posición del rectángulo con respecto al botón
-    //     top: "72px",
-    //     height: '8.5%',
-    //     width: '5px',
-    //     backgroundColor: 'orange'
-    // && <span style={activeIndicatorStyle}></span> esto va al lado de {activeButton === 'Perfil'}
-    // };
+    };
 
 
     return (
         <div style={background}>
+            <SearchBar/>
+            <br />
+            <br />
+            <div className="row row-cols-1 row-cols-md-3 g-5 " style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '150px' }}>
+                <div className="col ">
                 <Link to="/" style={linkColor2}>
                     Hogar &gt; &nbsp;
                 </Link>
@@ -67,18 +77,16 @@ function User() {
                 <Link to="/user" style={linkColor2}>
                     Perfil
                 </Link>
-            <div className="row row-cols-1 row-cols-md-3 g-5" style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '150px' }}>
-                <div className="col">
                     <div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h5 className="card-title" style={titleButton} >Mi cuenta:</h5>
+                            <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
                             <button
                                 type="button"
                                 className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
-                                {activeButton === 'Perfil'}
+                                {activeButton === 'Perfil'} <span style={activeIndicatorStyle}></span> 
                                 <Link to="/user" style={linkColor}>
                                     Perfil
                                 </Link>
@@ -142,6 +150,7 @@ function User() {
                         <div className="card-body">
                             <h5 className="card-title">Nombre</h5>
                             <p className="card-text text-center mb-0">Email@gmail.com</p>
+                            <p className="card-text text-center mb-0">Tipo de usuario: vendedor o usuario normal</p>
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>
@@ -198,6 +207,7 @@ function User() {
 
 
             </div>
+          
         </div>
     );
 }
