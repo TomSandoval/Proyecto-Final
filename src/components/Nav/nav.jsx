@@ -39,12 +39,8 @@ export default function SearchBar({ view }) {
     }
   }
 
-  function handleChangeOn() {
-    dispatch(darkMode(true));
-  }
-
-  function handleChangeOff() {
-    dispatch(darkMode(false));
+  function handleChange() {
+    dispatch(darkMode(!darkModes));
   }
 
   useEffect(() => {
@@ -127,7 +123,9 @@ export default function SearchBar({ view }) {
               className={styles.img2}
             />
           </Link>
-          <span>{carrito.length}</span>
+          <span className={darkModes ? styles.count_dark : styles.count}>
+            {carrito.length}
+          </span>
         </button>
         <button className={styles.button}>
           <button onClick={handleMenu} className={styles.button}>
@@ -159,7 +157,7 @@ export default function SearchBar({ view }) {
             <span className={styles.themeTitle}>Change Themes</span>
             {darkModes ? (
               <div className="button-container">
-                <button onClick={handleChangeOff}>
+                <button onClick={handleChange}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -173,7 +171,7 @@ export default function SearchBar({ view }) {
               </div>
             ) : (
               <div className="button-container">
-                <button onClick={handleChangeOn}>
+                <button onClick={handleChange}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -189,11 +187,11 @@ export default function SearchBar({ view }) {
             )}
           </div>
           <div>
-            { userLogin && 
+            {userLogin && (
               <button onClick={handleSession} className={styles.logoutButton}>
                 Cerrar Sesión
               </button>
-            }
+            )}
           </div>
         </div>
       </div>

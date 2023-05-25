@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import CarEmpty from "../CarEmpty/CarEmpty";
 import {
   deleteProduct,
   aumentarCantidad,
@@ -30,6 +31,7 @@ export default function CarBuy() {
   const totalDeCompra = useSelector((state) => state.totalDeCompra);
   const userLogin = useSelector((state) => state.userLogin);
   const [showPayPal, setShowPayPal] = useState(false);
+  const userData = useSelector((state) => state.userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -77,17 +79,32 @@ export default function CarBuy() {
     toast.error(`${p.name} fue eliminado de tu carrito`);
   };
 
+  console.log(userData);
+
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
-  const detalles = {
-    fecha: `${currentDay}-${currentMonth}-${currentYear}`,
-    comprador: "feli.zarratea99@gmail.com",
-    total: totalDeCompra,
-    metodoDePago: "Paypal",
-    productos: carrito,
-  };
+  const detalles = carrito.reduce((result, producto) => {
+    const vendedorId = producto.userId;
+    const vendedorObj = result.find((obj) => obj.userId === vendedorId);
+    if (vendedorObj) {
+      vendedorObj.total += producto.price * producto.cantidad;
+      vendedorObj.productos.push(producto);
+    } else {
+      const newVendedorObj = {
+        userId: vendedorId,
+        fecha: `${currentYear}-${currentMonth}-${currentDay}`,
+        comprador: "feli.zarratea99@gmail.com",
+        total: producto.price * producto.cantidad,
+        metodoDePago: "Paypal",
+        productos: [producto],
+      };
+
+      result.push(newVendedorObj);
+    }
+    return result;
+  }, []);
 
   const reloadPage = () => {
     window.location.reload();
@@ -109,9 +126,9 @@ export default function CarBuy() {
                     <div className="p-5">
                       <div className="d-flex justify-content-between align-items-center mb-5">
                         <h1 className="fw-bold mb-0 text-black">
-                          Shopping Cart
+                          Carro de compras
                         </h1>
-                        <h6 className="mb-0 text-muted">{`${carrito.length} items`}</h6>
+                        <h6 className="mb-0 text-muted">{`${carrito.length} item`}</h6>
                       </div>
                       <hr className="my-4" />
                       {carrito?.map((p, index) => (
@@ -155,9 +172,24 @@ export default function CarBuy() {
                             </h6>
                             <button
                               className="btn btn-link text-danger text-decoration-none"
-                              onClick={(e) => eliminarProducto(e, p)}
+                              onClick={(e) =>
+                                Swal.fire({
+                                  title: "¿Estas Seguro?",
+                                  text: "Vas eliminar este producto del carrito bro!",
+                                  icon: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#3085d6",
+                                  cancelButtonColor: "#d33",
+                                  cancelButtonText: "Cancelar",
+                                  confirmButtonText: "Sí, eliminalo bro!",
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    eliminarProducto(e, p);
+                                  }
+                                })
+                              }
                             >
-                              Remove
+                              Eliminar
                             </button>
                           </div>
                         </div>
@@ -171,9 +203,32 @@ export default function CarBuy() {
                       </div>
                       <button
                         className="btn btn-danger btn-block btn-lg"
-                        onClick={borrarCompra}
+                        onClick={(e) =>
+                          Swal.fire({
+                            title: "¿Estas Seguro?",
+                            text: "Vas eliminar todos los productos del carrito bro!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            cancelButtonText: "Cancelar",
+                            confirmButtonText: "Eliminar todo!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title:
+                                  "Has eliminado todos los productos del carrito.",
+                                showConfirmButton: false,
+                                timer: 2000,
+                              });
+                              borrarCompra(e);
+                            }
+                          })
+                        }
                       >
-                        Delete all
+                        Eliminar Todo
                       </button>
                     </div>
                   </div>
@@ -276,7 +331,7 @@ export default function CarBuy() {
     </div>
   ) : (
     <div>
-      <h1>No hay productos en el carrito</h1>
+      <CarEmpty />
     </div>
   );
 }

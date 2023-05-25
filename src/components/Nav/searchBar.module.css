@@ -15,7 +15,7 @@
 }
 
 .divSearchBar_dark {
-  background-color: #232323;
+  background-color: #191818;
   margin: 0;
   width: 100vw;
   max-width: 100%;
@@ -35,7 +35,8 @@
   display: flex;
 }
 
-.divUser, .divUserDark {
+.divUser,
+.divUserDark {
   background-color: #ff9f1c;
   align-items: center;
   display: flex;
@@ -43,11 +44,10 @@
 }
 
 .divUserDark {
-  background-color: #232323;
+  background-color: #191818;
   align-items: center;
   display: flex;
 }
-
 
 .containerInput {
   flex: 1 1 0%;
@@ -126,7 +126,7 @@
 .button {
   background: none;
   border: none;
-  margin-right: 25px
+  margin-right: 25px;
 }
 
 .link {
@@ -199,6 +199,9 @@
   height: 5vh;
 }
 
+.count_dark {
+  color: #efe9e9;
+}
 
 .logoutButton {
   background: none;
@@ -215,14 +218,15 @@
   margin: 12px;
 }
 
-.menuUser, .menuUserHidden {
+.menuUser,
+.menuUserHidden {
   background-color: inherit;
   width: 300px;
   height: 400px;
   position: absolute;
   bottom: -400px;
   right: 0;
-  transition: right .4s ease-in;
+  transition: right 0.4s ease-in;
   border-bottom-left-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -230,9 +234,7 @@
   align-items: center;
   box-shadow: 7px 15px 13px -4px #ffffff1b;
   border: 2px solid #fff;
-
 }
-
 
 .menuUserHidden {
   background-color: inherit;
@@ -241,16 +243,15 @@
   position: absolute;
   bottom: -400px;
   right: -300px;
-  transition: right .4s ease-in;
+  transition: right 0.4s ease-in;
 }
 
-.menuUser div, .menuUserHidden div {
+.menuUser div,
+.menuUserHidden div {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-
 
 .linkMenu {
   text-decoration: none;
@@ -258,4 +259,31 @@
   font-size: 1.2em;
   margin: 10px;
   color: #fff;
+}
+
+@media (max-width: 480px) {
+  .divSearchBar,
+  .divSearchBar_dark {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+    height: 10%;
+  }
+
+  .input {
+    width: 80vw;
+  }
+
+  .divUser {
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    background-color: red;
+  }
+
+  .menuUserHidden {
+    width: 100%;
+  }
 }

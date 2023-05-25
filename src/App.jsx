@@ -23,17 +23,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Contact from "./components/Contact/Contact";
 import { checkSesion, closeSesion } from "./redux/actions";
 import PaymentOptions from "./components/ComponenteDePago/pago";
-import { Toaster} from 'sonner'
+import { Toaster } from "sonner";
 import PruebaGoogle from "./components/prueba/PruebaGoogle";
 import User from "./components/User/User";
 import Order from "./components/User/Order";
 import Payment from "./components/User/Payment";
-
+import ProductSale from "./components/ProductSale/ProductSale";
 
 function App() {
   const [visible, setVisible] = useState(false);
   const darkModes = useSelector((state) => state.darkModes);
-
 
   const toggleVisibility = () => {
     setVisible(!visible);
@@ -46,13 +45,15 @@ function App() {
   };
   return (
     <>
-    <Toaster 
-    position="bottom-right" 
-    toastOptions={{
-      style: {
-        fontSize: '16px'}}}
-    richColors
-    />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+          },
+        }}
+        richColors
+      />
       <img src={bubble} alt="bubblechat" className="bubble_chat" />
       <span className={darkModes ? "chat_with_dark" : "chat_with"}>
         Chatea <br />
@@ -88,6 +89,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/user/orders" element={<Order />} />
         <Route path="/user/payment" element={<Payment />} />
+        <Route path="/ProductSale" element={<ProductSale />} />
       </Routes>
     </>
   );
