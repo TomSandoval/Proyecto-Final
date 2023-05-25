@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import CarEmpty from "../CarEmpty/CarEmpty";
 import {
   deleteProduct,
   aumentarCantidad,
@@ -19,7 +20,7 @@ import { Toaster, toast } from "sonner";
 
 //! NO PROBAR CON SUS DATOS REALES PORQUE PODRIA GENERARLES UN COBRO REAL!!!!!!
 
-//! VER EL MANEJO DE MONEDA, Y COMO AGREGAR EN AMOUNT EL MONTO AUTOMATICAMENTE
+//! VER EL MANEJO DE MONEDA
 //! https://www.currencyconverterapi.com O https://www.exchangerate-api.com => APIS PARA CONVERSION DE MONEDAS
 
 //? EMAIL ID PARA PRUEBA DE PAGO: sb-asjrj25998351@personal.example.com
@@ -123,9 +124,9 @@ export default function CarBuy() {
                     <div className="p-5">
                       <div className="d-flex justify-content-between align-items-center mb-5">
                         <h1 className="fw-bold mb-0 text-black">
-                          Shopping Cart
+                          Carro de compras
                         </h1>
-                        <h6 className="mb-0 text-muted">{`${carrito.length} items`}</h6>
+                        <h6 className="mb-0 text-muted">{`${carrito.length} item`}</h6>
                       </div>
                       <hr className="my-4" />
                       {carrito?.map((p, index) => (
@@ -169,9 +170,24 @@ export default function CarBuy() {
                             </h6>
                             <button
                               className="btn btn-link text-danger text-decoration-none"
-                              onClick={(e) => eliminarProducto(e, p)}
+                              onClick={(e) =>
+                                Swal.fire({
+                                  title: "¿Estas Seguro?",
+                                  text: "Vas eliminar este producto del carrito bro!",
+                                  icon: "warning",
+                                  showCancelButton: true,
+                                  confirmButtonColor: "#3085d6",
+                                  cancelButtonColor: "#d33",
+                                  cancelButtonText: "Cancelar",
+                                  confirmButtonText: "Sí, eliminalo bro!",
+                                }).then((result) => {
+                                  if (result.isConfirmed) {
+                                    eliminarProducto(e, p);
+                                  }
+                                })
+                              }
                             >
-                              Remove
+                              Eliminar
                             </button>
                           </div>
                         </div>
@@ -185,9 +201,32 @@ export default function CarBuy() {
                       </div>
                       <button
                         className="btn btn-danger btn-block btn-lg"
-                        onClick={borrarCompra}
+                        onClick={(e) =>
+                          Swal.fire({
+                            title: "¿Estas Seguro?",
+                            text: "Vas eliminar todos los productos del carrito bro!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            cancelButtonText: "Cancelar",
+                            confirmButtonText: "Eliminar todo!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title:
+                                  "Has eliminado todos los productos del carrito.",
+                                showConfirmButton: false,
+                                timer: 2000,
+                              });
+                              borrarCompra(e);
+                            }
+                          })
+                        }
                       >
-                        Delete all
+                        Eliminar Todo
                       </button>
                     </div>
                   </div>
@@ -292,7 +331,7 @@ export default function CarBuy() {
     </div>
   ) : (
     <div>
-      <h1>No hay productos en el carrito</h1>
+      <CarEmpty />
     </div>
   );
 }

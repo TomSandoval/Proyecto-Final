@@ -146,11 +146,11 @@
   font-weight: 400;
   font-size: 300px;
   line-height: 133.4%;
-  color: rgba(0, 0, 0, 0.87);
   flex: none;
   order: 0;
   margin: 2%;
   flex-grow: 0;
+  transition: all 1s ease-in-out;
 }
 
 .h2-review h2 {

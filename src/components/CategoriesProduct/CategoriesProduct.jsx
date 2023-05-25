@@ -10,6 +10,9 @@ import {
   changePageFilterCategory,
   orderByCategory,
   changePageOrderCategory,
+  sortPriceCategory,
+  changePageSortPriceCategory,
+
 } from "../../redux/actions";
 import CardList from "../Products/CardList";
 import Footer from "../Footer/Footer";
@@ -29,6 +32,34 @@ export default function CategoriesProduct() {
   });
   const [filters, setFilters] = useState("");
 
+  useEffect(() => {
+    window.sessionStorage.removeItem("filtroNombre");
+    const filtro = window.sessionStorage.getItem("filtroCategoria");
+    if (!filtro) {
+      dispatch(getProductByCategory(name));
+      return;
+    }
+    if (filtro.includes("A partir de") || filtro.includes("Maximo") || filtro.includes("Entre")) {
+      setFilters(filtro);
+    }
+    if (filtro === "alfabetico") {
+      setFilters("Ordenado alfabéticamente");
+    }
+    if (filtro === "Menor precio") {
+      setFilters("Menor Precio");
+    }
+    if (filtro === "Mayor precio") {
+      setFilters("Mayor Precio");
+    }
+  }, [dispatch, name]);
+
+  useEffect(()=>{
+   const filtro = window.sessionStorage.getItem("filtroCategoria");
+   if(!filtro){
+     setFilters("")
+   } 
+  },[name])
+
   const changePage = (value) => {
     if (filters == "Precio") {
       setCurrentPage(value);
@@ -38,20 +69,29 @@ export default function CategoriesProduct() {
         ? (max = 999999999)
         : (max = parseInt(priceFilters.max));
       min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
-       dispatch(
-        changePageFilterCategory(name, min,max,value)
-         ); 
-         window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        })
+      dispatch(changePageFilterCategory(name, min, max, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       return null;
     }
-    if(filters.includes('alfabéticamente')){
+    if (filters.includes("alfabéticamente")) {
       let filter;
-      filters.includes('A-Z') ? filter = 'asc' : filter = 'desc'
+      filters.includes("A-Z") ? (filter = "asc") : (filter = "desc");
       setCurrentPage(value);
       dispatch(changePageOrderCategory(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
+    if (filters.includes("precio")) {
+      let filter;
+      filters.includes("Menor") ? (filter = "ascPrice") : (filter = "descPrice");
+      setCurrentPage(value);
+      dispatch(changePageSortPriceCategory(name, filter, value));
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -67,10 +107,6 @@ export default function CategoriesProduct() {
     });
   };
 
-  useEffect(() => {
-    dispatch(getProductByCategory(name));
-  }, []);
-
   const handleChange = (e) => {
     setPriceFilters({
       ...priceFilters,
@@ -84,7 +120,18 @@ export default function CategoriesProduct() {
     max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
     min === "" ? (min = 0) : (min = priceFilters.min);
     dispatch(filterByCategory(name, min, max));
-    setFilters("Precio");
+    if(min === 0){
+      setFilters(`Maximo $${max}`);
+      window.sessionStorage.setItem("filtroCategoria", `Maximo $${max}`);
+    }
+    if(max === 999999999){
+      setFilters(`A partir de $${min}`);
+      window.sessionStorage.setItem("filtroCategoria", `A partir de $${min}`);
+    }
+    if(min !== 0 && max !== 999999999){
+      setFilters(`Entre $${min} y $${max}`);
+      window.sessionStorage.setItem("filtroCategoria", `Entre $${min} y $${max}`);
+    }
     setCurrentPage(1);
   };
 
@@ -96,11 +143,22 @@ export default function CategoriesProduct() {
   const handleOrder = (e) => {
     let order = e.target.value;
     let mode;
-    order === 'asc' ? mode = 'A-Z' : mode = 'Z-A'
-    
+    order === "asc" ? (mode = "A-Z") : (mode = "Z-A");
+
     setFilters(`Ordenado alfabéticamente ${mode}`);
-    dispatch(orderByCategory(name,order));
+    dispatch(orderByCategory(name, order));
     setCurrentPage(1);
+    window.sessionStorage.setItem("filtroCategoria", "afabetico");
+  };
+
+  const handleSortPrice = (e) => {
+    let order = e.target.value;
+    let mode;
+    order === "ascPrice" ? (mode = "Menor precio") : (mode = "Mayor precio");
+    setFilters(`${mode}`);
+    dispatch(sortPriceCategory(name, order));
+    setCurrentPage(1);
+    window.sessionStorage.setItem("filtroCategoria", mode);
   };
 
   if (!products.rows) {
@@ -164,8 +222,39 @@ export default function CategoriesProduct() {
           <div className="alphabetic-container">
             <label>Orden Alfabetico:</label>
             <div>
-              <button onClick={handleOrder} className="buttons-filter" value='asc'>A-Z</button>
-              <button onClick={handleOrder} className="buttons-filter" value='desc'>Z-A</button>
+              <button
+                onClick={handleOrder}
+                className="buttons-filter"
+                value="asc"
+              >
+                A-Z
+              </button>
+              <button
+                onClick={handleOrder}
+                className="buttons-filter"
+                value="desc"
+              >
+                Z-A
+              </button>
+            </div>
+          </div>
+          <div className="price-order-container">
+            <label>Orden Precio:</label>
+            <div>
+              <button
+                onClick={handleSortPrice}
+                className="buttons-filter"
+                value="ascPrice"
+              >
+                Menor Precio
+              </button>
+              <button
+                onClick={handleSortPrice}
+                className="buttons-filter"
+                value="descPrice"
+              >
+                Mayor Precio
+              </button>
             </div>
           </div>
         </div>
