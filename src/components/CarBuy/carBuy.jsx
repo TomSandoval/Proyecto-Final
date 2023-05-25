@@ -71,42 +71,7 @@ export default function CarBuy() {
     dispatch(deleteAllCart());
   };
 
-
-    const currency = 'USD';
-
-    const eliminarProducto = (e,p) => {
-        e.preventDefault();
-        dispatch(deleteProduct(p.id));
-        toast.error(`${p.name} fue eliminado de tu carrito`)
-    }
-
-
-    console.log(userData);
-
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentDay = currentDate.getDate();
-    const detalles = carrito.reduce((result, producto) => {
-        const vendedorId = producto.userId;
-        const vendedorObj = result.find((obj) => obj.userId === vendedorId);
-        if (vendedorObj) {
-          vendedorObj.total += producto.price * producto.cantidad;
-          vendedorObj.productos.push(producto);
-        } else {
-          const newVendedorObj = {
-            userId: vendedorId,
-            fecha: `${currentYear}-${currentMonth}-${currentDay}`,
-            comprador: 'feli.zarratea99@gmail.com',
-            total: producto.price * producto.cantidad,
-            metodoDePago: 'Paypal',
-            productos: [producto],
-          };
-      
-          result.push(newVendedorObj);
-        }
-        return result;
-      }, []);
+  const currency = "USD";
 
   const eliminarProducto = (e, p) => {
     e.preventDefault();
@@ -114,17 +79,32 @@ export default function CarBuy() {
     toast.error(`${p.name} fue eliminado de tu carrito`);
   };
 
+  console.log(userData);
+
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDay = currentDate.getDate();
-  const detalles = {
-    fecha: `${currentDay}-${currentMonth}-${currentYear}`,
-    comprador: "feli.zarratea99@gmail.com",
-    total: totalDeCompra,
-    metodoDePago: "Paypal",
-    productos: carrito,
-  };
+  const detalles = carrito.reduce((result, producto) => {
+    const vendedorId = producto.userId;
+    const vendedorObj = result.find((obj) => obj.userId === vendedorId);
+    if (vendedorObj) {
+      vendedorObj.total += producto.price * producto.cantidad;
+      vendedorObj.productos.push(producto);
+    } else {
+      const newVendedorObj = {
+        userId: vendedorId,
+        fecha: `${currentYear}-${currentMonth}-${currentDay}`,
+        comprador: "feli.zarratea99@gmail.com",
+        total: producto.price * producto.cantidad,
+        metodoDePago: "Paypal",
+        productos: [producto],
+      };
+
+      result.push(newVendedorObj);
+    }
+    return result;
+  }, []);
 
   const reloadPage = () => {
     window.location.reload();
