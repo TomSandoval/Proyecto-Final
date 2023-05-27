@@ -29,7 +29,6 @@ export default function SearchProduct() {
     max: 0,
   });
   const [filters, setFilters] = useState("");
-  
   useEffect(() => {
     window.sessionStorage.removeItem("filtroCategoria");
     const filtro = window.sessionStorage.getItem("filtroNombre");
