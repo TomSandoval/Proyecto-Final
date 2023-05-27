@@ -136,7 +136,6 @@ export const getProductByName = (name) => async (dispatch) => {
     const response = await axios.get(
       `http://localhost:3001/product?name=${name}&size=6`
     );
-
     dispatch({
       type: GET_PRODUCT_BY_NAME,
       payload: response.data,
