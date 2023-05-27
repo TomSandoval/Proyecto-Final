@@ -1,0 +1,17 @@
+.divCompra{
+
+    margin: 1vw;
+    align-items: center;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+.divImg{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    margin-left: auto;
+}
