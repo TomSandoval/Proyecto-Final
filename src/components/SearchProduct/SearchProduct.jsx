@@ -252,6 +252,7 @@ export default function SearchProduct() {
                 // category={p?.Categories[0]?.name}
                 stock={p.stock}
                 price={p.price}
+                userId={p.userId}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}
               />
             ))}
