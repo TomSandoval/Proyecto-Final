@@ -8,7 +8,6 @@ export default function History() {
     const dispatch = useDispatch();
     const userData = localStorage.getItem('email')
     const history = useSelector((state) => state.history);
-    console.log(history);
     const handleNavigate = (id) => {
         navigate(`Detail/${id}`);
       }

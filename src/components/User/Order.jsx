@@ -2,11 +2,16 @@ import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer"
+import { useDispatch, useSelector } from "react-redux";
+import { shoppinghistory } from "../../redux/actions";
+import styles from "./order.module.css";
 
 
 function Order() {
     const [activeButton, setActiveButton] = React.useState('Pedido');
-
+    const dispatch = useDispatch();
+    const userData = localStorage.getItem('email')
+    const history = useSelector((state) => state.history);
     useEffect(() => {
         const currentPath = window.location.pathname.split('/').pop();
         if (currentPath === 'user') {
@@ -17,6 +22,12 @@ function Order() {
             setActiveButton('Pedido');
         }
     }, []);
+
+    useEffect(() => {
+        if (userData) {
+            dispatch(shoppinghistory(userData));
+          }
+      }, [dispatch]);
 
     const background = {
         background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
@@ -72,13 +83,6 @@ function Order() {
         fontSize: "14px",
 
     }
-
-    //! prueba
-    const compras = [
-        { id: 1, producto: 'Producto 1', fecha: '2023-05-20' },
-        { id: 2, producto: 'Producto 2', fecha: '2023-05-22' },
-        { id: 3, producto: 'Producto 3', fecha: '2023-05-23' },
-    ];
 
 
 
@@ -198,14 +202,29 @@ function Order() {
                     <div className="card h-100 bg-secondary">
                         <div className="card-body">
                             <h2>Compras realizadas por el usuario:</h2>
-                            <ul>
-                                {compras.map(compra => (
-                                    <li key={compra.id}>
-                                        <strong>Producto:</strong> {compra.producto}<br />
-                                        <strong>Fecha:</strong> {compra.fecha}
-                                    </li>
-                                ))}
-                            </ul>
+                            {
+                                history? (
+                                <>
+                                {
+                                        history.map((el)=>el.detailOrders.map((e)=>(
+                                            <div key={`${el.id}-${e.productId}`} className={styles.divCompra}>
+                                                <div>
+                                                    <h3 >{`Item: ${e.product.name}`}</h3>
+                                                    <h4 >{`Precio:$ ${e.purchaseprice}`}</h4>
+                                                    <h4 >{`Status: ${el.status}`}</h4>
+                                                    <h4> {`Fecha de compra: ${el.orderDate}`}</h4>
+                                                </div>
+                                                <div className={styles.divImg}>
+                                                    <img src={e.product.img} style={{ width: "200px" }}/>
+                                                </div>
+                                            </div>
+                        )))
+                    }
+                </>
+                ): (
+                    <h3> Todavia nos realizaste compras </h3>
+                )
+            }
                         </div>
                     </div>
 
