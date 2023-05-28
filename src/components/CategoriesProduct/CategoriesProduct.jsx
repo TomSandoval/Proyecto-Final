@@ -24,7 +24,6 @@ export default function CategoriesProduct() {
   const { name } = useParams();
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
     min: 0,
@@ -276,6 +275,7 @@ export default function CategoriesProduct() {
                 category={p.Categories[0].name}
                 stock={p.stock}
                 price={p.price}
+                userId={p.userId}
                 dataAos={index % 2 === 0 ? "fade-left" : "fade-right"}
               />
             ))}
