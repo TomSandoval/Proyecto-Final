@@ -268,7 +268,7 @@ export default function CarBuy() {
                               ? setShowPayPal(true)
                               : Swal.fire({
                                   title: "¡Logueate!",
-                                  text: "Para continuar con la compra debes iniciar secion creandote una cuenta bro.",
+                                  text: "Para continuar con la compra debes iniciar sesión creandote una cuenta bro.",
                                   showCancelButton: true,
                                   confirmButtonColor: "#3085d6",
                                   cancelButtonColor: "#d33",
