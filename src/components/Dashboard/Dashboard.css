@@ -79,7 +79,7 @@
 }
 
 .tarjetitas {
-  width: 17vw;
+  width: 17.9vw;
   height: 33vh;
   /* box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px; */
@@ -88,6 +88,19 @@
   border: 0.1px solid rgb(241, 241, 249);
   background-color: rgb(208, 242, 255);
   margin: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tarjetitas h3 {
+  display: flex;
+  flex-direction: ;
+}
+
+.tarjetitas img {
+  width: 200px;
+  mix-blend-mode: darken;
 }
 
 .tarjetitas:hover {

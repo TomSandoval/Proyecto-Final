@@ -28,8 +28,10 @@ export default function PieChartNEW() {
     data[i].push(`rgb(${red}, ${green}, ${blue})`);
   }
   const options = {
-    title: "Cantidad de Productos Registrados por Categoria",
+    // title: "Cantidad de Productos Registrados por Categoria",
     is3D: true,
+    // with: 800,
+    // height: 600,
 
     bar: { groupWidth: "100%" },
   };
@@ -37,7 +39,13 @@ export default function PieChartNEW() {
   return (
     <div>
       {data.length > 0 ? (
-        <Chart chartType="PieChart" data={data} options={options} />
+        <Chart
+          chartType="PieChart"
+          // width={"200%"}
+          // height={"400px"}
+          data={data}
+          options={options}
+        />
       ) : (
         <p>Cargando datos...</p>
       )}

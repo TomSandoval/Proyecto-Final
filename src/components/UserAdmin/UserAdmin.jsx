@@ -14,6 +14,7 @@ export default function UserAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const usersAdmin = useSelector((state) => state.usersAdmin);
+  // const [rows1, setRows1] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,15 +25,14 @@ export default function UserAdmin() {
     setSelectedRows(selection.selectionModel);
   };
 
-  // const handleDeleteRows = () => {
-  //   const remainingRows = rows1.filter((row) => row.col1 !== "Hello");
+  const handleDeleteRows = () => {
+    const remainingRows = rows1.filter((row) => row.col4 === true);
 
-  //   setRows1(remainingRows);
-  //   setSelectedRows([]);
-  // };
+    setRows1(remainingRows);
+    setSelectedRows([]);
+  };
 
-  const rows1 = [];
-
+  let rows1 = [];
   usersAdmin.map((user, index) => {
     rows1.push({
       id: index,
@@ -76,10 +76,7 @@ export default function UserAdmin() {
           rows={filteredRows}
           columns={columns1}
         />
-        <Button
-          /*</div>onClick={handleDeleteRows}*/ variant="outlined"
-          color="secondary"
-        >
+        <Button onClick={handleDeleteRows} variant="outlined" color="secondary">
           Desactivar Administrador
         </Button>
       </div>
