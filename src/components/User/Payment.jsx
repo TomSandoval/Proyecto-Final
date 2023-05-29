@@ -33,7 +33,7 @@ function Payment() {
             titular: inputs[index * 5].value,
             numero: inputs[index * 5 + 1].value,
             mes: inputs[index * 5 + 2].value,
-            ano: inputs[index * 5 + 3].value,
+            año: inputs[index * 5 + 3].value,
             cvv: inputs[index * 5 + 4].value,
         };
         updatedCardData[index] = cardInfo;
@@ -93,6 +93,9 @@ function Payment() {
         textDecoration: "none",
         fontSize: "14px",
     };
+    const links = {
+        marginTop: "-25px",
+    };
 
 
 
@@ -103,17 +106,17 @@ function Payment() {
             <br />
             <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
-                <div class='container-fluid' >
-                <Link to="/" style={linkColor2}>
-                    Hogar &gt; &nbsp;
-                </Link>
-                <Link to="/user" style={linkColor2}>
-                    Mi cuenta &gt; &nbsp;
-                </Link>
-                <Link to="/user/orders" style={linkColor2}>
-                    Pedidos
-                </Link>
-            </div>
+                <div className='container-fluid' style={links}>
+                        <Link to="/" style={linkColor2}>
+                            Hogar &gt; &nbsp;
+                        </Link>
+                        <Link to="/user" style={linkColor2}>
+                            Mi cuenta &gt; &nbsp;
+                        </Link>
+                        <Link to="/user/payment" style={linkColor2}>
+                            Pagos
+                        </Link>
+                    </div>
                     <div className="card h-100 bg-secondary" style={firstCard}>
                         <div className="card-body">
                             <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
@@ -164,8 +167,18 @@ function Payment() {
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
-                                <Link to="/user/help" style={linkColor}>
+                                <Link to="/contact" style={linkColor}>
                                     Centro de ayuda
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/ProductSale" style={linkColor}>
+                                    Mis publicaciones
                                 </Link>
                             </button>
                         </div>
@@ -204,7 +217,7 @@ function Payment() {
                                                     <p>Titular: {cardData[0].titular}</p>
                                                     <p>Número: {cardData[0].numero}</p>
                                                     <p>Mes: {cardData[0].mes}</p>
-                                                    <p>Año: {cardData[0].ano}</p>
+                                                    <p>Año: {cardData[0].año}</p>
                                                     <p>CVV: {cardData[0].cvv}</p>
                                                 </>
                                             )}
@@ -240,7 +253,7 @@ function Payment() {
                                                     <p>Titular: {cardData[1].titular}</p>
                                                     <p>Número: {cardData[1].numero}</p>
                                                     <p>Mes: {cardData[1].mes}</p>
-                                                    <p>Año: {cardData[1].ano}</p>
+                                                    <p>Año: {cardData[1].año}</p>
                                                     <p>CVV: {cardData[1].cvv}</p>
                                                 </>
                                             )}
@@ -273,7 +286,7 @@ function Payment() {
                                                     <p>Titular: {cardData[2].titular}</p>
                                                     <p>Número: {cardData[2].numero}</p>
                                                     <p>Mes: {cardData[2].mes}</p>
-                                                    <p>Año: {cardData[2].ano}</p>
+                                                    <p>Año: {cardData[2].año}</p>
                                                     <p>CVV: {cardData[2].cvv}</p>
                                                 </>
                                             )}
@@ -304,7 +317,7 @@ function Payment() {
                                                     <p>Titular: {cardData[3].titular}</p>
                                                     <p>Número: {cardData[3].numero}</p>
                                                     <p>Mes: {cardData[3].mes}</p>
-                                                    <p>Año: {cardData[3].ano}</p>
+                                                    <p>Año: {cardData[3].año}</p>
                                                     <p>CVV: {cardData[3].cvv}</p>
                                                 </>
                                             )}
