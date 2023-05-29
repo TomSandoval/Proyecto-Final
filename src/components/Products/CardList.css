@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.title-container h2 {
+  text-align: center;
+}
+
 /* .title-card {
   color: #000;
   text-align: center;
@@ -72,7 +76,7 @@
 }
 
 .description-container {
-  margin-bottom: 3em;
+  margin-bottom: 2em;
   max-height: 110px;
 }
 

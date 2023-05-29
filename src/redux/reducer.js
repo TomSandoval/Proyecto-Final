@@ -51,7 +51,7 @@ const initialState = {
   carrito: JSON.parse(localStorage.getItem("carrito")) || [],
   totalDeCompra: "",
   carritoTotal: [],
-  history: [],
+  history: null,
   usersAdmin: [],
 };
 

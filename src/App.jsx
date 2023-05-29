@@ -28,6 +28,7 @@ import PruebaGoogle from "./components/prueba/PruebaGoogle";
 import User from "./components/User/User";
 import Order from "./components/User/Order";
 import Payment from "./components/User/Payment";
+import History from "./components/Record/record";
 import ProductSale from "./components/ProductSale/ProductSale";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormCreateAdmin from "./components/FormCreateAdmin/FormCreateAdmin";
@@ -92,6 +93,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/user/orders" element={<Order />} />
         <Route path="/user/payment" element={<Payment />} />
+        <Route path="/shoppinghistory" element={<History />} />
         <Route path="/ProductSale" element={<ProductSale />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />

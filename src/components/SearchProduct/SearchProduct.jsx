@@ -29,7 +29,6 @@ export default function SearchProduct() {
     max: 0,
   });
   const [filters, setFilters] = useState("");
-  
   useEffect(() => {
     window.sessionStorage.removeItem("filtroCategoria");
     const filtro = window.sessionStorage.getItem("filtroNombre");
@@ -116,7 +115,7 @@ export default function SearchProduct() {
     let min = priceFilters.min;
     let max = priceFilters.max;
     max === 0 || max === ""
-      ? (max = 999999999)
+      ? (max = 2^52)
       : (max = parseInt(priceFilters.max));
     min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
     dispatch(filterByName(name, min, max));
@@ -124,11 +123,11 @@ export default function SearchProduct() {
       setFilters(`Maximo $${max}`);
       window.sessionStorage.setItem("filtroNombre", `Maximo $${max}`);
     }
-    if(max === 999999999){
+    if(max === 2^52){
       setFilters(`A partir de $${min}`);
       window.sessionStorage.setItem("filtroNombre", `A partir de $${min}`);
     }
-    if(min !== 0 && max !== 999999999){
+    if(min !== 0 && max !== 2^52){
       setFilters(`Entre $${min} y $${max}`);
       window.sessionStorage.setItem("filtroNombre", `Entre $${min} y $${max}`);
     }
@@ -137,6 +136,10 @@ export default function SearchProduct() {
 
   const cleanFilter = () => {
     setFilters("");
+    setPriceFilters({
+      min: "",
+      max: "",
+    });
     dispatch(getProductByName(name));
     setCurrentPage(1);
     window.sessionStorage.removeItem("filtroNombre");
@@ -193,6 +196,7 @@ export default function SearchProduct() {
                 className="inputs"
                 type="number"
                 placeholder="mínimo"
+                value={priceFilters.min}
               />
               <input
                 name="max"
@@ -200,6 +204,7 @@ export default function SearchProduct() {
                 className="inputs"
                 type="number"
                 placeholder="máximo"
+                value={priceFilters.max}
               />
               <button onClick={handleSubmit} className="button-price">
                 <svg
@@ -250,9 +255,10 @@ export default function SearchProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                // category={p?.Categories[0]?.name}
+                category={p?.Categories[0]?.name}
                 stock={p.stock}
                 price={p.price}
+                userId={p.userId}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}
               />
             ))}
