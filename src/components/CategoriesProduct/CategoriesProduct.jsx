@@ -116,18 +116,18 @@ export default function CategoriesProduct() {
   const handleSubmit = () => {
     let min = priceFilters.min;
     let max = priceFilters.max;
-    max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
-    min === "" ? (min = 0) : (min = priceFilters.min);
+    !max ? (max = 2^52) : (max = priceFilters.max);
+    !min ? (min = 0) : (min = priceFilters.min);
     dispatch(filterByCategory(name, min, max));
     if(min === 0){
       setFilters(`Maximo $${max}`);
       window.sessionStorage.setItem("filtroCategoria", `Maximo $${max}`);
     }
-    if(max === 999999999){
+    if(max < 1){
       setFilters(`A partir de $${min}`);
       window.sessionStorage.setItem("filtroCategoria", `A partir de $${min}`);
     }
-    if(min !== 0 && max !== 999999999){
+    if(min !== 0 && max !== 2^52){
       setFilters(`Entre $${min} y $${max}`);
       window.sessionStorage.setItem("filtroCategoria", `Entre $${min} y $${max}`);
     }
@@ -136,6 +136,10 @@ export default function CategoriesProduct() {
 
   const cleanFilter = () => {
     setFilters("");
+    setPriceFilters({
+      min: "",
+      max: "",
+    });
     dispatch(getProductByCategory(name));
   };
 
@@ -197,6 +201,7 @@ export default function CategoriesProduct() {
                 className="inputs"
                 type="number"
                 placeholder="mínimo"
+                value={priceFilters.min}
               />
               <input
                 name="max"
@@ -204,6 +209,7 @@ export default function CategoriesProduct() {
                 className="inputs"
                 type="number"
                 placeholder="máximo"
+                value={priceFilters.max}
               />
               <button onClick={handleSubmit} className="button-price">
                 <svg

@@ -34,19 +34,21 @@ export const CLOSE_SESION = "CLOSE_SESION";
 export const CHECK_SESION = "CHECK_SESION";
 export const DELETE_ALL_CART = "DELETE_ALL_CART";
 export const GET_PRODUC_BY_USER = "GET_PRODUC_BY_USER";
+export const GET_PRODUCT_ACTIVE = "GET_PRODUCT_ACTIVE";
+export const CREATE_ADMIN = "CREATE_ADMIN";
+export const LIST_USERS = "LIST_USERS";
 
 export const postForm = (form) => {
   return async function (dispatch) {
     try {
       var json = await axios.post("http://localhost:3001/user/create", form);
-      console.log(json)
+      console.log(json);
       dispatch({
         type: USER_CREATE,
-        payload: json.data.message
+        payload: json.data.message,
       });
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
       const errors = {
         nicknameError: "Este nickname ya está en uso. Por favor, elija otro.",
         emailError: "El correo electrónico ya tiene una cuenta.",
@@ -72,15 +74,14 @@ export const postForm = (form) => {
   };
 };
 
-
 export const googleLogin = () => async (dispatch) => {
   try {
-    const response = axios.get("http://localhost:3001/auth/google")
-    console.log(response)
+    const response = axios.get("http://localhost:3001/auth/google");
+    console.log(response);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const cleanUserError = () => {
   return {
@@ -125,7 +126,6 @@ export const getDetail = (id) => {
     return dispatch({ type: PRODUCT_DETAIL, payload: data });
   };
 };
-
 
 export const cleanDetail = () => {
   return { type: CLEAN_DETAIL };
@@ -176,19 +176,25 @@ export const nextPageHome = (value, page) => async (dispatch) => {
 export const postLogin = (payload) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/user/login", payload);
-      window.localStorage.setItem('token', JSON.stringify(response.data.token))
-      window.localStorage.setItem('tokenExpiration', JSON.stringify(response.data.exp))
-      window.localStorage.setItem('username', response.data.nickname)
-      window.localStorage.setItem('email', response.data.email)
+      const response = await axios.post(
+        "http://localhost:3001/user/login",
+        payload
+      );
+      window.localStorage.setItem("token", JSON.stringify(response.data.token));
+      window.localStorage.setItem(
+        "tokenExpiration",
+        JSON.stringify(response.data.exp)
+      );
+      window.localStorage.setItem("username", response.data.nickname);
+      window.localStorage.setItem("email", response.data.email);
       const user = {
         username: response.data?.nickname,
-        email: response.data.email
-      }
+        email: response.data.email,
+      };
       dispatch({
         type: USER_LOGIN,
-        payload: user
-      })
+        payload: user,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -196,34 +202,34 @@ export const postLogin = (payload) => {
 };
 
 export const closeSesion = () => {
-  window.localStorage.removeItem('token');
-  window.localStorage.removeItem('tokenExpiration')
-  window.localStorage.removeItem('username')
+  window.localStorage.removeItem("token");
+  window.localStorage.removeItem("tokenExpiration");
+  window.localStorage.removeItem("username");
   return {
-    type: CLOSE_SESION
-  }
-}
+    type: CLOSE_SESION,
+  };
+};
 export const checkSesion = () => {
-  const username = localStorage.getItem('username');
-  const email = localStorage.getItem('email');
+  const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   const user = {
     username: username,
     email: email,
   }
   return {
     type: CHECK_SESION,
-    payload: user
-  }
-}
-
+    payload: user,
+  };
+};
 
 export const checkExpiration = () => {
   const tokenExpiration = window.localStorage.getItem('tokenExpiration');
+
   if (Date.now() >= tokenExpiration) {
     return closeSesion();
   }
-  return checkSesion()
-}
+  return checkSesion();
+};
 
 export const postCreate = (payload) => {
   return async function (dispatch) {
@@ -313,32 +319,39 @@ export const filterByName = (name, min, max) => async (dispatch) => {
   }
 };
 
-export const changePageFilterNames = (name, min, max, value) => async (dispatch) => {
-  try {
+export const changePageFilterNames =
+  (name, min, max, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    const response = await axios.get(`http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
-export const changePageFilterCategory = (name, min, max, value) => async (dispatch) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error);
-  }
-
-}
+export const changePageFilterCategory =
+  (name, min, max, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   try {
@@ -353,19 +366,22 @@ export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   } catch (error) { }
 };
 
-export const changePageOrderName = (name, filter, value) => async (dispatch) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-
-
-}
+export const changePageOrderName =
+  (name, filter, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const sortPriceProducts = (name, value) => async (dispatch) => {
   try {
@@ -381,43 +397,53 @@ export const sortPriceProducts = (name, value) => async (dispatch) => {
 
 }
 
-export const changePageSortPriceName = (name, filter, value) => async (dispatch) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
+export const changePageSortPriceName =
+  (name, filter, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const sortPriceCategory = (name, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${value}`)
+    const response = await axios.get(
+      `http://localhost:3001/categories/order/category/${name}?orders=${value}`
+    );
     dispatch({
       type: FILTER_PRODUCTS,
-      payload: response.data
-    })
+      payload: response.data,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const changePageSortPriceCategory = (name, filter, value) => async (dispatch) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-
-}
+export const changePageSortPriceCategory =
+  (name, filter, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const orderByCategory = (name, value) => async (dispatch) => {
   try {
@@ -432,20 +458,24 @@ export const orderByCategory = (name, value) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const changePageOrderCategory = (name, filter, value) => async (dispatch) => {
-  try {
-    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value - 1}`)
-    dispatch({
-      type: CHANGE_PAGES_PRODUCTS,
-      payload: response.data
-    })
-  } catch (error) {
-    console.log(error)
-  }
-
-}
+export const changePageOrderCategory =
+  (name, filter, value) => async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${
+          value - 1
+        }`
+      );
+      dispatch({
+        type: CHANGE_PAGES_PRODUCTS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 export const darkMode = (payload) => {
   return {
@@ -525,6 +555,45 @@ export const shoppinghistory = (payload) => {
   };
 };
 
+export const getProductActive = (email) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/active/${email}`
+      );
+      dispatch({ type: GET_PRODUCT_ACTIVE, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createAdmin = (form) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/admin/createadmin/",
+        form
+      );
+      dispatch({ type: CREATE_ADMIN, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const listUsers = () => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get("http://localhost:3001/admin/listusers");
+      const data = response.data;
+
+      dispatch({ type: LIST_USERS, payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };

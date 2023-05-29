@@ -27,7 +27,7 @@ export default function Detail() {
   useEffect(() => {
     dispatch(cleanDetail());
     dispatch(getDetail(id));
-  }, [dispatch]);
+  }, [id]);
 
   if (!productDetail.id) {
     return <Loading />;
