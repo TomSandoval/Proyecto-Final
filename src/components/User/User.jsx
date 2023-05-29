@@ -187,7 +187,7 @@ function User() {
                             <div className="border-top border-dark" />
                             <div className="row align-items-center">
                                 <div className="col">
-                                    <h5 className="card-title" style={subtitleButton}>Email:</h5>
+                                    <h5 className="card-title" style={subtitleButton}>Email: </h5>
                                 </div>
                                 <div className="col">
                                     <p className="card-text text-center">{email}</p>

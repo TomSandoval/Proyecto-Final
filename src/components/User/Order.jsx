@@ -209,7 +209,7 @@ function Order() {
 
                     <div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras realizadas por el usuario:</h2>
+                            <h2>Compras realizadas por el usuario: </h2>
                             {history ? (
                                 <>
                                     {history.map((el) => el.detailOrders.map((e) => (

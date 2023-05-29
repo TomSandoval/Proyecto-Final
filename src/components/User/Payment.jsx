@@ -203,7 +203,7 @@ function Payment() {
                 </div>
                 <div className="col" style={cardHeight}>
                     <div className="card h-100 bg-secondary">
-                        <h5 className="card-title" style={titleButton}>&nbsp; &nbsp; Pagos:</h5>
+                        <h5 className="card-title" style={titleButton}>&nbsp; &nbsp; Pagos: </h5>
                         <div className="container">
                             <div className="row row-cols-1 row-cols-md-3 g-4">
                                 <div className="col">
