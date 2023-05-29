@@ -136,7 +136,6 @@ export const getProductByName = (name) => async (dispatch) => {
     const response = await axios.get(
       `http://localhost:3001/product?name=${name}&size=6`
     );
-
     dispatch({
       type: GET_PRODUCT_BY_NAME,
       payload: response.data,
@@ -217,6 +216,7 @@ export const checkSesion = () => {
     username: username,
     email: email,
   };
+
   return {
     type: CHECK_SESION,
     payload: user,
@@ -518,7 +518,7 @@ export const envioDetalle = (detalles) => {
   console.log(detalles);
   return async function (dispatch) {
     try {
-      var json = await axios.post("http://localhost:3001/login", detalles);
+      var json = await axios.post("http://localhost:3001/order", detalles);
       return {
         type: ENVIO_DETALLES,
         payload: detalles,
@@ -538,15 +538,15 @@ export const deleteAllCart = () => {
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/user/shoppinghistory", {
-        params: {
-          email: payload,
-        },
+      var json = await axios.get("http://localhost:3001/users/shoppinghistory",{
+        params:{
+          email:payload,
+        }
       });
-      return {
+      dispatch({ 
         type: GET_PRODUC_BY_USER,
-        payload: json,
-      };
+        payload: json.data,
+    })
     } catch (error) {
       console.log(error);
     }

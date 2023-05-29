@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import SearchBar from "../Nav/nav";
-import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 function Payment() {
-    const [activeButton, setActiveButton] = React.useState('Pedido');
+    const [activeButton, setActiveButton] = useState('Pedido');
+    const [isInputVisible, setIsInputVisible] = useState([]);
+    const [cardData, setCardData] = useState([]);
+    const [showSaveButton, setShowSaveButton] = useState(false);
 
     useEffect(() => {
         const currentPath = window.location.pathname.split('/').pop();
@@ -17,7 +20,34 @@ function Payment() {
         }
     }, []);
 
+    const handleInsertButtonClick = (index) => {
+        const updatedVisibility = [...isInputVisible];
+        updatedVisibility[index] = true;
+        setIsInputVisible(updatedVisibility);
+        setShowSaveButton(true);
+    };
+    const handleSaveButtonClick = (index) => {
+        const updatedCardData = [...cardData];
+        const inputs = document.querySelectorAll('.form-control');
+        const cardInfo = {
+            titular: inputs[index * 5].value,
+            numero: inputs[index * 5 + 1].value,
+            mes: inputs[index * 5 + 2].value,
+            año: inputs[index * 5 + 3].value,
+            cvv: inputs[index * 5 + 4].value,
+        };
+        updatedCardData[index] = cardInfo;
+        setCardData(updatedCardData);
+        setShowSaveButton(false);
+    };
 
+
+    //! Estilos
+    const background = {
+        background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
+        height: '150vh',
+        width: '100vw'
+    };
     const perfilButtonStyle = {
         width: '100%',
         textAlign: 'left',
@@ -28,52 +58,68 @@ function Payment() {
     const titleButton = {
         textAlign: "left",
         fontSize: "24px"
-    }
+    };
     const subtitleButton = {
         textAlign: "left"
-    }
-    const background = {
-        background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
-        height: '108vh',
-        width: '100vw'
     };
     const linkColor = {
         color: "white",
         textDecoration: "none",
-    }
+    };
+    const cardHeight = {
+        height: "100%",
+        width: "75%",
+    };
+    const cardContainerStyle = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingLeft: '30px',
+        paddingRight: '30px',
+        paddingTop: '150px',
+        marginBottom: '30px',
+    };
+    const products = {
+        paddingTop: "-1vw",
+        width: "75%"
+    };
+    const firstCard = {
+        width: "300px"
+    };
+    const lastCard = {
+        width: "75%"
+    };
     const linkColor2 = {
         color: "black",
         textDecoration: "none",
-        fontSize: "14px"
-    }
-    // const activeIndicatorStyle = {
-    //     position: 'absolute',
-    //     right: '372px', // Ajusta la posición del rectángulo con respecto al botón
-    //     top: "72px",
-    //     height: '8.5%',
-    //     width: '5px',
-    //     backgroundColor: 'orange'
-    // && <span style={activeIndicatorStyle}></span> esto va al lado de {activeButton === 'Perfil'}
-    // };
+        fontSize: "14px",
+    };
+    const links = {
+        marginTop: "-25px",
+    };
+
 
 
     return (
         <div style={background}>
-            <Link to="/" style={linkColor2}>
-                Hogar &gt; &nbsp;
-            </Link>
-            <Link to="/user" style={linkColor2}>
-                Mi cuenta &gt; &nbsp;
-            </Link>
-            <Link to="/user/payment" style={linkColor2}>
-                Pagos
-            </Link>
-            <div className="row row-cols-1 row-cols-md-3 g-5" style={{ paddingLeft: '30px', paddingRight: '30px', paddingTop: '150px' }}>
-
+            <SearchBar/>
+            <br />
+            <br />
+            <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
-                    <div className="card h-100 bg-secondary">
+                <div className='container-fluid' style={links}>
+                        <Link to="/" style={linkColor2}>
+                            Hogar &gt; &nbsp;
+                        </Link>
+                        <Link to="/user" style={linkColor2}>
+                            Mi cuenta &gt; &nbsp;
+                        </Link>
+                        <Link to="/user/payment" style={linkColor2}>
+                            Pagos
+                        </Link>
+                    </div>
+                    <div className="card h-100 bg-secondary" style={firstCard}>
                         <div className="card-body">
-                            <h5 className="card-title" style={titleButton} >Mi cuenta:</h5>
+                            <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
                             <button
                                 type="button"
                                 className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
@@ -90,7 +136,6 @@ function Payment() {
                                 className={`btn btn-secondary btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
-
                             >
                                 <Link to="/user/orders" style={linkColor}>
                                     Pedidos
@@ -122,8 +167,18 @@ function Payment() {
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
-                                <Link to="/user/help" style={linkColor}>
+                                <Link to="/contact" style={linkColor}>
                                     Centro de ayuda
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/ProductSale" style={linkColor}>
+                                    Mis publicaciones
                                 </Link>
                             </button>
                         </div>
@@ -132,73 +187,147 @@ function Payment() {
                         </div>
                     </div>
                 </div>
-
-
-                <div className="col">
+                <div className="col" style={cardHeight}>
                     <div className="card h-100 bg-secondary">
-                        <svg className="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <circle cx="50%" cy="50%" r="80" fill="#868e96" />
-                            <text x="50%" y="50%" text-anchor="middle" fill="#dee2e6" dy=".3em">Image cap</text>
-                        </svg>
-                        <div className="card-body">
-                            <h5 className="card-title">Nombre</h5>
-                            <p className="card-text text-center mb-0">Email@gmail.com</p>
-                        </div>
-                        <div className="card-footer">
-                            <small className="text-body-secondary">TukiMarket 🐸</small>
+                        <h5 className="card-title" style={titleButton}>&nbsp; &nbsp; Pagos:</h5>
+                        <div className="container">
+                            <div className="row row-cols-1 row-cols-md-3 g-4">
+                                <div className="col">
+                                    <div className="card bg-warning">
+                                        <div className="card-body text-center">
+                                            <div className="d-flex justify-content-center">
+                                                <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(0)}>+ Añadir tarjeta</button>
+                                            </div>
+                                            {isInputVisible[0] && (
+                                                <>
+
+                                                    <input type="text" className="form-control" placeholder="Nombre del titular" />
+                                                    <input type="text" className="form-control" placeholder="Número de la tarjeta" />
+                                                    <input type="text" className="form-control" placeholder="Mes" />
+                                                    <input type="text" className="form-control" placeholder="Año" />
+                                                    <input type="text" className="form-control" placeholder="CVV" />
+                                                    {showSaveButton && (
+                                                        <button className="btn btn-primary mt-2" onClick={() => handleSaveButtonClick(0)}>Guardar tarjeta</button>
+                                                    )}
+                                                </>
+                                            )}
+                                             {/* Info tarjeta guardada */}
+                                            {cardData[0] && (
+                                                <>
+                                                    <p>Titular: {cardData[0].titular}</p>
+                                                    <p>Número: {cardData[0].numero}</p>
+                                                    <p>Mes: {cardData[0].mes}</p>
+                                                    <p>Año: {cardData[0].año}</p>
+                                                    <p>CVV: {cardData[0].cvv}</p>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="card bg-warning">
+                                        <div className="card-body text-center">
+
+                                            <div className="d-flex justify-content-center">
+                                                <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(1)}>
+                                                    + Añadir tarjeta
+                                                </button>
+                                            </div>
+                                            {isInputVisible[1] && (
+                                                <>
+                                                    <input type="text" className="form-control" placeholder="Nombre del titular" />
+                                                    <input type="text" className="form-control" placeholder="Número de la tarjeta" />
+                                                    <input type="text" className="form-control" placeholder="Mes" />
+                                                    <input type="text" className="form-control" placeholder="Año" />
+                                                    <input type="text" className="form-control" placeholder="CVV" />
+                                                    {showSaveButton && (
+                                                        <button className="btn btn-primary mt-2" onClick={() => handleSaveButtonClick(1)}>
+                                                            Guardar tarjeta
+                                                        </button>
+                                                    )}
+                                                </>
+                                            )}
+                                            {/* Info tarjeta guardada */}
+                                            {cardData[1] && (
+                                                <>
+                                                    <p>Titular: {cardData[1].titular}</p>
+                                                    <p>Número: {cardData[1].numero}</p>
+                                                    <p>Mes: {cardData[1].mes}</p>
+                                                    <p>Año: {cardData[1].año}</p>
+                                                    <p>CVV: {cardData[1].cvv}</p>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="col">
+                                    <div className="card bg-warning">
+                                        <div className="card-body text-center">
+                                            <div className="d-flex justify-content-center">
+                                                <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(2)}>+ Añadir tarjeta</button>
+                                            </div>
+                                            {isInputVisible[2] && (
+                                                <>
+
+                                                    <input type="text" className="form-control" placeholder="Nombre del titular" />
+                                                    <input type="text" className="form-control" placeholder="Número de la tarjeta" />
+                                                    <input type="text" className="form-control" placeholder="Mes" />
+                                                    <input type="text" className="form-control" placeholder="Año" />
+                                                    <input type="text" className="form-control" placeholder="CVV" />
+                                                    {showSaveButton && (
+                                                        <button className="btn btn-primary mt-2" onClick={() => handleSaveButtonClick(2)}>Guardar tarjeta</button>
+                                                    )}
+                                                </>
+                                            )}
+                                            {/* Info tarjeta guardada */}
+                                            {cardData[2] && (
+                                                <>
+                                                    <p>Titular: {cardData[2].titular}</p>
+                                                    <p>Número: {cardData[2].numero}</p>
+                                                    <p>Mes: {cardData[2].mes}</p>
+                                                    <p>Año: {cardData[2].año}</p>
+                                                    <p>CVV: {cardData[2].cvv}</p>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col">
+                                    <div className="card bg-warning">
+                                        <div className="card-body text-center">
+                                            <div className="d-flex justify-content-center">
+                                                <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(3)}>+ Añadir tarjeta</button>
+                                            </div>
+                                            {isInputVisible[3] && (
+                                                <>
+                                                    <input type="text" className="form-control" placeholder="Nombre del titular" />
+                                                    <input type="text" className="form-control" placeholder="Número de la tarjeta" />
+                                                    <input type="text" className="form-control" placeholder="Mes" />
+                                                    <input type="text" className="form-control" placeholder="Año" />
+                                                    <input type="text" className="form-control" placeholder="CVV" />
+                                                    {showSaveButton && (
+                                                        <button className="btn btn-primary mt-2" onClick={() => handleSaveButtonClick(3)}>Guardar tarjeta</button>
+                                                    )}
+                                                </>
+                                            )}
+                                            {/* Info tarjeta guardada */}
+                                            {cardData[3] && (
+                                                <>
+                                                    <p>Titular: {cardData[3].titular}</p>
+                                                    <p>Número: {cardData[3].numero}</p>
+                                                    <p>Mes: {cardData[3].mes}</p>
+                                                    <p>Año: {cardData[3].año}</p>
+                                                    <p>CVV: {cardData[3].cvv}</p>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
-                <div className="col">
-                    <div className="card h-100 bg-secondary">
-                        <div className="card-body">
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h5 className="card-title" style={subtitleButton}>Nombe:</h5>
-                                </div>
-                                <div className="col">
-                                    <p className="card-text text-center">Diego Rivera Spröhnle</p>
-                                </div>
-                            </div>
-                            <div class="border-top border-dark" />
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h5 className="card-title" style={subtitleButton}>Email:</h5>
-                                </div>
-                                <div className="col">
-                                    <p className="card-text text-center">Email@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="border-top border-dark" />
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h5 className="card-title" style={subtitleButton}>Celular:</h5>
-                                </div>
-                                <div className="col">
-                                    <p className="card-text text-center">+56 9 8752 0519</p>
-                                </div>
-                            </div>
-                            <div class="border-top border-dark" />
-                            <div className="row align-items-center">
-                                <div className="col">
-                                    <h5 className="card-title" style={subtitleButton}>Dirección:</h5>
-                                </div>
-                                <div className="col">
-                                    <p className="card-text text-center">Calle 123, Ciudad, País</p>
-                                </div>
-                            </div>
-                            <div class="border-top border-dark" />
-                        </div>
-                        <div className="card-footer">
-                            <small className="text-body-secondary">TukiMarket 🐸</small>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
     );
