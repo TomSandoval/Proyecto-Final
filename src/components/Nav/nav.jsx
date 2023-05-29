@@ -25,12 +25,11 @@ export default function SearchBar({ view }) {
     setName(e.target.value);
   }
 
-
   function handleSubmit() {
     dispatch(getProductByName(name));
     setName("");
     navigate(`/Search/${name}`);
-    window.sessionStorage.removeItem('filtroNombre')
+    window.sessionStorage.removeItem("filtroNombre");
   }
 
   function handleKeyDown(e) {
@@ -80,6 +79,9 @@ export default function SearchBar({ view }) {
         <div className={styles.buttonLogin}>
           <Link to="/formCreateProduct" className={styles.link}>
             Publicar un producto
+          </Link>
+          <Link to="/admin/dashboard" className={styles.link}>
+            Admin
           </Link>
         </div>
       </div>
