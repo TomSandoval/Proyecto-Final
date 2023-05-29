@@ -21,7 +21,7 @@
 }
 
 .Product-active {
-  width: 82vw;
+  width: 61.9vw;
   height: 52vh;
   /* position: absolute;
   top: 61%;
@@ -29,8 +29,9 @@
   transform: translate(-50%, -50%); */
   border-radius: 10px;
   padding: 20px;
-  backdrop-filter: blur(10000px);
+  backdrop-filter: blur(900px);
   -webkit-backdrop-filter: blur(15px);
+  margin: 1%;
 }
 
 .Product-inactive {
@@ -42,7 +43,7 @@
   transform: translate(-50%, -50%); */
   border-radius: 10px;
   padding: 20px;
-  backdrop-filter: blur(900px);
+  backdrop-filter: blur(10000px);
   -webkit-backdrop-filter: blur(15px);
   margin: 1%;
 }

@@ -92,7 +92,8 @@
 @media (max-width: 768px) {
   @media (max-width: 600px) {
     /* Estilos para pantallas más pequeñas, como smartphones */
-    .footer {
+    .footer,
+    .footer-dark {
       flex-direction: column;
       align-items: center;
       text-align: center;
@@ -115,7 +116,7 @@
 
     .Redirect-h4 {
       font-size: 27px;
-      color: #000;
+      margin-top: 5%;
     }
 
     .redirect-links {
@@ -127,6 +128,10 @@
       width: 100%; /* Reduce el ancho del logo */
       /* height: 50%; */
       margin: 15px; /* Añade un margen inferior para separar el logo */
+    }
+
+    .footer-logo-dark {
+      width: 70%;
     }
 
     .contact-block {
