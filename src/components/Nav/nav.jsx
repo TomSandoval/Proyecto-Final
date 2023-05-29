@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
@@ -10,6 +10,7 @@ import logoWhite from "../../assets/cart-white-alt-regular-24.png";
 import { getProductByName, darkMode, closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./searchBar.module.css";
+import axios from "axios";
 
 export default function SearchBar({ view }) {
   const carrito = useSelector((state) => state.carrito);
@@ -18,12 +19,46 @@ export default function SearchBar({ view }) {
   const userData = useSelector((state) => state.userData);
   const [name, setName] = useState("");
   const [viewMenu, setViewMenu] = useState(false);
+  const [productsSearch, setProductsSearch] = useState([]); //para el buscador
+  const [matched, setMatched] = useState([]); //para el buscador
+  const [displayResults, setDisplayResults] = useState(false); //para el buscador
+  const inputRef = useRef(null) ;
+  const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = localStorage.getItem('username');
+  const username = localStorage.getItem('username
 
-  function handleInput(e) {
+
+  useEffect(()=>{
+    async function getProducts(){
+    const response = await axios.get(`http://localhost:3001/product`)
+    setProductsSearch(response.data)
+    }
+    getProducts()
+    function handleClickOutside(event) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        searchDisplayRef.current &&
+        !searchDisplayRef.current.contains(event.target)
+      ) {
+        setDisplayResults(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  },[])
+
+
+
+  async function  handleInput(e) {
     setName(e.target.value);
+    setMatched(productsSearch.filter((product) => product.name.toLowerCase().includes(e.target.value.toLowerCase())));
+    setDisplayResults(name.length >= 3 && matched.length > 1);
   }
 
 
@@ -37,7 +72,7 @@ export default function SearchBar({ view }) {
   function handleKeyDown(e) {
     if (e.keyCode === 13) {
       handleSubmit();
-    }
+    } 
   }
 
   function handleChange() {
@@ -87,6 +122,18 @@ export default function SearchBar({ view }) {
     );
   };
 
+  const handleSearchItem = (id) => {
+    navigate(`/Detail/${id}`)
+  }
+
+  const searchDisplay = () => {
+    return (
+      <div ref={searchDisplayRef} className={styles.searchDisplay}>
+        {matched.map((product,index) => <option onClick={()=>handleSearchItem(product.id)} className={styles.searchItems} key={index}>{product.name}</option>)}
+      </div>
+    )
+  }
+
   return (
     <div className={darkModes ? styles.divSearchBar_dark : styles.divSearchBar}>
       <div className={styles.logoContainer}>
@@ -101,6 +148,7 @@ export default function SearchBar({ view }) {
       {view ? (
         <div className={styles.divInput}>
           <input
+          ref={inputRef}
             type="search"
             value={name}
             placeholder="¿Que vas a llevar hoy?"
@@ -112,6 +160,7 @@ export default function SearchBar({ view }) {
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>
+          {displayResults ? searchDisplay() : null}
         </div>
       ) : null}
 
@@ -151,6 +200,7 @@ export default function SearchBar({ view }) {
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
             <Link to="/user" className={styles.linkMenu}>
+              Perfil
               {username}
             </Link>
           </div>

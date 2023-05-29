@@ -66,7 +66,7 @@ export default function FormUserLogin() {
     }
   };
   const googleHandle = () => {
-    window.open("https://tuki-server.onrender.com/auth/google", "_self");
+    window.open("http://localhost:3001/auth/google", "_self");
 
     const urlParams = new URLSearchParams(window.location.search);
     const token = decodeURIComponent(urlParams.get("token"));
@@ -100,6 +100,7 @@ export default function FormUserLogin() {
         />
       </Link>
       <div className={darkModes ? styles.divDark : styles.div}>
+        <h2 className={styles.loginTitle}>Login</h2>
         <form
           action="/login"
           method="POST"
@@ -107,46 +108,26 @@ export default function FormUserLogin() {
           className={styles.divForm}
         >
           <div className={styles.divAlreadyRegister}>
-            <div className={styles.userNameInput}>
-              <input
-                type="text"
-                name="nickname"
-                value={input.nickname}
-                onChange={handleChange}
-                placeholder="Nombre"
-                className={styles.inputMail}
-              />
-              {<span className={styles.errors}>{errors.nickName}</span>}
+            <div class={styles.inputUserContainer}>
+              <input autoComplete="non" type="text" name="nickname" id="username-input" className={input.nickname < 1 ? styles.inputUsername : styles.inputUserActive} value={input.nickname} onChange={handleChange}/>
+              <label for="username-input" className={styles.inputLabel}>
+                Nombre de usuario
+              </label>
+            {<span className={styles.errors}>{errors.nickname}</span>}
             </div>
           </div>
 
           <div className={styles.divAlreadyRegister}>
-            <div className={styles.userNameInput}>
-              <input
-                type="password"
-                value={input.password}
-                onChange={handleChange}
-                name="password"
-                placeholder="Contraseña"
-                className={styles.inputPassword}
-              />
-              {<span className={styles.errors}>{errors.password}</span>}
+          <div class={styles.inputUserPasswordContainer}>
+              <input type="password" name="password" id="password-input" className={input.password < 1 ? styles.inputPasswordLogin : styles.inputPasswordActiveLogin} value={input.password} onChange={handleChange}/>
+              <label for="password-input" className={styles.inputLabel}>
+                Contraseña
+              </label>
+            {<span className={styles.errors}>{errors.password}</span>}
             </div>
-
-            <span className={styles.register}>Ingresar</span>
           </div>
           <div className={styles.divAlreadyRegister}>
             <button className={styles.buttonHome}>Ingresar</button>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <Link to={"/formRegister"} className={styles.noRegister}>
-              No tengo cuenta
-            </Link>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <Link to="/" className={styles.buttonGuest}>
-              Continuar como Invitado
-            </Link>
           </div>
         </form>
         <button className={styles.googleButton} onClick={googleHandle}>
@@ -161,6 +142,7 @@ export default function FormUserLogin() {
           </svg>
           Continuar con Google
         </button>
+        <span className={styles.userNoRegister} >No tienes cuenta? <Link to='/formRegister' className={styles.toRegister}>Registrate</Link></span>
       </div>
     </div>
   );
