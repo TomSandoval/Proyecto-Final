@@ -136,16 +136,18 @@ function User() {
                                     Centro de ayuda
                                 </Link>
                             </button>
-                            <button
-                                type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                style={perfilButtonStyle}
-                                id="perfil-btn"
-                            >
-                                <Link to="/ProductSale" style={linkColor}>
-                                    Mis publicaciones
-                                </Link>
-                            </button>
+                            {roll === 'SELLER' && (
+                                <button
+                                    type="button"
+                                    className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    <Link to="/ProductSale" style={linkColor}>
+                                        Mis publicaciones
+                                    </Link>
+                                </button>
+                            )}
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>

@@ -11,6 +11,7 @@ function Order() {
     const userData = localStorage.getItem('email');
     const history = useSelector((state) => state.history);
     const location = useLocation();
+    const roll = localStorage.getItem('roll');
 
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
@@ -155,16 +156,18 @@ function Order() {
                                     Centro de ayuda
                                 </button>
                             </Link>
-                            <Link to="/ProductSale" style={linkColor}>
+                            {roll === 'SELLER' && (
                                 <button
                                     type="button"
                                     className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
-                                    Mis publicaciones
+                                    <Link to="/ProductSale" style={linkColor}>
+                                        Mis publicaciones
+                                    </Link>
                                 </button>
-                            </Link>
+                            )}
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>
@@ -180,7 +183,7 @@ function Order() {
                                     <a className="nav-link active" aria-current="page" href="#">Todo</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Sin pagar(0)</a>
+                                    <a className="nav-link" href="#" style={linkColor}>Pendientes(0)</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#" style={linkColor}>Procesando(0)</a>

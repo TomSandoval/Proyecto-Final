@@ -8,17 +8,30 @@ function Payment() {
     const [isInputVisible, setIsInputVisible] = useState([]);
     const [cardData, setCardData] = useState([]);
     const [showSaveButton, setShowSaveButton] = useState(false);
+    const roll = localStorage.getItem('roll');
+
 
     useEffect(() => {
+        // Cargar datos de tarjetas guardados en el localStorage al inicio
+        const storedCardData = localStorage.getItem('cardData');
+        if (storedCardData) {
+            setCardData(JSON.parse(storedCardData));
+        }
+
         const currentPath = window.location.pathname.split('/').pop();
         if (currentPath === 'user') {
             setActiveButton('Perfil');
         } else if (currentPath === 'payment') {
             setActiveButton('Pagos');
         } else {
-            setActiveButton('Pedido');
+            setActiveButton('Mis compras');
         }
     }, []);
+
+    useEffect(() => {
+        // Guardar los datos de las tarjetas en el localStorage cuando cambien
+        localStorage.setItem('cardData', JSON.stringify(cardData));
+    }, [cardData]);
 
     const handleInsertButtonClick = (index) => {
         const updatedVisibility = [...isInputVisible];
@@ -26,6 +39,7 @@ function Payment() {
         setIsInputVisible(updatedVisibility);
         setShowSaveButton(true);
     };
+
     const handleSaveButtonClick = (index) => {
         const updatedCardData = [...cardData];
         const inputs = document.querySelectorAll('.form-control');
@@ -40,8 +54,6 @@ function Payment() {
         setCardData(updatedCardData);
         setShowSaveButton(false);
     };
-
-
     //! Estilos
     const background = {
         background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
@@ -101,12 +113,12 @@ function Payment() {
 
     return (
         <div style={background}>
-            <SearchBar/>
+            <SearchBar />
             <br />
             <br />
             <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
-                <div className='container-fluid' style={links}>
+                    <div className='container-fluid' style={links}>
                         <Link to="/" style={linkColor2}>
                             Hogar &gt; &nbsp;
                         </Link>
@@ -171,16 +183,18 @@ function Payment() {
                                     Centro de ayuda
                                 </Link>
                             </button>
-                            <button
-                                type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                style={perfilButtonStyle}
-                                id="perfil-btn"
-                            >
-                                <Link to="/ProductSale" style={linkColor}>
-                                    Mis publicaciones
-                                </Link>
-                            </button>
+                            {roll === 'SELLER' && (
+                                <button
+                                    type="button"
+                                    className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    <Link to="/ProductSale" style={linkColor}>
+                                        Mis publicaciones
+                                    </Link>
+                                </button>
+                            )}
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>
@@ -200,7 +214,6 @@ function Payment() {
                                             </div>
                                             {isInputVisible[0] && (
                                                 <>
-
                                                     <input type="text" className="form-control" placeholder="Nombre del titular" />
                                                     <input type="text" className="form-control" placeholder="Número de la tarjeta" />
                                                     <input type="text" className="form-control" placeholder="Mes" />
@@ -211,7 +224,7 @@ function Payment() {
                                                     )}
                                                 </>
                                             )}
-                                             {/* Info tarjeta guardada */}
+                                            {/* Info tarjeta guardada */}
                                             {cardData[0] && (
                                                 <>
                                                     <p>Titular: {cardData[0].titular}</p>

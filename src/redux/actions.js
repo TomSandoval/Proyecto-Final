@@ -140,7 +140,7 @@ export const getProductByName = (name) => async (dispatch) => {
       type: GET_PRODUCT_BY_NAME,
       payload: response.data,
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const prevPageHome = (value, page) => async (dispatch) => {
@@ -208,7 +208,7 @@ export const checkSesion = () => {
   const email = localStorage.getItem('email');
   const user = {
     username: username,
-    email:email,
+    email: email,
   }
   return {
     type: CHECK_SESION,
@@ -219,7 +219,7 @@ export const checkSesion = () => {
 
 export const checkExpiration = () => {
   const tokenExpiration = window.localStorage.getItem('tokenExpiration');
-  if(Date.now() >= tokenExpiration) {
+  if (Date.now() >= tokenExpiration) {
     return closeSesion();
   }
   return checkSesion()
@@ -229,10 +229,11 @@ export const postCreate = (payload) => {
   return async function (dispatch) {
     try {
       var json = await axios.post("http://localhost:3001/product", payload);
-      return dispatch({
+      dispatch({
         type: POST_CREATE,
         payload: json,
       });
+      window.localStorage.setItem('roll', 'SELLER')
     } catch (error) {
       console.log(error);
     }
@@ -269,7 +270,7 @@ export const filterByCategory = (name, min, max) => async (dispatch) => {
       type: FILTER_PRODUCTS,
       payload: response.data,
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const changePagesCategory = (name, value) => async (dispatch) => {
@@ -281,7 +282,7 @@ export const changePagesCategory = (name, value) => async (dispatch) => {
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data,
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
 export const changePagesName = (name, value) => async (dispatch) => {
@@ -312,10 +313,10 @@ export const filterByName = (name, min, max) => async (dispatch) => {
   }
 };
 
-export const changePageFilterNames = (name,min,max,value) => async (dispatch) => {
+export const changePageFilterNames = (name, min, max, value) => async (dispatch) => {
   try {
 
-    const response = await axios.get(`http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}&page=${value-1}`)
+    const response = await axios.get(`http://localhost:3001/product/pricerange/name/${name}?max=${max}&min=${min}&page=${value - 1}`)
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data
@@ -326,18 +327,18 @@ export const changePageFilterNames = (name,min,max,value) => async (dispatch) =>
 }
 
 
-export const changePageFilterCategory = (name,min,max,value) => async (dispatch) => {
-    try {
-        const response = await axios.get(`http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}&page=${value-1}`)
-        dispatch({ 
-            type: CHANGE_PAGES_PRODUCTS,
-            payload: response.data
-        })
-    } catch (error) {
-        console.log(error);      
-    }
+export const changePageFilterCategory = (name, min, max, value) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/product/pricerange/category/${name}?max=${max}&min=${min}&page=${value - 1}`)
+    dispatch({
+      type: CHANGE_PAGES_PRODUCTS,
+      payload: response.data
+    })
+  } catch (error) {
+    console.log(error);
+  }
 
- } 
+}
 
 export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
   try {
@@ -349,12 +350,12 @@ export const sortAlphabeticProducts = (name, value) => async (dispatch) => {
       type: FILTER_PRODUCTS,
       payload: response.data,
     });
-  } catch (error) {}
+  } catch (error) { }
 };
 
-export const changePageOrderName = (name,filter,value) => async (dispatch) => {
+export const changePageOrderName = (name, filter, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value-1}`)
+    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value - 1}`)
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data
@@ -376,13 +377,13 @@ export const sortPriceProducts = (name, value) => async (dispatch) => {
       type: FILTER_PRODUCTS,
       payload: response.data,
     });
-  } catch (error) {}
+  } catch (error) { }
 
 }
 
-export const changePageSortPriceName = (name,filter,value) => async (dispatch) => {
+export const changePageSortPriceName = (name, filter, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value-1}`)
+    const response = await axios.get(`http://localhost:3001/product/order/name/${name}?orders=${filter}&page=${value - 1}`)
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data
@@ -405,9 +406,9 @@ export const sortPriceCategory = (name, value) => async (dispatch) => {
   }
 }
 
-export const changePageSortPriceCategory = (name,filter,value) => async (dispatch) => {
+export const changePageSortPriceCategory = (name, filter, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value-1}`)
+    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value - 1}`)
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data
@@ -433,9 +434,9 @@ export const orderByCategory = (name, value) => async (dispatch) => {
   }
 }
 
-export const changePageOrderCategory = (name,filter,value) => async (dispatch) => {
+export const changePageOrderCategory = (name, filter, value) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value-1}`)
+    const response = await axios.get(`http://localhost:3001/categories/order/category/${name}?orders=${filter}&page=${value - 1}`)
     dispatch({
       type: CHANGE_PAGES_PRODUCTS,
       payload: response.data
@@ -502,22 +503,22 @@ export const envioDetalle = (detalles) => {
 
 export const deleteAllCart = () => {
   return {
-    type:DELETE_ALL_CART,
+    type: DELETE_ALL_CART,
   };
 };
 
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/users/shoppinghistory",{
-        params:{
-          email:payload,
+      var json = await axios.get("http://localhost:3001/users/shoppinghistory", {
+        params: {
+          email: payload,
         }
       });
-      dispatch({ 
+      dispatch({
         type: GET_PRODUC_BY_USER,
         payload: json.data,
-    })
+      })
     } catch (error) {
       console.log(error);
     }
