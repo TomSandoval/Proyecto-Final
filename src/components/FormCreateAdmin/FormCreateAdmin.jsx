@@ -13,22 +13,24 @@ export default function FormCreateAdmin() {
 
   const [form, setForm] = useState({
     name: "",
-    lastname: "",
+    lastName: "",
     nickname: "",
     email: "",
     birthDate: "",
     address: "",
     password: "",
+    picture: "",
   });
 
   const [errors, setErrors] = useState({
     name: "",
-    lastname: "",
+    lastName: "",
     nickname: "",
     email: "",
     birthDate: "",
     address: "",
     password: "",
+    picture: "",
   });
 
   const handleChange = (event) => {
@@ -44,7 +46,7 @@ export default function FormCreateAdmin() {
     event.preventDefault();
     if (
       !errors?.name &&
-      !errors?.lastname &&
+      !errors?.lastName &&
       !errors?.nickname &&
       !errors?.email &&
       !errors?.birthDate &&
@@ -81,8 +83,8 @@ export default function FormCreateAdmin() {
             </div>
             <div>
               <p htmlFor="">Apellido</p>
-              <input type="text" name="lastname" onChange={handleChange} />
-              <span>{errors.lastname}</span>
+              <input type="text" name="lastName" onChange={handleChange} />
+              <span>{errors.lastName}</span>
             </div>
           </div>
           <div className={style.emailNick}>
@@ -118,6 +120,11 @@ export default function FormCreateAdmin() {
               <input type="date" name="birthDate" onChange={handleChange} />
               <span>{errors.birthDate}</span>
             </div>
+          </div>
+          <div>
+            <p>Picture</p>
+            <input type="text" name="picture" onChange={handleChange} />
+            {/* <span>{errors.picture}</span> */}
           </div>
           <div>
             <p htmlFor="">Contraseña</p>

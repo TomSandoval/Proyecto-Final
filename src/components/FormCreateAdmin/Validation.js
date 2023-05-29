@@ -21,5 +21,8 @@ export default function Validation(form) {
   if (!form.password) {
     errors.password = "Campo vacio";
   }
+  // if (!form.picture) {
+  //   errors.picture = "Campo vacio";
+  // }
   return errors;
 }
