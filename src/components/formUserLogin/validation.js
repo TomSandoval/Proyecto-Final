@@ -2,10 +2,10 @@ export default function Validation (input,setErrors,errors,e) {
     let isValid = true;
     switch (e.target.name) {
         case 'nickname':
-            if(!input.nickname)setErrors({...errors, nickName:'Campo Vacio'});
+            if(!input.nickname)setErrors({...errors, nickname:'Campo Vacio'});
             else{
                 if(isValid){
-                    setErrors({...errors, nickName:''});
+                    setErrors({...errors, nickname:''});
                 }
             }
         break;
