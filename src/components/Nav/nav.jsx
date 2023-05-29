@@ -26,7 +26,7 @@ export default function SearchBar({ view }) {
   const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = localStorage.getItem('username
+  const username = localStorage.getItem('username')
 
 
   useEffect(()=>{
@@ -200,7 +200,6 @@ export default function SearchBar({ view }) {
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
             <Link to="/user" className={styles.linkMenu}>
-              Perfil
               {username}
             </Link>
           </div>
