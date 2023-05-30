@@ -15,6 +15,12 @@ function Order() {
     const userData = localStorage.getItem('email');
     const history = useSelector((state) => state.history);
     const location = useLocation();
+    const completo=history?.filter((order) => order.status === 'ENTREGADO')
+    const enviado=history?.filter((order) => order.status === "ENVIADO")
+    const pendiente=history?.filter((order) => order.status === "PENDIENTE")
+    const [status , setStatus] =  React.useState({
+        status:'TODO',
+    });
     const [reviews , setReviews] =  React.useState(false);
     const [review , setReview] =  React.useState({
         id:'',
@@ -140,6 +146,13 @@ function Order() {
             descripcion:'',
         })
         setReviews(false)
+      }
+
+      const handleStatus = (e)=>{
+        console.log(e);
+        setStatus({
+            status: e.target.name,
+        })
       }
       
       
@@ -297,32 +310,33 @@ function Order() {
                         <div className="card-body">
                             <ul className="nav nav-pills nav-fill">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Todo</a>
+                                    {status.status==='TODO'?<a className="nav-link active" style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e)=>handleStatus(e)}>Todo</a>:
+                                    <a className="nav-link " style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e)=>handleStatus(e)}>Todo</a>}
                                 </li>
 
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Procesando(0)</a>
+                                    {status.status==='PENDIENTE'?<a className="nav-link active" href="#" style={linkColor} name='PENDIENTE' onClick={(e)=>handleStatus(e)}>Procesando(0)</a>:
+                                    <a className="nav-link " href="#" style={linkColor} name='PENDIENTE' onClick={(e)=>handleStatus(e)}>Procesando(0)</a>}
+                                    
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Enviado</a>
+                                    {status.status==='ENVIADO'?
+                                    <a className="nav-link active" href="#" style={linkColor} name='ENVIADO' onClick={(e)=>handleStatus(e)}>Enviado</a>:
+                                    <a className="nav-link" href="#" style={linkColor} name='ENVIADO' onClick={(e)=>handleStatus(e)}>Enviado</a>
+                                    }
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Completado</a>
+                                    {status.status==='ENTREGADO'?
+                                    <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e)=>handleStatus(e)}>Completado</a>:
+                                    <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e)=>handleStatus(e)}>Completado</a>
+                                    }
                                 </li>
                             </ul>
-                            <nav className="navbar bg-body-tertiary" style={{ width: '680px' }}>
-                                <div className="container-fluid">
-                                    <div className="d-flex align-items-center">
-                                        <h5>Pedidos:</h5>
-                                        <input className="form-control" type="search" style={{ width: '500px' }} placeholder="N° de pedido, nombre del producto" aria-label="Search" />
-                                        <button className="btn btn-success" type="submit">Buscar</button>
-                                    </div>
-                                </div>
-                            </nav>
+
                         </div>
                     </div>
 
-                    <div className="card h-100 bg-secondary">
+                    {status.status==="TODO"?<div className="card h-100 bg-secondary">
                         <div className="card-body">
                             <h2>Compras realizadas por el usuario:</h2>
                             {history ? (
@@ -347,7 +361,87 @@ function Order() {
                                 <h3>Todavía no has realizado compras.</h3>
                             )}
                         </div>
-                    </div>
+                    </div>:''}
+
+                    {status.status==="PENDIENTE"?<div className="card h-100 bg-secondary">
+                        <div className="card-body">
+                            <h2>Compras en preparacion:</h2>
+                            {history ? (
+                                <>
+                                    {pendiente.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={()=>handleNavigate(e.product.id)}>
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No tienes compras en preparacion.</h3>
+                            )}
+                        </div>
+                    </div>:''}
+                
+                    {status.status==="ENVIADO"?<div className="card h-100 bg-secondary">
+                        <div className="card-body">
+                            <h2>Compras enviadas:</h2>
+                            {history ? (
+                                <>
+                                    {enviado.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={()=>handleNavigate(e.product.id)}>
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No tienes compras en envio.</h3>
+                            )}
+                        </div>
+                    </div>:''}
+                    {status.status==="ENTREGADO"?<div className="card h-100 bg-secondary">
+                        <div className="card-body">
+                            <h2>Compras Completadas:</h2>
+                            {history ? (
+                                <>
+                                    {completo.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={()=>handleNavigate(e.product.id)}>
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No ninguna compra completada.</h3>
+                            )}
+                        </div>
+                    </div>:''}
                 </div>
             </div>
         </div>
