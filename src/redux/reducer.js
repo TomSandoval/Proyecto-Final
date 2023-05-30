@@ -31,6 +31,7 @@ import {
   GET_PRODUCT_ACTIVE,
   CREATE_ADMIN,
   LIST_USERS,
+  SEND_REVIEWS
 } from "./actions";
 
 const initialState = {
@@ -318,6 +319,11 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         usersAdmin: action.payload,
+      };
+
+    case SEND_REVIEWS:
+      return {
+        ...state,
       };
 
     default:
