@@ -31,7 +31,7 @@ function UpdateProduct() {
         if (userData) {
             dispatch(getVentas(userData));
         }
-    }, [dispatch, ventas]);
+    }, [dispatch]);
     const handleStatus = (e)=>{
         setStatus({
             status: e.target.name,
