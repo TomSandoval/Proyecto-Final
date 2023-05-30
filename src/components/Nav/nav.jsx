@@ -11,6 +11,7 @@ import { getProductByName, darkMode, closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./searchBar.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function SearchBar({ view }) {
   const carrito = useSelector((state) => state.carrito);
@@ -90,7 +91,25 @@ export default function SearchBar({ view }) {
   };
 
   const handleSession = () => {
-    dispatch(closeSesion());
+    Swal.fire({
+      title: '¿Estas seguro que quieres cerrar sesión?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Cerrar Sesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(closeSesion())
+        Swal.fire(
+          'Espero verte pronto!',
+          'Tu cuenta fue cerrda con exito.',
+          'success'
+        )
+      }
+    })
   };
 
   const buttonsUnlogin = () => {
