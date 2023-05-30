@@ -1,54 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import SearchBar from "../Nav/nav";
-import { Link, useLocation } from "react-router-dom";
+import {getVentas, putStatus} from '../../redux/actions';
 import { useDispatch, useSelector } from "react-redux";
-import { shoppinghistory } from "../../redux/actions";
-import styles from "./order.module.css";
-import { sendReviews , getVentas} from '../../redux/actions';
-import { Toaster, toast } from 'sonner'
 import { useNavigate } from "react-router-dom";
+import styles from "./order.module.css";
+import { LogarithmicScale } from 'chart.js';
+import { Toaster, toast } from 'sonner'
 
 
-function Order() {
-    const [activeButton, setActiveButton] = React.useState('Pedido');
+function UpdateProduct() {
     const dispatch = useDispatch();
     const userData = localStorage.getItem('email');
-    const history = useSelector((state) => state.history);
-    const location = useLocation();
-    const completo=history?.filter((order) => order.status === 'ENTREGADO')
-    const enviado=history?.filter((order) => order.status === "ENVIADO")
-    const pendiente=history?.filter((order) => order.status === "PENDIENTE")
+    const ventas = useSelector((state) => state.ventas);
+    const completo=ventas?.filter((order) => order.status === 'ENTREGADO')
+    const enviado=ventas?.filter((order) => order.status === "ENVIADO")
+    const pendiente=ventas?.filter((order) => order.status === "PENDIENTE")
+    const [activeButton, setActiveButton] = useState('Pedido');
     const [status , setStatus] =  React.useState({
         status:'TODO',
     });
-    const [reviews , setReviews] =  React.useState(false);
-    const [review , setReview] =  React.useState({
+    const [update , setUpdate] =  React.useState(false);
+
+    const [updateStatus , setUpdateStatus] =  React.useState({
         id:'',
-        idProduc:'',
-        email:userData,
-        rating:null,
-        descripcion:'',
+        status:'',
+        statusActual:''
     });
     useEffect(() => {
-        const currentPath = location.pathname.split('/').pop();
+        if (userData) {
+            dispatch(getVentas(userData));
+        }
+    }, [dispatch, ventas]);
+    const handleStatus = (e)=>{
+        setStatus({
+            status: e.target.name,
+        })
+      }
+
+    useEffect(() => {
+        const currentPath = window.location.pathname.split('/').pop();
         if (currentPath === 'user') {
             setActiveButton('Perfil');
-        } else if (currentPath === 'orders') {
-            setActiveButton('Pedidos');
+        } else if (currentPath === 'payment') {
+            setActiveButton('Pagos');
         } else {
             setActiveButton('Pedido');
         }
-    }, [location.pathname]);
+    }, []);
 
-    useEffect(() => {
-        if (userData) {
-            dispatch(shoppinghistory(userData));
-        }
-    }, [dispatch, userData]);
 
+
+    //! Estilos
     const background = {
         background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
-        minHeight: '100vh',
+        height: '150vh',
         width: '100vw'
     };
     const perfilButtonStyle = {
@@ -65,16 +71,14 @@ function Order() {
     const subtitleButton = {
         textAlign: "left"
     };
-
     const linkColor = {
         color: "white",
         textDecoration: "none",
     };
     const cardHeight = {
-        height: "50%",
+        height: "100%",
         width: "75%",
     };
-
     const cardContainerStyle = {
         display: 'flex',
         justifyContent: 'space-between',
@@ -101,162 +105,126 @@ function Order() {
     const links = {
         marginTop: "-25px",
     };
-
-    const onReviews = (eId,id) => {
-        setReviews(true)
-        setReview({
-            ...review,
-            id:id,
-            idProduc:eId,
-        })
-    }
     const navigate = useNavigate();
     const handleNavigate = (id) => {
         navigate(`/Detail/${id}`);
       }
+    
+      const onReviews = (id,status) => {
+        setUpdate(true)
+        setUpdateStatus({
+            ...updateStatus,
+            id:id,
+            statusActual:status,
+        })
+    }
 
-    const handleChange = (e) => {
-        setReview({
-            ...review,
-            [e.target.name]: e.target.value,
-        })
-      };
-      
-      const handleSubmit = (e) => {
-        e.preventDefault(); 
-        dispatch(sendReviews(review))
-        setReview({
+    const closeUpdate =() =>{
+        setUpdateStatus({
             id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
+            status:'',
+            statusActual:''
         })
-        toast.success(`Se envio la reseña correctamente , gracias`),{
-        }
-        setReviews(false)
-      };
-
-      const closeReviews =() =>{
-        setReview({
-            id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
-        })
-        setReviews(false)
+        setUpdate(false)
       }
 
-      const handleStatus = (e)=>{
-        setStatus({
+      const handleUpdate = (e)=>{
+        setUpdateStatus({
+            ...updateStatus,
             status: e.target.name,
         })
       }
-      
-      
-      return (
-        <div style={background} >
-          {reviews ? (
+
+      const handleSubmit = (e) => {
+        e.preventDefault(); 
+        dispatch(putStatus(updateStatus))
+        toast.success(`Se cambio el estado a ${updateStatus.status} , gracias`),{
+        }
+        setUpdateStatus({
+            id:'',
+            status:'',
+            statusActual:''
+        })
+        setUpdate(false)
+      };
+
+
+
+    return (
+        <div style={background}>
+                {update ? (
             <div className={`${styles.overlay}`}>
-                <button className={styles.closebButton} onClick={()=>closeReviews()}>❌</button>
-              <form onSubmit={(e)=>handleSubmit(e)}>
+                <button type='button' className={styles.closebButton} onClick={()=>closeUpdate()}>❌</button>
+              <form onSubmit={(e)=>handleSubmit(e)} className={`${styles.divForm}`}>
                 <div>
-                  <label htmlFor="descripcion" >Deja una Reseña: </label>
+                  <label htmlFor="descripcion" >Selecciona en el estado del producto: </label>
                 </div>
                 <div>
-                <textarea
-                    name="descripcion"
-                    onChange={handleChange}
-                    className={styles.descriptionInput}
-                ></textarea>
-                </div>
-                <div className={styles.rating}>
-                  <input
-                    type="radio"
-                    id="star5"
-                    name="rating"
-                    value="5"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star5"></label>
-                  <input
-                    type="radio"
-                    id="star4"
-                    name="rating"
-                    value="4"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star4"></label>
-                  <input
-                    type="radio"
-                    id="star3"
-                    name="rating"
-                    value="3"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star3"></label>
-                  <input
-                    type="radio"
-                    id="star2"
-                    name="rating"
-                    value="2"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star2"></label>
-                  <input
-                    type="radio"
-                    id="star1"
-                    name="rating"
-                    value="1"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star1"></label>
+                  <button type="button" 
+                  className={styles.submitButton} 
+                  disabled={updateStatus.statusActual === 'PENDIENTE' || updateStatus.statusActual === 'ENVIADO' || updateStatus.statusActual === 'ENTREGADO'}
+                  >En Preparacion 🛠️</button>
                 </div>
                 <div>
-                  <button type="submit" className={styles.submitButton}>Enviar reseña</button>
+                  <button type="button" 
+                  name='ENVIADO'
+                  className={styles.submitButton}
+                  onClick={(e)=>handleUpdate(e)}
+                  disabled={updateStatus.statusActual === 'ENVIADO' || updateStatus.statusActual === 'ENTREGADO'}
+                  >Enviado 🚚</button>
+                </div>
+                <div>
+                  <button type="button" 
+                  name='ENTREGADO'
+                  className={styles.submitButton}
+                  onClick={(e)=>handleUpdate(e)}
+                  disabled={updateStatus.statusActual === 'ENTREGADO'}>Completado ✅</button>
+                </div>
+                <div>
+                  <button type="submit" className={styles.submitButton}>Cambiar estado</button>
                 </div>
               </form>
             </div>):<></>}
-            <SearchBar />
+            <SearchBar/>
             <br />
             <br />
             <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
-                    <div className='container-fluid' style={links}>
+                <div className='container-fluid' style={links}>
                         <Link to="/" style={linkColor2}>
                             Hogar &gt; &nbsp;
                         </Link>
                         <Link to="/user" style={linkColor2}>
                             Mi cuenta &gt; &nbsp;
                         </Link>
-                        <Link to="/user/orders" style={linkColor2}>
-                            Pedidos
+                        <Link to="/user/payment" style={linkColor2}>
+                            Pagos
                         </Link>
                     </div>
                     <div className="card h-100 bg-secondary" style={firstCard}>
                         <div className="card-body">
                             <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
-                            <Link to="/user" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                {activeButton === 'Perfil'}
+                                <Link to="/user" style={linkColor}>
                                     Perfil
-                                </button>
-                            </Link>
-                            <Link to="/user/orders" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/user/orders" style={linkColor}>
                                     Pedidos
-                                </button>
-                            </Link>
+                                </Link>
+                            </button>
                             <Link to="/user/update" style={linkColor}>
                                 <button
                                     type="button"
@@ -267,53 +235,52 @@ function Order() {
                                     Vendidos
                                 </button>
                             </Link>
-                            <Link to="/user/payment" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/user/payment" style={linkColor}>
                                     Pagos
-                                </button>
-                            </Link>
-                            <Link to="/user/adress" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/user/adress" style={linkColor}>
                                     Dirección de envío
-                                </button>
-                            </Link>
-                            <Link to="/contact" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/contact" style={linkColor}>
                                     Centro de ayuda
-                                </button>
-                            </Link>
-                            <Link to="/ProductSale" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
+                                </Link>
+                            </button>
+                            <button
+                                type="button"
+                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
+                                style={perfilButtonStyle}
+                                id="perfil-btn"
+                            >
+                                <Link to="/ProductSale" style={linkColor}>
                                     Mis publicaciones
-                                </button>
-                            </Link>
+                                </Link>
+                            </button>
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>
-
                 <div className="col" style={cardHeight}>
                     <div className="card h-100 bg-secondary">
                         <div className="card-body">
@@ -344,22 +311,21 @@ function Order() {
 
                         </div>
                     </div>
-
                     {status.status==="TODO"?<div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras realizadas por el usuario:</h2>
-                            {history ? (
+                            <h2>Ventas realizadas por el usuario:</h2>
+                            {ventas ? (
                                 <>
-                                    {history.map((el) => el.detailOrders.map((e) => (
+                                    {ventas.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={()=>handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
-                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Status ACtual: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <button onClick={()=>onReviews(el.id , el.status)} className={styles.reviewsButton}>Cambiar Estado</button>
                                             <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
@@ -367,26 +333,25 @@ function Order() {
                                     }
                                 </>
                             ) : (
-                                <h3>Todavía no has realizado compras.</h3>
+                                <h3>Todavía no has realizado venta.</h3>
                             )}
                         </div>
                     </div>:''}
-
                     {status.status==="PENDIENTE"?<div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras en preparacion:</h2>
-                            {history ? (
+                            <h2>Ventas en preparacion:</h2>
+                            {ventas ? (
                                 <>
                                     {pendiente.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={()=>handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
-                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Status ACtual: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <button onClick={()=>onReviews(el.id , el.status)} className={styles.reviewsButton}>Cambiar Estado</button>
                                             <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
@@ -394,26 +359,26 @@ function Order() {
                                     }
                                 </>
                             ) : (
-                                <h3>No tienes compras en preparacion.</h3>
+                                <h3>No tienes ventas en preparacion.</h3>
                             )}
                         </div>
                     </div>:''}
                 
                     {status.status==="ENVIADO"?<div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras enviadas:</h2>
-                            {history ? (
+                            <h2>Ventas enviadas:</h2>
+                            {ventas ? (
                                 <>
                                     {enviado.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={()=>handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
-                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Status ACtual: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <button onClick={()=>onReviews(el.id , el.status)} className={styles.reviewsButton}>Cambiar Estado</button>
                                             <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
@@ -421,25 +386,25 @@ function Order() {
                                     }
                                 </>
                             ) : (
-                                <h3>No tienes compras en envio.</h3>
+                                <h3>No tienes venta en envio.</h3>
                             )}
                         </div>
                     </div>:''}
                     {status.status==="ENTREGADO"?<div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras Completadas:</h2>
-                            {history ? (
+                            <h2>Ventas Completadas:</h2>
+                            {ventas ? (
                                 <>
                                     {completo.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={()=>handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
-                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Status ACtual: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <button onClick={()=>onReviews(el.id , el.status)} className={styles.reviewsButton}>Cambiar Estado</button>
                                             <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
@@ -447,7 +412,7 @@ function Order() {
                                     }
                                 </>
                             ) : (
-                                <h3>No ninguna compra completada.</h3>
+                                <h3>No ninguna venta completada.</h3>
                             )}
                         </div>
                     </div>:''}
@@ -457,4 +422,4 @@ function Order() {
     );
 }
 
-export default Order;
+export default UpdateProduct;
