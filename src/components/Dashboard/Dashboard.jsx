@@ -11,6 +11,7 @@ import axios from "axios";
 import carrito from "../../assets/Multimedia.jpg";
 import { useEffect, useState } from "react";
 import logo from "../../assets/Recurso 1.png";
+import LoadingDashboard from "../Loading/LoadingDashboard";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -48,36 +49,40 @@ function Dashboard() {
       <SearchBar />
       <DashboardLeft />
       <div className="allChart">
-        <h1>Gráficos</h1>
+        <h1>Bienvenido al DashBoard</h1>
         <div className="alltarjetitas">
-          <div className="tarjetitas">
+          <div className="tarjetitas-google">
             <img
               src="https://static.vecteezy.com/system/resources/previews/010/353/285/original/colourful-google-logo-on-white-background-free-vector.jpg"
               alt=""
             />
-            <h3>{`${tarjeta?.porcentGoogle?.result?.googlePercentage?.toFixed(
+            <h5>{`${tarjeta?.porcentGoogle?.result?.googlePercentage?.toFixed(
               2
-            )}%`}</h3>
+            )}%`}</h5>
+            <p>Visitas de Google</p>
           </div>
-          <div className="tarjetitas">
-            <img src={carrito} style={{ width: "70%" }} alt="" />
-            <h3>{`${tarjeta?.porcentGoogle?.result?.directPercentage?.toFixed(
+          <div className="tarjetitas-delivered">
+            <img src={carrito} style={{ width: "68.3%" }} alt="" />
+            <h5>{`${tarjeta?.porcentGoogle?.result?.directPercentage?.toFixed(
               2
-            )}%`}</h3>
+            )}%`}</h5>
+            <p>Visitas de Google</p>
           </div>
-          <div className="tarjetitas">
+          <div className="tarjetitas-sold">
             <img
               src="https://img.freepik.com/vector-gratis/sellos-vendido_1017-5621.jpg?w=740&t=st=1685375450~exp=1685376050~hmac=8c80ba089fe94e16b7aa05f0510fb6a6e44eb5642f299c801f33c8d13bef9b6d"
               alt=""
             />
-            <h3>{tarjeta?.deliveredProduct?.result}</h3>
+            <h5>{tarjeta?.deliveredProduct?.result}</h5>
+            <p>Delivered</p>
           </div>
-          <div className="tarjetitas">
+          <div className="tarjetitas-sales">
             <img
               src="https://http2.mlstatic.com/storage/developers-site-cms-admin/CDV_ME/275540041329-210909-mla-mlm-mlb-mlc-mco-mlu-crea-tus-ofertas-con-varios-productos-a-la-vez-icono.png"
               alt=""
             />
-            <h3>{tarjeta?.productSales}</h3>
+            <h5>{tarjeta?.productSales}</h5>
+            <p>Productos en Oferta</p>
           </div>
         </div>
         <div className="chartColumn">

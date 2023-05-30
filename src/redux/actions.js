@@ -38,6 +38,8 @@ export const GET_PRODUCT_ACTIVE = "GET_PRODUCT_ACTIVE";
 export const CREATE_ADMIN = "CREATE_ADMIN";
 export const LIST_USERS = "LIST_USERS";
 export const SEND_REVIEWS = "SEND_REVIEWS";
+export const GET_VENTAS = "GET_VENTAS";
+export const PUT_STATUS = "PUT_STATUS";
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -540,15 +542,18 @@ export const deleteAllCart = () => {
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/users/shoppinghistory",{
-        params:{
-          email:payload,
+      var json = await axios.get(
+        "http://localhost:3001/users/shoppinghistory",
+        {
+          params: {
+            email: payload,
+          },
         }
-      });
-      dispatch({ 
+      );
+      dispatch({
         type: GET_PRODUC_BY_USER,
         payload: json.data,
-    })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -575,7 +580,7 @@ export const createAdmin = (form) => {
         "http://localhost:3001/admin/createadmin/",
         form
       );
-      dispatch({ type: CREATE_ADMIN, payload: response.data });
+      dispatch({ type: CREATE_ADMIN, C });
     } catch (error) {
       console.log(error);
     }
@@ -595,6 +600,20 @@ export const listUsers = () => {
   };
 };
 
+export const deleteAdmin = (ids) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers/",
+        ids
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
 export const sendReviews = (payload) => {
   console.log(payload);
   return async function (dispatch) {
@@ -606,7 +625,33 @@ export const sendReviews = (payload) => {
     }
   };
 };
+export const getVentas = (payload) => {
+  
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`http://localhost:3001/users/saleshistory?email=${payload}`);
+      dispatch({ 
+        type: GET_VENTAS,
+        payload: response.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
+export const putStatus = ({id , status}) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.put(`http://localhost:3001/order/update?estado=${status}&id=${id}`)
+      dispatch({ 
+        type: PUT_STATUS,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 
 // const filterProduct = data.filter((product) => product.id == id);

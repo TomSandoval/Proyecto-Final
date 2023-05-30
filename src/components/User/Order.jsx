@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppinghistory } from "../../redux/actions";
 import styles from "./order.module.css";
-import { sendReviews } from '../../redux/actions';
+import { sendReviews , getVentas} from '../../redux/actions';
 import { Toaster, toast } from 'sonner'
 import { useNavigate } from "react-router-dom";
 
@@ -28,6 +28,7 @@ function Order() {
         email: userData,
         rating: null,
         descripcion: '',
+
     });
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
@@ -177,7 +178,62 @@ function Order() {
         textAlign: "left"
     };
 
-    return (
+  
+  
+    const onReviews = (eId,id) => {
+        setReviews(true)
+        setReview({
+            ...review,
+            id:id,
+            idProduc:eId,
+        })
+    }
+    const navigate = useNavigate();
+    const handleNavigate = (id) => {
+        navigate(`/Detail/${id}`);
+      }
+
+    const handleChange = (e) => {
+        setReview({
+            ...review,
+            [e.target.name]: e.target.value,
+        })
+      };
+      
+      const handleSubmit = (e) => {
+        e.preventDefault(); 
+        dispatch(sendReviews(review))
+        setReview({
+            id:'',
+            idProduc:'',
+            email:userData,
+            rating:null,
+            descripcion:'',
+        })
+        toast.success(`Se envio la reseña correctamente , gracias`),{
+        }
+        setReviews(false)
+      };
+
+      const closeReviews =() =>{
+        setReview({
+            id:'',
+            idProduc:'',
+            email:userData,
+            rating:null,
+            descripcion:'',
+        })
+        setReviews(false)
+      }
+
+      const handleStatus = (e)=>{
+        setStatus({
+            status: e.target.name,
+        })
+      }
+      
+      
+      return (
         <div style={background} >
             {reviews ? (
                 <div className={`${styles.overlay}`}>
@@ -279,6 +335,16 @@ function Order() {
                                     Pedidos
                                 </button>
                             </Link>
+                            <Link to="/user/update" style={linkColor}>
+                                <button
+                                    type="button"
+                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    Vendidos
+                                </button>
+                            </Link>
                             <Link to="/user/payment" style={linkColor}>
                                 <button
                                     type="button"
@@ -330,6 +396,7 @@ function Order() {
                         <div className="card-body">
                             <ul className="nav nav-pills nav-fill">
                                 <li className="nav-item">
+
                                     {status.status === 'TODO' ? <a className="nav-link active" style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e) => handleStatus(e)}>Todo</a> :
                                         <a className="nav-link " style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e) => handleStatus(e)}>Todo</a>}
                                 </li>
@@ -379,6 +446,7 @@ function Order() {
                         </div>
                     </div> : ''}
                     {status.status === "PENDIENTE" ? <div className="card h-100 bg-light bg-gradient">
+
                         <div className="card-body">
                             <h2>Compras en preparacion:</h2>
                             {history ? (
@@ -386,6 +454,7 @@ function Order() {
                                     {pendiente.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={() => handleNavigate(e.product.id)}>
+
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
                                                 <h4>{`Status: ${el.status}`}</h4>
@@ -405,6 +474,7 @@ function Order() {
                         </div>
                     </div> : ''}
                     {status.status === "ENVIADO" ? <div className="card h-100 bg-light bg-gradient">
+
                         <div className="card-body">
                             <h2>Compras enviadas:</h2>
                             {history ? (
@@ -432,6 +502,7 @@ function Order() {
                     </div> : ''}
                     {status.status === "ENTREGADO" ? <div className="card h-100 bg-light bg-gradient">
                         <div className="card-body ">
+
                             <h2>Compras Completadas:</h2>
                             {history ? (
                                 <>
@@ -456,6 +527,7 @@ function Order() {
                             )}
                         </div>
                     </div> : ''}
+
                 </div>
             </div>
         </div>

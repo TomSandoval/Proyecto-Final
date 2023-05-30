@@ -31,7 +31,10 @@ import {
   GET_PRODUCT_ACTIVE,
   CREATE_ADMIN,
   LIST_USERS,
-  SEND_REVIEWS
+  SEND_REVIEWS,
+  GET_VENTAS,
+  PUT_STATUS
+  
 } from "./actions";
 
 const initialState = {
@@ -54,6 +57,7 @@ const initialState = {
   carritoTotal: [],
   history: null,
   usersAdmin: [],
+  ventas:null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -324,6 +328,15 @@ const rootReducer = (state = initialState, action) => {
     case SEND_REVIEWS:
       return {
         ...state,
+      };
+    case PUT_STATUS:
+      return {
+        ...state,
+      };
+    case GET_VENTAS:
+      return {
+        ...state,
+        ventas:action.payload,
       };
 
     default:
