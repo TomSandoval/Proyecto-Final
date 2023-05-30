@@ -41,7 +41,7 @@ export default function Validation(input, setErrors, errors, e) {
         if (input.lastName.length < 4 || input.lastName.length > 30) {
           setErrors({
             ...errors,
-            lastName: "El lastName debe tener entre 4 y 30 caracteres",
+            lastName: "El apellido debe tener entre 4 y 30 caracteres",
           });
           isValid = false;
         }
@@ -57,7 +57,7 @@ export default function Validation(input, setErrors, errors, e) {
         if (input.nickname.length < 4 || input.nickname.length > 30) {
           setErrors({
             ...errors,
-            nickname: "El nickname debe tener entre 4 y 30 caracteres",
+            nickname: "El nombre de usuario debe tener entre 4 y 30 caracteres",
           });
           isValid = false;
         }

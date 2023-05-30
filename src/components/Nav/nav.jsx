@@ -202,7 +202,7 @@ export default function SearchBar({ view }) {
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
             <Link to="/user" className={styles.linkMenu}>
-              {username}
+              {username ? username : 'Perfil' }
             </Link>
           </div>
           <div>
