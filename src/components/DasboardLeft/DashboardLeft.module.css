@@ -8,13 +8,6 @@
   flex-direction: column;
 }
 
-.stage h2 {
-  margin-top: 43%;
-  margin-bottom: 53%;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
 .stage button {
   width: 16.7vw;
   height: 5.7vh;
@@ -44,4 +37,19 @@
 .stage svg {
   margin: 8%;
   margin-right: 10%;
+}
+
+.logueado {
+  margin-top: 55%;
+  margin-bottom: 33%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+
+  width: 16.7vw;
+  height: 9vh;
+  background-color: rgb(218, 218, 232);
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }

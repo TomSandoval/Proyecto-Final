@@ -22,19 +22,18 @@ export default function SearchBar({ view }) {
   const [productsSearch, setProductsSearch] = useState([]); //para el buscador
   const [matched, setMatched] = useState([]); //para el buscador
   const [displayResults, setDisplayResults] = useState(false); //para el buscador
-  const inputRef = useRef(null) ;
+  const inputRef = useRef(null);
   const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = localStorage.getItem('username
+  const username = localStorage.getItem("username");
 
-
-  useEffect(()=>{
-    async function getProducts(){
-    const response = await axios.get(`http://localhost:3001/product`)
-    setProductsSearch(response.data)
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(`http://localhost:3001/product`);
+      setProductsSearch(response.data);
     }
-    getProducts()
+    getProducts();
     function handleClickOutside(event) {
       if (
         inputRef.current &&
@@ -51,13 +50,15 @@ export default function SearchBar({ view }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  },[])
+  }, []);
 
-
-
-  async function  handleInput(e) {
+  async function handleInput(e) {
     setName(e.target.value);
-    setMatched(productsSearch.filter((product) => product.name.toLowerCase().includes(e.target.value.toLowerCase())));
+    setMatched(
+      productsSearch.filter((product) =>
+        product.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
     setDisplayResults(name.length >= 3 && matched.length > 1);
   }
 
@@ -71,7 +72,7 @@ export default function SearchBar({ view }) {
   function handleKeyDown(e) {
     if (e.keyCode === 13) {
       handleSubmit();
-    } 
+    }
   }
 
   function handleChange() {
@@ -125,16 +126,24 @@ export default function SearchBar({ view }) {
   };
 
   const handleSearchItem = (id) => {
-    navigate(`/Detail/${id}`)
-  }
+    navigate(`/Detail/${id}`);
+  };
 
   const searchDisplay = () => {
     return (
       <div ref={searchDisplayRef} className={styles.searchDisplay}>
-        {matched.map((product,index) => <option onClick={()=>handleSearchItem(product.id)} className={styles.searchItems} key={index}>{product.name}</option>)}
+        {matched.map((product, index) => (
+          <option
+            onClick={() => handleSearchItem(product.id)}
+            className={styles.searchItems}
+            key={index}
+          >
+            {product.name}
+          </option>
+        ))}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className={darkModes ? styles.divSearchBar_dark : styles.divSearchBar}>
@@ -150,7 +159,7 @@ export default function SearchBar({ view }) {
       {view ? (
         <div className={styles.divInput}>
           <input
-          ref={inputRef}
+            ref={inputRef}
             type="search"
             value={name}
             placeholder="¿Que vas a llevar hoy?"

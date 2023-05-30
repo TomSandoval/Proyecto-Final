@@ -64,6 +64,12 @@
   font-size: 16px;
 }
 
+.errores {
+  width: 10px;
+  display: flex;
+  align-items: center;
+}
+
 .formContainer span {
   margin-right: 25px;
   color: red;
