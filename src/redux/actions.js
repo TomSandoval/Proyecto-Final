@@ -542,15 +542,18 @@ export const deleteAllCart = () => {
 export const shoppinghistory = (payload) => {
   return async function (dispatch) {
     try {
-      var json = await axios.get("http://localhost:3001/users/shoppinghistory", {
-        params: {
-          email: payload,
+      var json = await axios.get(
+        "http://localhost:3001/users/shoppinghistory",
+        {
+          params: {
+            email: payload,
+          },
         }
-      });
+      );
       dispatch({
         type: GET_PRODUC_BY_USER,
         payload: json.data,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -597,6 +600,20 @@ export const listUsers = () => {
   };
 };
 
+export const deleteAdmin = (ids) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers/",
+        ids
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+
 export const sendReviews = (payload) => {
   console.log(payload);
   return async function (dispatch) {
@@ -608,7 +625,6 @@ export const sendReviews = (payload) => {
     }
   };
 };
-
 
 
 // const filterProduct = data.filter((product) => product.id == id);

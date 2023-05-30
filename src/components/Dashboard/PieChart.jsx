@@ -2,6 +2,7 @@ import { Pie } from "react-chartjs-2";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import LoadingDashboard from "../Loading/LoadingDashboard";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -67,7 +68,7 @@ export default function PieChart() {
       {chartData ? (
         <Pie data={chartData} options={options} />
       ) : (
-        <div>Loading...</div>
+        <LoadingDashboard />
       )}
     </div>
   );

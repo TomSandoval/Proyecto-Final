@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Chart } from "react-google-charts";
+import LoadingDashboard from "../Loading/LoadingDashboard";
 
 export default function PieChartSeller() {
   const [data, setData] = useState([]);
@@ -40,7 +41,7 @@ export default function PieChartSeller() {
       {data.length > 0 ? (
         <Chart chartType="BarChart" data={data} options={options} />
       ) : (
-        <p>Cargando datos...</p>
+        <LoadingDashboard />
       )}
     </div>
   );
