@@ -25,8 +25,8 @@ export default function SearchProduct() {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
-    min: 0,
-    max: 0,
+    min: "",
+    max: "",
   });
   const [filters, setFilters] = useState("");
   useEffect(() => {
@@ -114,8 +114,9 @@ export default function SearchProduct() {
   const handleSubmit = () => {
     let min = priceFilters.min;
     let max = priceFilters.max;
+    if(!min && !max) return null;
     max === 0 || max === ""
-      ? (max = 2^52)
+      ? (max = 999999999999999)
       : (max = parseInt(priceFilters.max));
     min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
     dispatch(filterByName(name, min, max));
@@ -123,11 +124,11 @@ export default function SearchProduct() {
       setFilters(`Maximo $${max}`);
       window.sessionStorage.setItem("filtroNombre", `Maximo $${max}`);
     }
-    if(max === 2^52){
+    if(max === 999999999999999){
       setFilters(`A partir de $${min}`);
       window.sessionStorage.setItem("filtroNombre", `A partir de $${min}`);
     }
-    if(min !== 0 && max !== 2^52){
+    if(min !== 0 && max !== 999999999999999){
       setFilters(`Entre $${min} y $${max}`);
       window.sessionStorage.setItem("filtroNombre", `Entre $${min} y $${max}`);
     }

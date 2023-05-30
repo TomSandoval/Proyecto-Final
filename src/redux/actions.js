@@ -37,6 +37,7 @@ export const GET_PRODUC_BY_USER = "GET_PRODUC_BY_USER";
 export const GET_PRODUCT_ACTIVE = "GET_PRODUCT_ACTIVE";
 export const CREATE_ADMIN = "CREATE_ADMIN";
 export const LIST_USERS = "LIST_USERS";
+export const SEND_REVIEWS = "SEND_REVIEWS";
 
 export const postForm = (form) => {
   return async function (dispatch) {
@@ -205,6 +206,7 @@ export const closeSesion = () => {
   window.localStorage.removeItem("token");
   window.localStorage.removeItem("tokenExpiration");
   window.localStorage.removeItem("username");
+  window.localStorage.removeItem("email");
   return {
     type: CLOSE_SESION,
   };
@@ -608,6 +610,20 @@ export const deleteAdmin = (ids) => {
     }
   };
 };
+
+
+export const sendReviews = (payload) => {
+  console.log(payload);
+  return async function (dispatch) {
+    try {
+      const response = await axios.post("http://localhost:3001/product/review",payload);
+      dispatch({ type: SEND_REVIEWS});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };
