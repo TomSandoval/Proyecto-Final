@@ -11,6 +11,7 @@ import { getProductByName, darkMode, closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./searchBar.module.css";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function SearchBar({ view }) {
   const carrito = useSelector((state) => state.carrito);
@@ -26,7 +27,7 @@ export default function SearchBar({ view }) {
   const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = localStorage.getItem('username
+  const username = localStorage.getItem('username')
 
 
   useEffect(()=>{
@@ -90,7 +91,25 @@ export default function SearchBar({ view }) {
   };
 
   const handleSession = () => {
-    dispatch(closeSesion());
+    Swal.fire({
+      title: '¿Estas seguro que quieres cerrar sesión?',
+      text: "",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Cerrar Sesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(closeSesion())
+        Swal.fire(
+          'Espero verte pronto!',
+          'Tu cuenta fue cerrda con exito.',
+          'success'
+        )
+      }
+    })
   };
 
   const buttonsUnlogin = () => {
@@ -202,8 +221,7 @@ export default function SearchBar({ view }) {
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
             <Link to="/user" className={styles.linkMenu}>
-              Perfil
-              {username}
+              {username ? username : 'Perfil' }
             </Link>
           </div>
           <div>

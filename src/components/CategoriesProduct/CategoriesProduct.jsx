@@ -26,8 +26,8 @@ export default function CategoriesProduct() {
   const darkModes = useSelector((state) => state.darkModes);
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
-    min: 0,
-    max: 0,
+    min: "",
+    max: "",
   });
   const [filters, setFilters] = useState("");
 
@@ -116,8 +116,13 @@ export default function CategoriesProduct() {
   const handleSubmit = () => {
     let min = priceFilters.min;
     let max = priceFilters.max;
-    !max ? (max = 2^52) : (max = priceFilters.max);
+    if(!min && !max){
+      return null
+    }
+    !max ? (max = 999999999999999) : (max = priceFilters.max);
     !min ? (min = 0) : (min = priceFilters.min);
+    console.log(min, max);
+    
     dispatch(filterByCategory(name, min, max));
     if(min === 0){
       setFilters(`Maximo $${max}`);

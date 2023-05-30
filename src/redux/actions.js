@@ -205,6 +205,7 @@ export const closeSesion = () => {
   window.localStorage.removeItem("token");
   window.localStorage.removeItem("tokenExpiration");
   window.localStorage.removeItem("username");
+  window.localStorage.removeItem("email");
   return {
     type: CLOSE_SESION,
   };
