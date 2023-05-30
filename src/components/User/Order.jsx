@@ -4,6 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppinghistory } from "../../redux/actions";
 import styles from "./order.module.css";
+import { sendReviews } from '../../redux/actions';
+import { Toaster, toast } from 'sonner'
+import { useNavigate } from "react-router-dom";
+
 
 function Order() {
     const [activeButton, setActiveButton] = React.useState('Pedido');
@@ -11,8 +15,14 @@ function Order() {
     const userData = localStorage.getItem('email');
     const history = useSelector((state) => state.history);
     const location = useLocation();
-    const roll = localStorage.getItem('roll');
-
+    const [reviews , setReviews] =  React.useState(false);
+    const [review , setReview] =  React.useState({
+        id:'',
+        idProduc:'',
+        email:userData,
+        rating:null,
+        descripcion:'',
+    });
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
         if (currentPath === 'user') {
@@ -85,8 +95,117 @@ function Order() {
     const links = {
         marginTop: "-25px",
     };
-    return (
-        <div style={background}>
+
+    const onReviews = (eId,id) => {
+        setReviews(true)
+        setReview({
+            ...review,
+            id:id,
+            idProduc:eId,
+        })
+    }
+    const navigate = useNavigate();
+    const handleNavigate = (id) => {
+        navigate(`/Detail/${id}`);
+      }
+
+    const handleChange = (e) => {
+        setReview({
+            ...review,
+            [e.target.name]: e.target.value,
+        })
+      };
+      
+      const handleSubmit = (e) => {
+        e.preventDefault(); 
+        dispatch(sendReviews(review))
+        setReview({
+            id:'',
+            idProduc:'',
+            email:userData,
+            rating:null,
+            descripcion:'',
+        })
+        toast.success(`Se envio la reseña correctamente , gracias`),{
+        }
+        setReviews(false)
+      };
+
+      const closeReviews =() =>{
+        setReview({
+            id:'',
+            idProduc:'',
+            email:userData,
+            rating:null,
+            descripcion:'',
+        })
+        setReviews(false)
+      }
+      
+      
+      return (
+        <div style={background} >
+          {reviews ? (
+            <div className={`${styles.overlay}`}>
+                <button className={styles.closebButton} onClick={()=>closeReviews()}>❌</button>
+              <form onSubmit={(e)=>handleSubmit(e)}>
+                <div>
+                  <label htmlFor="descripcion" >Deja una Reseña: </label>
+                </div>
+                <div>
+                <textarea
+                    name="descripcion"
+                    onChange={handleChange}
+                    className={styles.descriptionInput}
+                ></textarea>
+                </div>
+                <div className={styles.rating}>
+                  <input
+                    type="radio"
+                    id="star5"
+                    name="rating"
+                    value="5"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="star5"></label>
+                  <input
+                    type="radio"
+                    id="star4"
+                    name="rating"
+                    value="4"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="star4"></label>
+                  <input
+                    type="radio"
+                    id="star3"
+                    name="rating"
+                    value="3"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="star3"></label>
+                  <input
+                    type="radio"
+                    id="star2"
+                    name="rating"
+                    value="2"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="star2"></label>
+                  <input
+                    type="radio"
+                    id="star1"
+                    name="rating"
+                    value="1"
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="star1"></label>
+                </div>
+                <div>
+                  <button type="submit" className={styles.submitButton}>Enviar reseña</button>
+                </div>
+              </form>
+            </div>):<></>}
             <SearchBar />
             <br />
             <br />
@@ -156,18 +275,16 @@ function Order() {
                                     Centro de ayuda
                                 </button>
                             </Link>
-                            {roll === 'SELLER' && (
+                            <Link to="/ProductSale" style={linkColor}>
                                 <button
                                     type="button"
                                     className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
-                                    <Link to="/ProductSale" style={linkColor}>
-                                        Mis publicaciones
-                                    </Link>
+                                    Mis publicaciones
                                 </button>
-                            )}
+                            </Link>
                         </div>
                         <div className="card-footer">
                             <small className="text-body-secondary">TukiMarket 🐸</small>
@@ -182,9 +299,7 @@ function Order() {
                                 <li className="nav-item">
                                     <a className="nav-link active" aria-current="page" href="#">Todo</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Pendientes(0)</a>
-                                </li>
+
                                 <li className="nav-item">
                                     <a className="nav-link" href="#" style={linkColor}>Procesando(0)</a>
                                 </li>
@@ -209,19 +324,20 @@ function Order() {
 
                     <div className="card h-100 bg-secondary">
                         <div className="card-body">
-                            <h2>Compras realizadas por el usuario: </h2>
+                            <h2>Compras realizadas por el usuario:</h2>
                             {history ? (
                                 <>
                                     {history.map((el) => el.detailOrders.map((e) => (
-                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra}>
-                                            <div>
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={()=>handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
                                                 <h4>{`Status: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                                <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
+                                            <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
                                     )))
