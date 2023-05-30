@@ -178,59 +178,6 @@ function Order() {
         textAlign: "left"
     };
 
-  
-  
-    const onReviews = (eId,id) => {
-        setReviews(true)
-        setReview({
-            ...review,
-            id:id,
-            idProduc:eId,
-        })
-    }
-    const navigate = useNavigate();
-    const handleNavigate = (id) => {
-        navigate(`/Detail/${id}`);
-      }
-
-    const handleChange = (e) => {
-        setReview({
-            ...review,
-            [e.target.name]: e.target.value,
-        })
-      };
-      
-      const handleSubmit = (e) => {
-        e.preventDefault(); 
-        dispatch(sendReviews(review))
-        setReview({
-            id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
-        })
-        toast.success(`Se envio la reseña correctamente , gracias`),{
-        }
-        setReviews(false)
-      };
-
-      const closeReviews =() =>{
-        setReview({
-            id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
-        })
-        setReviews(false)
-      }
-
-      const handleStatus = (e)=>{
-        setStatus({
-            status: e.target.name,
-        })
-      }
       
       
       return (
