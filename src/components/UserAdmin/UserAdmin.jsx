@@ -14,15 +14,18 @@ export default function UserAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const usersAdmin = useSelector((state) => state.usersAdmin);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
   // const [rows1, setRows1] = useState([]);
   const dispatch = useDispatch();
+  let rows1 = [];
 
   useEffect(() => {
     dispatch(listUsers());
   }, []);
 
   const handleRowSelection = (selection) => {
-    setSelectedRows(selection.selectionModel);
+    setSelectedUserIds(selection);
+    console.log(selectedUserIds);
   };
 
   const handleDeleteRows = () => {
@@ -32,10 +35,9 @@ export default function UserAdmin() {
     setSelectedRows([]);
   };
 
-  let rows1 = [];
   usersAdmin.map((user, index) => {
     rows1.push({
-      id: index,
+      id: user.id,
       col1: user.name,
       col2: user.email,
       col3: user.roll,
@@ -69,8 +71,8 @@ export default function UserAdmin() {
         />
         <DataGrid
           experimentalFeatures={{ columnGrouping: true }}
-          checkboxSelection
-          onSelectionModelChange={handleRowSelection}
+          checkboxSelection={true}
+          onRowSelectionModelChange={(newSelection) => handleRowSelection(newSelection)}
           selectionModel={selectedRows}
           disableRowSelectionOnClick
           rows={filteredRows}
