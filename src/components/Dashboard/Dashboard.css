@@ -4,13 +4,6 @@
 }
 /*////////*/
 
-.Dashboard h1 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 50px;
-  margin-top: 9%;
-}
-
 .allChart {
   display: flex;
   align-items: center;
@@ -19,6 +12,15 @@
   width: 100%;
   background-color: rgb(249, 250, 251);
   margin-top: 0%;
+}
+
+.allChart h1 {
+  font-family: "Public Sans", sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  margin-top: 11%;
+  text-align: left;
+  margin-left: 23px;
 }
 
 .chartColumn {
@@ -36,6 +38,7 @@
   border-radius: 12px;
   text-align: center;
   margin: 1%;
+  align-items: center;
 }
 
 .Chart-torta:hover {
@@ -44,7 +47,6 @@
 
 .chart-line {
   width: 45%;
-  height: 50vh;
   margin-left: 3%;
   /* margin: 1.5%; */
   background-color: rgb(255, 255, 255);
@@ -78,32 +80,50 @@
   border: 2px solid rgb(230, 230, 236);
 }
 
-.tarjetitas {
+.tarjetitas-google,
+.tarjetitas-delivered,
+.tarjetitas-sales,
+.tarjetitas-sold {
   width: 17.9vw;
-  height: 33vh;
-  /* box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
-    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px; */
-  border-radius: 12px;
-  border-radius: 10px;
+  height: 34vh;
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  border-radius: 8px;
   border: 0.1px solid rgb(241, 241, 249);
-  background-color: rgb(208, 242, 255);
+  /* background-color: rgb(208, 242, 255); */
   margin: 13px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* transform: scale(0.9); */
 }
 
-.tarjetitas h3 {
-  display: flex;
-  flex-direction: ;
+.tarjetitas-google {
+  /* background-color: #eee5e8; */
+  margin-left: 20px;
 }
 
-.tarjetitas img {
-  width: 200px;
+/* .tarjetitas-delivered {
+  background-color: rgb(240, 240, 181);
+}
+
+.tarjetitas-sold {
+  background-color: #dbdbec;
+}
+
+.tarjetitas-sales {
+  background-color: rgb(209, 233, 252);
+} */
+
+.alltarjetitas img {
+  width: 185px;
   mix-blend-mode: darken;
 }
 
-.tarjetitas:hover {
+.tarjetitas-google:hover,
+.tarjetitas-delivered:hover,
+.tarjetitas-sales:hover,
+.tarjetitas-sold:hover {
   border: 2px solid rgb(230, 230, 236);
 }
 

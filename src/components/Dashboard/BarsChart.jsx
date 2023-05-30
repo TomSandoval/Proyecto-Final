@@ -10,8 +10,7 @@ import {
 } from "chart.js";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-import faker from "faker";
+import LoadingDashboard from "../Loading/LoadingDashboard";
 
 ChartJS.register(
   CategoryScale,
@@ -75,7 +74,7 @@ export default function BarsChart() {
 
   return (
     <div>
-      {data ? <Bar data={data} options={options} /> : <div>Loading...</div>}
+      {data ? <Bar data={data} options={options} /> : <LoadingDashboard />}
     </div>
   );
 }

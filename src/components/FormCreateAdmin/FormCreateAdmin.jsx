@@ -6,9 +6,13 @@ import Validation from "./Validation";
 import { useDispatch, useSelector } from "react-redux";
 import { createAdmin } from "../../redux/actions";
 import Swal from "sweetalert2";
+import axios from "axios";
+import { FormGroup, Input } from "reactstrap";
 
 export default function FormCreateAdmin() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
   // const allAdmins = useSelector((state) => state.allAdmins);
 
   const [form, setForm] = useState({
@@ -20,6 +24,7 @@ export default function FormCreateAdmin() {
     address: "",
     password: "",
     picture: "",
+    passwordRepit: "",
   });
 
   const [errors, setErrors] = useState({
@@ -30,6 +35,7 @@ export default function FormCreateAdmin() {
     birthDate: "",
     address: "",
     password: "",
+    passwordRepit: "",
     picture: "",
   });
 
@@ -39,7 +45,9 @@ export default function FormCreateAdmin() {
 
     setForm({ ...form, [property]: value });
 
-    setErrors(Validation({ ...form, [property]: value }, errors));
+    setErrors(
+      Validation({ ...form, [property]: value }, errors, setErrors, event)
+    );
   };
 
   const handleSubmit = (event) => {
@@ -51,16 +59,35 @@ export default function FormCreateAdmin() {
       !errors?.email &&
       !errors?.birthDate &&
       !errors?.address &&
-      !errors?.password
+      !errors?.password &&
+      !errors?.passwordRepit
     ) {
       dispatch(createAdmin(form));
-      alert("Admin Creado Exitosamente");
+      Swal.fire("Creado!", "Has creado un Administrador con Exito.", "success");
     } else {
       Swal.fire({
         title: "Introduzca los datos Correctamente",
         icon: "error",
       });
     }
+  };
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "tukimarquet");
+    setLoading(true);
+    const res = await axios.post(
+      "https://api.cloudinary.com/v1_1/diyccpins/image/upload",
+      data
+    );
+    const file = await res.data;
+    setForm({
+      ...form,
+      picture: file.secure_url,
+    });
+    setLoading(false);
   };
 
   return (
@@ -79,12 +106,12 @@ export default function FormCreateAdmin() {
                 name="name"
                 onChange={handleChange}
               ></input>
-              <span>{errors.name}</span>
+              <span>{errors?.name}</span>
             </div>
             <div>
               <p htmlFor="">Apellido</p>
               <input type="text" name="lastName" onChange={handleChange} />
-              <span>{errors.lastName}</span>
+              <span>{errors?.lastName}</span>
             </div>
           </div>
           <div className={style.emailNick}>
@@ -96,12 +123,12 @@ export default function FormCreateAdmin() {
                 name="email"
                 onChange={handleChange}
               />
-              <span>{errors.email}</span>
+              <span>{errors?.email}</span>
             </div>
             <div>
               <p htmlFor="">Nickname</p>
               <input type="text" name="nickname" onChange={handleChange} />
-              <span>{errors.nickname}</span>
+              <span>{errors?.nickname}</span>
             </div>
           </div>
           <div className={style.adreessDate}>
@@ -113,24 +140,62 @@ export default function FormCreateAdmin() {
                 name="address"
                 onChange={handleChange}
               />
-              <span>{errors.address}</span>
+              <span>{errors?.address}</span>
             </div>
             <div>
               <p htmlFor="">fecha de nacimiento</p>
               <input type="date" name="birthDate" onChange={handleChange} />
-              <span>{errors.birthDate}</span>
+              <span>{errors?.birthDate}</span>
             </div>
           </div>
           <div>
             <p>Picture</p>
-            <input type="text" name="picture" onChange={handleChange} />
-            {/* <span>{errors.picture}</span> */}
+            <div>
+              <FormGroup>
+                <Input
+                  type="file"
+                  name="picture"
+                  placeholder="Sube de perfil"
+                  style={{ width: "100%" }}
+                  accept="image/jpeg, image/jpg, image/webp, image/bmp, image/tiff, image/svg+xml"
+                  onChange={uploadImage}
+                />
+                {loading ? (
+                  <label htmlFor="">Loading Image</label>
+                ) : (
+                  <img
+                    src={form.picture}
+                    style={{
+                      width: "200px",
+                      marginTop: "12px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                )}
+              </FormGroup>
+            </div>
           </div>
-          <div>
-            <p htmlFor="">Contraseña</p>
-            <input type="password" name="password" onChange={handleChange} />
+          <div className={style.adreessDate}>
+            <div>
+              <p htmlFor="">Contraseña</p>
+              <input
+                className={style.right}
+                type="password"
+                name="password"
+                onChange={handleChange}
+              />
+              <p>{errors?.password}</p>
+            </div>
+            <div>
+              <p htmlFor="">Validar Contraseña</p>
+              <input
+                type="password"
+                name="passwordRepit"
+                onChange={handleChange}
+              />
+              <p>{errors?.passwordRepit}</p>
+            </div>
           </div>
-          <p>{errors.password}</p>
           <button type="submit">Crear</button>
         </div>
       </form>
