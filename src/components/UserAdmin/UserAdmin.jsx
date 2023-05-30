@@ -25,7 +25,6 @@ export default function UserAdmin() {
 
   const handleRowSelection = (selection) => {
     setSelectedUserIds(selection);
-    console.log(selectedUserIds);
   };
 
   const handleDeleteRows = () => {

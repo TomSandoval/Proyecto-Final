@@ -9,8 +9,8 @@ import logoTukiDark from "../../assets/tuki-market-darks.jpg";
 import { postForm } from "../../redux/actions";
 import UserCreateError from "./UserCreateError/UserCreateError";
 import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
-import { FormGroup, Input } from "reactstrap";
 import axios from "axios";
+import Typewriter  from "typewriter-effect";
 
 const paisesAmerica = [
   "Antigua y Barbuda",
@@ -60,6 +60,8 @@ export default function FormRegister() {
   );
 
   useEffect(() => {
+
+
     if (userCreateSuccesfull) {
       setInput({
         email: "",
@@ -74,7 +76,10 @@ export default function FormRegister() {
         address: "",
       });
     }
-  }, []);
+    
+  }, [userCreateSuccesfull]);
+
+
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
@@ -161,6 +166,9 @@ export default function FormRegister() {
     });
   };
 
+
+  const messages = ["Bienvenido a Tuki Market!", "Disfruta de tu compra!"]
+
   return (
     <div className={darkModes ? styles.allFormDark : styles.allForm}>
       <Link to="/">
@@ -171,23 +179,22 @@ export default function FormRegister() {
           className={darkModes ? styles.tukimarkdark : styles.tukimark}
         />
       </Link>
-
-      {userCreateSuccesfull !== null ? (
-        <UserCreateSuccesFull />
-      ) : (
         <div className={darkModes ? styles.divDark : styles.div}>
-          {userCreateError ? (
-            <UserCreateError />
-          ) : (
+          <div className={styles.welcomeDiv}>
+            <h1 className={styles.welcomeTitle}><Typewriter options={{
+              strings: messages,
+              autoStart: true,
+              delay: 80,
+              loop: true,
+            }} /></h1>
+          </div>
+          <div className={styles.divFormContainer}>
             <form
               onSubmit={(e) => handleSubmit(e)}
               className={styles.divForm}
               action="/create"
               method="POST"
             >
-              <div className={styles.titleRegister}>
-                <h1>Registrarse</h1>
-              </div>
               <div class={styles.inputEmailUserContainer}>
                 <input
                   autoComplete="off"
@@ -447,10 +454,9 @@ export default function FormRegister() {
               
               <button className={styles.submitButton} onClick={handleSubmit}>Registrarme</button>
             </form>
-          )}
-          <span className={styles.alReadyRegister}>Ya tienes cuenta? <Link className={styles.toLogin} to="/formLogin">Iniciar sesión</Link></span>
         </div>
-      )}
+          <span className={styles.alReadyRegister}>Ya tienes cuenta? <Link className={styles.toLogin} to="/formLogin">Iniciar sesión</Link></span>
+      </div>
     </div>
   );
 }
