@@ -12,6 +12,7 @@ import { FormGroup, Input } from "reactstrap";
 export default function FormCreateAdmin() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const darkModes = useSelector((state) => state.darkModes);
 
   // const allAdmins = useSelector((state) => state.allAdmins);
 
@@ -94,7 +95,10 @@ export default function FormCreateAdmin() {
     <div className={style.Allform}>
       <SearchBar />
       <DashboardLeft />
-      <form onSubmit={handleSubmit} className={style.FormAdmin}>
+      <form
+        onSubmit={handleSubmit}
+        className={darkModes ? style.FormAdminDark : style.FormAdmin}
+      >
         <h1>Crear Administrador</h1>
         <div className={style.formContainer}>
           <div className={style.NameLast}>

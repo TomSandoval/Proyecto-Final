@@ -1,11 +1,13 @@
 import React from "react";
 import style from "./DashboardLeft.module.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function DashboardLeft() {
   const navigate = useNavigate();
   const username = window.localStorage.getItem("username");
   const roll = window.localStorage.getItem("roll");
+  const darkModes = useSelector((state) => state.darkModes);
 
   const handleNavigateHome = () => {
     navigate("/");
@@ -21,7 +23,7 @@ export default function DashboardLeft() {
   };
 
   return (
-    <div className={style.stage}>
+    <div className={darkModes ? style.stageBlack : style.stage}>
       <div className={style.logueado}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
