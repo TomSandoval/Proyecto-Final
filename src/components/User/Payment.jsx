@@ -141,6 +141,16 @@ function Payment() {
                                     Pedidos
                                 </Link>
                             </button>
+                            <Link to="/user/update" style={linkColor}>
+                                <button
+                                    type="button"
+                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    Vendidos
+                                </button>
+                            </Link>
                             <button
                                 type="button"
                                 className={`btn btn-secondary btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}

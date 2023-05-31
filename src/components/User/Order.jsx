@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { shoppinghistory } from "../../redux/actions";
 import styles from "./order.module.css";
-import { sendReviews } from '../../redux/actions';
+import { sendReviews , getVentas} from '../../redux/actions';
 import { Toaster, toast } from 'sonner'
 import { useNavigate } from "react-router-dom";
 
@@ -15,13 +15,20 @@ function Order() {
     const userData = localStorage.getItem('email');
     const history = useSelector((state) => state.history);
     const location = useLocation();
-    const [reviews , setReviews] =  React.useState(false);
-    const [review , setReview] =  React.useState({
-        id:'',
-        idProduc:'',
-        email:userData,
-        rating:null,
-        descripcion:'',
+    const completo = history?.filter((order) => order.status === 'ENTREGADO')
+    const enviado = history?.filter((order) => order.status === "ENVIADO")
+    const pendiente = history?.filter((order) => order.status === "PENDIENTE")
+    const [status, setStatus] = React.useState({
+        status: 'TODO',
+    });
+    const [reviews, setReviews] = React.useState(false);
+    const [review, setReview] = React.useState({
+        id: '',
+        idProduc: '',
+        email: userData,
+        rating: null,
+        descripcion: '',
+
     });
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
@@ -33,17 +40,124 @@ function Order() {
             setActiveButton('Pedido');
         }
     }, [location.pathname]);
-
     useEffect(() => {
         if (userData) {
             dispatch(shoppinghistory(userData));
         }
     }, [dispatch, userData]);
+    
 
+     //! FUNCIONES
+    const closeReviews = () => {
+        setReview({
+            id: '',
+            idProduc: '',
+            email: userData,
+            rating: null,
+            descripcion: '',
+        })
+        setReviews(false)
+    }
+    const handleChange = (e) => {
+        setReview({
+            ...review,
+            [e.target.name]: e.target.value,
+        })
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(sendReviews(review))
+        setReview({
+            id: '',
+            idProduc: '',
+            email: userData,
+            rating: null,
+            descripcion: '',
+        })
+        toast.success(`Se envio la reseña correctamente , gracias`), {
+        }
+        setReviews(false)
+    };
+    const handleStatus = (e) => {
+        console.log(e);
+        setStatus({
+            status: e.target.name,
+        })
+    }
+    const onReviews = (eId, id) => {
+        setReviews(true)
+        setReview({
+            ...review,
+            id: id,
+            idProduc: eId,
+        })
+    }
+    const navigate = useNavigate();
+    const handleNavigate = (id) => {
+        navigate(`/Detail/${id}`);
+    }
+
+
+    //! ESTILOS EXTRAS
     const background = {
-        background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
+        background: '#DAE3E7',
         minHeight: '100vh',
         width: '100vw'
+    };
+    const cardShadow = {
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
+        borderRadius: '8px',
+        border: '0.1px solid rgb(241, 241, 249)'
+    };
+    const card = {
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
+        borderRadius: '8px',
+        border: '0.1px solid rgb(241, 241, 249)'
+    };
+    const cardHeight = {
+        height: "50%",
+        width: "75%",
+    };
+    const cardContainerStyle = {
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingLeft: '30px',
+        paddingRight: '30px',
+        paddingTop: '150px',
+        marginBottom: '30px',
+    };
+    const firstCard = {
+        width: "300px",
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
+        borderRadius: '8px',
+        border: '0.1px solid rgb(241, 241, 249)'
+    };
+    const lastCard = {
+        width: "75%"
+    };
+    const links = {
+        marginTop: "-25px",
+    };
+    const linkColor = {
+        color: "black",
+        textDecoration: "none",
+    };
+    const linkColorHome = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "13px",
+        opacity: "0.7"
+    };
+    const linkColorAccount = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "13px",
+        opacity: "0.7"
+    };
+    const linkColorOrder = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "16px",
     };
     const perfilButtonStyle = {
         width: '100%',
@@ -51,6 +165,10 @@ function Order() {
         padding: '0',
         margin: '0',
         borderRadius: '0'
+    };
+    const products = {
+        paddingTop: "-1vw",
+        width: "75%"
     };
     const titleButton = {
         textAlign: "left",
@@ -60,175 +178,94 @@ function Order() {
         textAlign: "left"
     };
 
-    const linkColor = {
-        color: "white",
-        textDecoration: "none",
-    };
-    const cardHeight = {
-        height: "50%",
-        width: "75%",
-    };
-
-    const cardContainerStyle = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingLeft: '30px',
-        paddingRight: '30px',
-        paddingTop: '150px',
-        marginBottom: '30px',
-    };
-    const products = {
-        paddingTop: "-1vw",
-        width: "75%"
-    };
-    const firstCard = {
-        width: "300px"
-    };
-    const lastCard = {
-        width: "75%"
-    };
-    const linkColor2 = {
-        color: "black",
-        textDecoration: "none",
-        fontSize: "14px",
-    };
-    const links = {
-        marginTop: "-25px",
-    };
-
-    const onReviews = (eId,id) => {
-        setReviews(true)
-        setReview({
-            ...review,
-            id:id,
-            idProduc:eId,
-        })
-    }
-    const navigate = useNavigate();
-    const handleNavigate = (id) => {
-        navigate(`/Detail/${id}`);
-      }
-
-    const handleChange = (e) => {
-        setReview({
-            ...review,
-            [e.target.name]: e.target.value,
-        })
-      };
-      
-      const handleSubmit = (e) => {
-        e.preventDefault(); 
-        dispatch(sendReviews(review))
-        setReview({
-            id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
-        })
-        toast.success(`Se envio la reseña correctamente , gracias`),{
-        }
-        setReviews(false)
-      };
-
-      const closeReviews =() =>{
-        setReview({
-            id:'',
-            idProduc:'',
-            email:userData,
-            rating:null,
-            descripcion:'',
-        })
-        setReviews(false)
-      }
       
       
       return (
         <div style={background} >
-          {reviews ? (
-            <div className={`${styles.overlay}`}>
-                <button className={styles.closebButton} onClick={()=>closeReviews()}>❌</button>
-              <form onSubmit={(e)=>handleSubmit(e)}>
-                <div>
-                  <label htmlFor="descripcion" >Deja una Reseña: </label>
-                </div>
-                <div>
-                <textarea
-                    name="descripcion"
-                    onChange={handleChange}
-                    className={styles.descriptionInput}
-                ></textarea>
-                </div>
-                <div className={styles.rating}>
-                  <input
-                    type="radio"
-                    id="star5"
-                    name="rating"
-                    value="5"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star5"></label>
-                  <input
-                    type="radio"
-                    id="star4"
-                    name="rating"
-                    value="4"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star4"></label>
-                  <input
-                    type="radio"
-                    id="star3"
-                    name="rating"
-                    value="3"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star3"></label>
-                  <input
-                    type="radio"
-                    id="star2"
-                    name="rating"
-                    value="2"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star2"></label>
-                  <input
-                    type="radio"
-                    id="star1"
-                    name="rating"
-                    value="1"
-                    onChange={handleChange}
-                  />
-                  <label htmlFor="star1"></label>
-                </div>
-                <div>
-                  <button type="submit" className={styles.submitButton}>Enviar reseña</button>
-                </div>
-              </form>
-            </div>):<></>}
+            {reviews ? (
+                <div className={`${styles.overlay}`}>
+                    <button className={styles.closebButton} onClick={() => closeReviews()}>❌</button>
+                    <form onSubmit={(e) => handleSubmit(e)}>
+                        <div>
+                            <label htmlFor="descripcion" >Deja una Reseña: </label>
+                        </div>
+                        <div>
+                            <textarea
+                                name="descripcion"
+                                onChange={handleChange}
+                                className={styles.descriptionInput}
+                            ></textarea>
+                        </div>
+                        <div className={styles.rating}>
+                            <input
+                                type="radio"
+                                id="star5"
+                                name="rating"
+                                value="5"
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="star5"></label>
+                            <input
+                                type="radio"
+                                id="star4"
+                                name="rating"
+                                value="4"
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="star4"></label>
+                            <input
+                                type="radio"
+                                id="star3"
+                                name="rating"
+                                value="3"
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="star3"></label>
+                            <input
+                                type="radio"
+                                id="star2"
+                                name="rating"
+                                value="2"
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="star2"></label>
+                            <input
+                                type="radio"
+                                id="star1"
+                                name="rating"
+                                value="1"
+                                onChange={handleChange}
+                            />
+                            <label htmlFor="star1"></label>
+                        </div>
+                        <div>
+                            <button type="submit" className={styles.submitButton}>Enviar reseña</button>
+                        </div>
+                    </form>
+                </div>) : <></>}
             <SearchBar />
             <br />
             <br />
             <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
                     <div className='container-fluid' style={links}>
-                        <Link to="/" style={linkColor2}>
+                        <Link to="/" style={linkColorHome}>
                             Hogar &gt; &nbsp;
                         </Link>
-                        <Link to="/user" style={linkColor2}>
+                        <Link to="/user" style={linkColorAccount}>
                             Mi cuenta &gt; &nbsp;
                         </Link>
-                        <Link to="/user/orders" style={linkColor2}>
+                        <Link to="/user/orders" style={linkColorOrder}>
                             Pedidos
                         </Link>
                     </div>
-                    <div className="card h-100 bg-secondary" style={firstCard}>
+                    <div className="card h-100 bg-light bg-gradient" style={firstCard}>
                         <div className="card-body">
-                            <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
+                            <h5 className="card-title " style={titleButton}>Mi cuenta:</h5>
                             <Link to="/user" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
@@ -238,17 +275,27 @@ function Order() {
                             <Link to="/user/orders" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
                                     Pedidos
                                 </button>
                             </Link>
+                            <Link to="/user/update" style={linkColor}>
+                                <button
+                                    type="button"
+                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    Vendidos
+                                </button>
+                            </Link>
                             <Link to="/user/payment" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
@@ -258,7 +305,7 @@ function Order() {
                             <Link to="/user/adress" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
@@ -268,7 +315,7 @@ function Order() {
                             <Link to="/contact" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
@@ -278,7 +325,7 @@ function Order() {
                             <Link to="/ProductSale" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
@@ -287,57 +334,54 @@ function Order() {
                             </Link>
                         </div>
                         <div className="card-footer">
-                            <small className="text-body-secondary">TukiMarket 🐸</small>
+                            <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>
-
                 <div className="col" style={cardHeight}>
-                    <div className="card h-100 bg-secondary">
+                    <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
                         <div className="card-body">
                             <ul className="nav nav-pills nav-fill">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Todo</a>
-                                </li>
 
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Procesando(0)</a>
+                                    {status.status === 'TODO' ? <a className="nav-link active" style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e) => handleStatus(e)}>Todo</a> :
+                                        <a className="nav-link " style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e) => handleStatus(e)}>Todo</a>}
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Enviado</a>
+                                    {status.status === 'PENDIENTE' ? <a className="nav-link active" href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando(0)</a> :
+                                        <a className="nav-link " href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando(0)</a>}
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#" style={linkColor}>Completado</a>
+                                    {status.status === 'ENVIADO' ?
+                                        <a className="nav-link active" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado</a> :
+                                        <a className="nav-link" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado</a>
+                                    }
+                                </li>
+                                <li className="nav-item">
+                                    {status.status === 'ENTREGADO' ?
+                                        <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado</a> :
+                                        <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado</a>
+                                    }
                                 </li>
                             </ul>
-                            <nav className="navbar bg-body-tertiary" style={{ width: '680px' }}>
-                                <div className="container-fluid">
-                                    <div className="d-flex align-items-center">
-                                        <h5>Pedidos:</h5>
-                                        <input className="form-control" type="search" style={{ width: '500px' }} placeholder="N° de pedido, nombre del producto" aria-label="Search" />
-                                        <button className="btn btn-success" type="submit">Buscar</button>
-                                    </div>
-                                </div>
-                            </nav>
                         </div>
                     </div>
-
-                    <div className="card h-100 bg-secondary">
+                    {status.status === "TODO" ? <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
                         <div className="card-body">
-                            <h2>Compras realizadas por el usuario:</h2>
+                            <h2>&nbsp; Compras realizadas por el usuario:</h2>
                             {history ? (
                                 <>
                                     {history.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
-                                            <div onClick={()=>handleNavigate(e.product.id)}>
+                                            <div onClick={() => handleNavigate(e.product.id)}>
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
                                                 <h4>{`Status: ${el.status}`}</h4>
                                                 <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
                                             </div>
                                             <div className={styles.divImg}>
-                                            <button onClick={()=>onReviews(e.product.id,el.id)} className={styles.reviewsButton}>Reviews</button>
-                                            <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                                <button onClick={() => onReviews(e.product.id, el.id)} className={styles.reviewsButton}>Reviews</button>
+                                                <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
                                             </div>
                                         </div>
                                     )))
@@ -347,7 +391,90 @@ function Order() {
                                 <h3>Todavía no has realizado compras.</h3>
                             )}
                         </div>
-                    </div>
+                    </div> : ''}
+                    {status.status === "PENDIENTE" ? <div className="card h-100 bg-light bg-gradient">
+
+                        <div className="card-body">
+                            <h2>Compras en preparacion:</h2>
+                            {history ? (
+                                <>
+                                    {pendiente.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={() => handleNavigate(e.product.id)}>
+
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                                <button onClick={() => onReviews(e.product.id, el.id)} className={styles.reviewsButton}>Reviews</button>
+                                                <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No tienes compras en preparacion.</h3>
+                            )}
+                        </div>
+                    </div> : ''}
+                    {status.status === "ENVIADO" ? <div className="card h-100 bg-light bg-gradient">
+
+                        <div className="card-body">
+                            <h2>Compras enviadas:</h2>
+                            {history ? (
+                                <>
+                                    {enviado.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={() => handleNavigate(e.product.id)}>
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                                <button onClick={() => onReviews(e.product.id, el.id)} className={styles.reviewsButton}>Reviews</button>
+                                                <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No tienes compras en envio.</h3>
+                            )}
+                        </div>
+                    </div> : ''}
+                    {status.status === "ENTREGADO" ? <div className="card h-100 bg-light bg-gradient">
+                        <div className="card-body ">
+
+                            <h2>Compras Completadas:</h2>
+                            {history ? (
+                                <>
+                                    {completo.map((el) => el.detailOrders.map((e) => (
+                                        <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
+                                            <div onClick={() => handleNavigate(e.product.id)}>
+                                                <h3>{`Item: ${e.product.name}`}</h3>
+                                                <h4>{`Precio: $${e.purchaseprice}`}</h4>
+                                                <h4>{`Status: ${el.status}`}</h4>
+                                                <h4>{`Fecha de compra: ${el.orderDate}`}</h4>
+                                            </div>
+                                            <div className={styles.divImg}>
+                                                <button onClick={() => onReviews(e.product.id, el.id)} className={styles.reviewsButton}>Reviews</button>
+                                                <img src={e.product.img} style={{ width: "200px" }} alt="Product" />
+                                            </div>
+                                        </div>
+                                    )))
+                                    }
+                                </>
+                            ) : (
+                                <h3>No hay compras registradas en su usuario.</h3>
+                            )}
+                        </div>
+                    </div> : ''}
+
                 </div>
             </div>
         </div>
