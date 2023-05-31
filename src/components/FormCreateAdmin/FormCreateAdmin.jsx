@@ -15,6 +15,7 @@ export default function FormCreateAdmin() {
   const [loading, setLoading] = useState(false);
   const adminErrors = useSelector((state) => state.adminErrors);
 
+  const darkModes = useSelector((state) => state.darkModes);
 
   // const allAdmins = useSelector((state) => state.allAdmins);
 
@@ -109,7 +110,10 @@ export default function FormCreateAdmin() {
     <div className={style.Allform}>
       <SearchBar />
       <DashboardLeft />
-      <form onSubmit={handleSubmit} className={style.FormAdmin}>
+      <form
+        onSubmit={handleSubmit}
+        className={darkModes ? style.FormAdminDark : style.FormAdmin}
+      >
         <h1>Crear Administrador</h1>
         <div className={style.formContainer}>
           <div className={style.NameLast}>
@@ -120,12 +124,18 @@ export default function FormCreateAdmin() {
                 type="text"
                 name="name"
                 onChange={handleChange}
+                value={form.name}
               ></input>
               <span>{errors?.name}</span>
             </div>
             <div>
               <p htmlFor="">Apellido</p>
-              <input type="text" name="lastName" onChange={handleChange} />
+              <input
+                type="text"
+                value={form.lastName}
+                name="lastName"
+                onChange={handleChange}
+              />
               <span>{errors?.lastName}</span>
             </div>
           </div>
@@ -134,6 +144,7 @@ export default function FormCreateAdmin() {
               <p htmlFor="">Email</p>
               <input
                 className={style.right}
+                value={form.email}
                 type="text"
                 name="email"
                 onChange={handleChange}
@@ -142,7 +153,12 @@ export default function FormCreateAdmin() {
             </div>
             <div>
               <p htmlFor="">Nickname</p>
-              <input type="text" name="nickname" onChange={handleChange} />
+              <input
+                type="text"
+                value={form.nickname}
+                name="nickname"
+                onChange={handleChange}
+              />
               <span>{errors?.nickname}</span>
             </div>
           </div>
@@ -151,6 +167,7 @@ export default function FormCreateAdmin() {
               <p htmlFor="">Direccion</p>
               <input
                 className={style.right}
+                value={form.address}
                 type="text"
                 name="address"
                 onChange={handleChange}
@@ -159,7 +176,12 @@ export default function FormCreateAdmin() {
             </div>
             <div>
               <p htmlFor="">fecha de nacimiento</p>
-              <input type="date" name="birthDate" onChange={handleChange} />
+              <input
+                type="date"
+                name="birthDate"
+                value={form.birthDate}
+                onChange={handleChange}
+              />
               <span>{errors?.birthDate}</span>
             </div>
           </div>
@@ -197,6 +219,7 @@ export default function FormCreateAdmin() {
                 className={style.right}
                 type="password"
                 name="password"
+                value={form.password}
                 onChange={handleChange}
               />
               <p>{errors?.password}</p>
@@ -206,6 +229,7 @@ export default function FormCreateAdmin() {
               <input
                 type="password"
                 name="passwordRepit"
+                value={form.passwordRepit}
                 onChange={handleChange}
               />
               <p>{errors?.passwordRepit}</p>

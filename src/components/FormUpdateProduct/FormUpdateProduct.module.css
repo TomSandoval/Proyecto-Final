@@ -1,38 +1,21 @@
 .Allform {
   display: flex;
+  min-height: 100%;
 }
 
-.FormAdmin,
-.FormAdminDark {
+.FormAdmin {
   margin-top: 6.8%;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  height: 100%;
-  background-color: rgb(249, 250, 251);
-  color: black;
-  transition: all 1s ease-in-out;
 }
-
-.FormAdminDark {
-  background-color: #222324;
-  transition: all 1s ease-in-out;
-}
-
-.FormAdmin h1,
-.FormAdminDark h1 {
+.FormAdmin h1 {
   font-family: "Montserrat", sans-serif;
   font-weight: 600;
   font-size: 35px;
   margin: auto;
-  color: black;
-  transition: all 1s ease-in-out;
-}
-.FormAdminDark h1 {
-  color: white;
-  transition: all 1s ease-in-out;
 }
 
 .formContainer,
@@ -121,6 +104,14 @@
 
 .adreessDate input {
   width: 15vw;
+}
+
+.adreessDate select {
+  background-color: rgb(248, 242, 242);
+  margin: 15px;
+  width: 13vw;
+  height: 5vh;
+  border-radius: 10px;
 }
 
 .right {

@@ -9,15 +9,17 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { listUsers } from "../../redux/actions";
+import axios from "axios";
 
 export default function UserAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const usersAdmin = useSelector((state) => state.usersAdmin);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
-  // const [rows1, setRows1] = useState([]);
+  const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
   let rows1 = [];
+  let ids = selectedUserIds;
 
   useEffect(() => {
     dispatch(listUsers());
@@ -27,11 +29,33 @@ export default function UserAdmin() {
     setSelectedUserIds(selection);
   };
 
-  const handleDeleteRows = () => {
-    const remainingRows = rows1.filter((row) => row.col4 === true);
+  const handleDeleteSelectedUsers = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers?action=delete",
+        {
+          data: { ids: ids },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error.response?.data);
+    }
+  };
 
-    setRows1(remainingRows);
-    setSelectedRows([]);
+  const handleRestoreSelectedUsers = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers?action=restore",
+        {
+          data: { ids: ids },
+        }
+      );
+      window.location.reload();
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
 
   usersAdmin.map((user, index) => {
@@ -52,33 +76,50 @@ export default function UserAdmin() {
     { field: "col1", headerName: "Nombre", width: 150 },
     { field: "col2", headerName: "Email", width: 150 },
     { field: "col3", headerName: "roll", width: 150 },
-    { field: "col4", headerName: "deleteLogic", width: 150 },
+    { field: "col4", headerName: "Borrado Lógico", width: 150 },
   ];
 
   return (
-    <div className={styles.allUserAdmin}>
+    <div className={darkModes ? styles.allUserAdminDark : styles.allUserAdmin}>
       <SearchBar />
       <DashboardLeft />
-      <div className={styles.users}>
+      <div className={darkModes ? styles.darkUsers : styles.users}>
         <h1>Usuarios</h1>
-        <TextField
-          fullWidth
-          label="Buscar"
-          id="fullWidth"
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-        />
-        <DataGrid
-          experimentalFeatures={{ columnGrouping: true }}
-          checkboxSelection={true}
-          onRowSelectionModelChange={(newSelection) => handleRowSelection(newSelection)}
-          selectionModel={selectedRows}
-          disableRowSelectionOnClick
-          rows={filteredRows}
-          columns={columns1}
-        />
-        <Button onClick={handleDeleteRows} variant="outlined" color="secondary">
-          Desactivar Administrador
+        <div className={styles.search}>
+          <TextField
+            fullWidth
+            label="Buscar"
+            id="fullWidth"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+        </div>
+        <div className={styles.dataGri}>
+          <DataGrid
+            experimentalFeatures={{ columnGrouping: true }}
+            checkboxSelection={true}
+            onRowSelectionModelChange={(newSelection) =>
+              handleRowSelection(newSelection)
+            }
+            selectionModel={selectedRows}
+            disableRowSelectionOnClick
+            rows={filteredRows}
+            columns={columns1}
+          />
+        </div>
+        <Button
+          onClick={handleDeleteSelectedUsers}
+          variant="outlined"
+          color="secondary"
+        >
+          Desactivar
+        </Button>
+        <Button
+          onClick={handleRestoreSelectedUsers}
+          variant="outlined"
+          color="secondary"
+        >
+          Activar
         </Button>
       </div>
     </div>

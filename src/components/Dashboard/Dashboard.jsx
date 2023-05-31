@@ -12,10 +12,12 @@ import carrito from "../../assets/Multimedia.jpg";
 import { useEffect, useState } from "react";
 import logo from "../../assets/Recurso 1.png";
 import LoadingDashboard from "../Loading/LoadingDashboard";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
   const navigate = useNavigate();
   const [tarjeta, setTarjeta] = useState();
+  const darkModes = useSelector((state) => state.darkModes);
 
   const handleNavigate = () => {
     navigate("/");
@@ -48,7 +50,7 @@ function Dashboard() {
     <div className="Dashboard">
       <SearchBar />
       <DashboardLeft />
-      <div className="allChart">
+      <div className={darkModes ? "allChartDark" : "allChart"}>
         <h1>Bienvenido al DashBoard</h1>
         <div className="alltarjetitas">
           <div className="tarjetitas-google">
@@ -59,14 +61,14 @@ function Dashboard() {
             <h5>{`${tarjeta?.porcentGoogle?.result?.googlePercentage?.toFixed(
               2
             )}%`}</h5>
-            <p>Visitas de Google</p>
+            <p>Usuarios de Google</p>
           </div>
           <div className="tarjetitas-delivered">
             <img src={carrito} style={{ width: "68.3%" }} alt="" />
             <h5>{`${tarjeta?.porcentGoogle?.result?.directPercentage?.toFixed(
               2
             )}%`}</h5>
-            <p>Visitas de Google</p>
+            <p>Usuarios de Tuki</p>
           </div>
           <div className="tarjetitas-sold">
             <img
@@ -74,7 +76,7 @@ function Dashboard() {
               alt=""
             />
             <h5>{tarjeta?.deliveredProduct?.result}</h5>
-            <p>Delivered</p>
+            <p>Cantidad de productos vendidos</p>
           </div>
           <div className="tarjetitas-sales">
             <img
@@ -97,7 +99,7 @@ function Dashboard() {
         </div>
         <div className="Chart-torta">
           <p>Cantidad de Productos Registrado por Categorías</p>
-          <PieChart />
+          <PieChartNEW />
         </div>
       </div>
     </div>
