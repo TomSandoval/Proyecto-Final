@@ -18,6 +18,16 @@ function Order() {
     const completo = history?.filter((order) => order.status === 'ENTREGADO')
     const enviado = history?.filter((order) => order.status === "ENVIADO")
     const pendiente = history?.filter((order) => order.status === "PENDIENTE")
+    const totalPendientes = pendiente?.reduce((total, order) => {
+        return total + order.detailOrders.length;
+      }, 0);
+    const totalEnviados = enviado?.reduce((total, order) => {
+        return total + order.detailOrders.length;
+      }, 0);
+    const totalCompletos = completo?.reduce((total, order) => {
+        return total + order.detailOrders.length;
+      }, 0);
+
     const [status, setStatus] = React.useState({
         status: 'TODO',
     });
@@ -80,7 +90,6 @@ function Order() {
         setReviews(false)
     };
     const handleStatus = (e) => {
-        console.log(e);
         setStatus({
             status: e.target.name,
         })
@@ -335,19 +344,19 @@ function Order() {
                                         <a className="nav-link " style={linkColor} aria-current="page" href="#" name='TODO' onClick={(e) => handleStatus(e)}>Todo</a>}
                                 </li>
                                 <li className="nav-item">
-                                    {status.status === 'PENDIENTE' ? <a className="nav-link active" href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando(0)</a> :
-                                        <a className="nav-link " href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando(0)</a>}
+                                    {status.status === 'PENDIENTE' ? <a className="nav-link active" href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando ({totalPendientes})</a> :
+                                        <a className="nav-link " href="#" style={linkColor} name='PENDIENTE' onClick={(e) => handleStatus(e)}>Procesando({totalPendientes})</a>}
                                 </li>
                                 <li className="nav-item">
                                     {status.status === 'ENVIADO' ?
-                                        <a className="nav-link active" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado</a> :
-                                        <a className="nav-link" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado</a>
+                                        <a className="nav-link active" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado ({totalEnviados})</a> :
+                                        <a className="nav-link" href="#" style={linkColor} name='ENVIADO' onClick={(e) => handleStatus(e)}>Enviado ({totalEnviados})</a>
                                     }
                                 </li>
                                 <li className="nav-item">
                                     {status.status === 'ENTREGADO' ?
-                                        <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado</a> :
-                                        <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado</a>
+                                        <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalCompletos})</a> :
+                                        <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalCompletos})</a>
                                     }
                                 </li>
                             </ul>
