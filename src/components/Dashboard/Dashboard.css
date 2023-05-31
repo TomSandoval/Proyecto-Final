@@ -30,9 +30,9 @@
 }
 
 .Chart-torta {
-  width: 40%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
-  padding: 50px;
+  padding: 30px;
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 12px;

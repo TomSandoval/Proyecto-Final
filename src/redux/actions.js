@@ -35,6 +35,7 @@ export const CHECK_SESION = "CHECK_SESION";
 export const DELETE_ALL_CART = "DELETE_ALL_CART";
 export const GET_PRODUC_BY_USER = "GET_PRODUC_BY_USER";
 export const GET_PRODUCT_ACTIVE = "GET_PRODUCT_ACTIVE";
+export const GET_PRODUCT_INACTIVE = "GET_PRODUCT_INACTIVE";
 export const CREATE_ADMIN = "CREATE_ADMIN";
 export const LIST_USERS = "LIST_USERS";
 export const SEND_REVIEWS = "SEND_REVIEWS";
@@ -571,6 +572,19 @@ export const getProductActive = (email) => {
   };
 };
 
+export const getProductInactive = (email) => {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/product/inactive/${email}`
+      );
+      dispatch({ type: GET_PRODUCT_INACTIVE, payload: response.data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const createAdmin = (form) => {
   return async function (dispatch) {
     try {
@@ -598,32 +612,37 @@ export const listUsers = () => {
   };
 };
 
-export const deleteAdmin = (ids) => {
-  return async function (dispatch) {
-    try {
-      const response = await axios.delete(
-        "http://localhost:3001/admin/listusers/",
-        ids
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
+// export const deleteAdmin = (ids) => {
+//   return async function (dispatch) {
+//     try {
+//       const response = await axios.delete(
+//         "http://localhost:3001/admin/listusers/",
+//         ids
+//       );
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// };
 
+// export const updateProduct = (id) =>{
+//   retu
+// }
 
 export const sendReviews = (payload) => {
   console.log(payload);
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/product/review",payload);
-      dispatch({ type: SEND_REVIEWS});
+      const response = await axios.post(
+        "http://localhost:3001/product/review",
+        payload
+      );
+      dispatch({ type: SEND_REVIEWS });
     } catch (error) {
       console.log(error);
     }
   };
 };
-
 
 // const filterProduct = data.filter((product) => product.id == id);
 // return { type: PRODUCT_DETAIL, payload: filterProduct[0] };

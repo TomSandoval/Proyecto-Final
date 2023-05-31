@@ -21,13 +21,13 @@ export default function PieChartSeller() {
     fetchData();
   }, []);
 
-  for (let i = 1; i < data.length; i++) {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
+  // for (let i = 1; i < data.length; i++) {
+  //   const red = Math.floor(Math.random() * 256);
+  //   const green = Math.floor(Math.random() * 256);
+  //   const blue = Math.floor(Math.random() * 256);
 
-    data[i].push(`rgb(${red}, ${green}, ${blue})`);
-  }
+  //   data[i].push(`rgb(${red}, ${green}, ${blue})`);
+  // }
 
   const options = {
     title: "Facturacion Por Vendedor",

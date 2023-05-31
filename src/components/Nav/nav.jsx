@@ -28,7 +28,7 @@ export default function SearchBar({ view }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const username = localStorage.getItem("username");
-
+  const roll = localStorage.getItem("roll");
 
   useEffect(() => {
     async function getProducts() {
@@ -94,24 +94,24 @@ export default function SearchBar({ view }) {
 
   const handleSession = () => {
     Swal.fire({
-      title: '¿Estas seguro que quieres cerrar sesión?',
+      title: "¿Estas seguro que quieres cerrar sesión?",
       text: "",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, Cerrar Sesión',
-      cancelButtonText: 'Cancelar'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Cerrar Sesión",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(closeSesion())
+        dispatch(closeSesion());
         Swal.fire(
-          'Espero verte pronto!',
-          'Tu cuenta fue cerrda con exito.',
-          'success'
-        )
+          "Espero verte pronto!",
+          "Tu cuenta fue cerrda con exito.",
+          "success"
+        );
       }
-    })
+    });
   };
 
   const buttonsUnlogin = () => {
@@ -137,9 +137,11 @@ export default function SearchBar({ view }) {
           <Link to="/formCreateProduct" className={styles.link}>
             Publicar un producto
           </Link>
-          <Link to="/admin/dashboard" className={styles.link}>
-            Admin
-          </Link>
+          {(roll === "ADMIN" || roll === "SUPERADMIN") && (
+            <Link to="/admin/dashboard" className={styles.link}>
+              Admin
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -230,9 +232,14 @@ export default function SearchBar({ view }) {
               <path d="M12 2A10.13 10.13 0 0 0 2 12a10 10 0 0 0 4 7.92V20h.1a9.7 9.7 0 0 0 11.8 0h.1v-.08A10 10 0 0 0 22 12 10.13 10.13 0 0 0 12 2zM8.07 18.93A3 3 0 0 1 11 16.57h2a3 3 0 0 1 2.93 2.36 7.75 7.75 0 0 1-7.86 0zm9.54-1.29A5 5 0 0 0 13 14.57h-2a5 5 0 0 0-4.61 3.07A8 8 0 0 1 4 12a8.1 8.1 0 0 1 8-8 8.1 8.1 0 0 1 8 8 8 8 0 0 1-2.39 5.64z"></path>
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
-            <Link to="/user" className={styles.linkMenu}>
-              {username ? username : 'Perfil' }
-            </Link>
+            {(roll === "USER" ||
+              roll === "SELLER" ||
+              roll === "SUPERADMIN" ||
+              roll === "ADMIN") && (
+              <Link to="/user" className={styles.linkMenu}>
+                {username ? username : "Perfil"}
+              </Link>
+            )}
           </div>
           <div>
             <span className={styles.themeTitle}>Change Themes</span>

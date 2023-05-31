@@ -1,116 +1,89 @@
-import { useDispatch, useSelector } from "react-redux";
-import React, { useState, useEffect } from "react";
-import { getCategories } from "../../redux/actions";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import style from "./FormUpdateProduct.module.css";
 import Validation from "./Validation";
-import { postCreate } from "../../redux/actions";
-import { FormGroup, Input } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { createAdmin } from "../../redux/actions";
+import Swal from "sweetalert2";
 import axios from "axios";
+import { FormGroup, Input } from "reactstrap";
 
-function verificarObjeto(objeto) {
-  for (let clave in objeto) {
-    if (objeto[clave] !== "") {
-      console.log(objeto);
-      return false;
-    }
-  }
-  return true;
-}
-
-export default function FormUpdateProduct() {
-  const allCategories = useSelector((state) => state.categories);
-  const navigate = useNavigate();
+export default function FormUpdateProduct({ value }) {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
-
   const [loading, setLoading] = useState(false);
-  const [input, setInput] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stock: "",
-    isOnSale: false,
-    salePrice: "0",
-    email: "",
-    status: "",
-    categories: "",
-    img: [],
+  const email = window.localStorage.getItem("email");
+
+  console.log(value);
+
+  // const allAdmins = useSelector((state) => state.allAdmins);
+
+  const [form, setForm] = useState({
+    name: value?.col1,
+    stock: value?.col2,
+    description: value?.col3,
+    price: value?.col4,
+    status: value?.col5,
+    img: value?.col6,
+    salePrice: value?.col7,
+    isOnSale: value?.col8,
+    deleteLogic: value?.col9,
   });
 
   const [errors, setErrors] = useState({
     name: "",
+    stock: "",
     description: "",
     price: "",
-    stock: "",
-    email: "",
     status: "",
-    categories: "",
-    salePrice: "",
     img: "",
+    salePrice: "",
+    isOnSale: "",
+    deleteLogic: "",
   });
 
-  const handleChange = (e) => {
-    if (e.target.name === "isOnSale") {
-      if (input.isOnSale === false) {
-        setInput({
-          ...input,
-          isOnSale: true,
-        });
-      } else {
-        setInput({
-          ...input,
-          isOnSale: false,
-        });
-      }
-    } else {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
-      });
-      Validation(
-        { ...input, [e.target.name]: e.target.value },
-        setErrors,
-        errors,
-        e
+  const handleChange = (event) => {
+    const property = event.target.name;
+    const value = event.target.value;
+
+    setForm({ ...form, [property]: value });
+
+    setErrors(
+      Validation({ ...form, [property]: value }, errors, setErrors, event)
+    );
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (
+      !errors?.name &&
+      !errors?.stock &&
+      !errors?.description &&
+      !errors?.price &&
+      !errors?.status &&
+      !errors?.salePrice
+    ) {
+      handleUpdateProduct();
+      Swal.fire(
+        "Actualizado!",
+        "Has actualizado el producto correctamente.",
+        "success"
       );
+      window.location.reload();
+    } else {
+      Swal.fire({
+        title: "Introduzca los datos Correctamente",
+        icon: "error",
+      });
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const verificar = verificarObjeto(errors);
-    if (verificar) {
-      dispatch(postCreate(input));
-      setInput({
-        name: "",
-        description: "",
-        price: "",
-        stock: "",
-        isOnSale: false,
-        salePrice: "0",
-        email: "",
-        status: "",
-        categories: "",
-        img: [],
-      });
-      setErrors({
-        name: "",
-        description: "",
-        price: "",
-        stock: "",
-        email: "",
-        status: "",
-        categories: "",
-        salePrice: "",
-        img: "",
-      });
-      alert("producto creado con exito");
-      navigate("/");
-    } else {
-      alert("Completa correctamente los campos");
+  const handleUpdateProduct = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/product/${value.col0}`,
+        form
+      );
+    } catch (error) {
+      console.error(error.response.data);
     }
   };
 
@@ -125,147 +98,152 @@ export default function FormUpdateProduct() {
       data
     );
     const file = await res.data;
-    setInput({
-      ...input,
-      img: [...input.img, file.secure_url],
+    setForm({
+      ...form,
+      img: file.secure_url,
     });
     setLoading(false);
-    Validation(
-      { ...input, img: [...input.img, file.secure_url] },
-      setErrors,
-      errors,
-      e
-    );
   };
 
   return (
-    <form action="/create" method="POST" onSubmit={(e) => handleSubmit(e)}>
-      <div>
-        <input
-          type="text"
-          name="name"
-          onChange={handleChange}
-          placeholder="Nombre del producto"
-        />
-        {<span>{errors.name}</span>}
-      </div>
-
-      <div>
-        <input
-          type="text"
-          name="description"
-          onChange={handleChange}
-          placeholder="Descripción"
-        />
-        {<span>{errors.description}</span>}
-      </div>
-
-      <div>
-        <input
-          type="text"
-          name="email"
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        {<span>{errors.email}</span>}
-      </div>
-
-      <div>
-        <input
-          type="text"
-          name="price"
-          onChange={handleChange}
-          placeholder="Precio"
-        />
-        {<span>{errors.price}</span>}
-      </div>
-
-      <div>
-        <input
-          type="text"
-          name="stock"
-          onChange={handleChange}
-          placeholder="Stock"
-        />
-        {<span>{errors.stock}</span>}
-      </div>
-
-      <label for="myCheckbox" htmlFor="isOnSale">
-        ¿Está en oferta?
-      </label>
-      <input
-        id="myCheckbox"
-        type="checkbox"
-        name="isOnSale"
-        onChange={handleChange}
-      />
-
-      <input
-        type="text"
-        name="salePrice"
-        placeholder="Precio Oferta"
-        onChange={handleChange}
-        style={{ display: input.isOnSale ? "block" : "none" }}
-      />
-      {
-        <span style={{ display: input.isOnSale ? "block" : "none" }}>
-          {input.isOnSale === "none"
-            ? setErrors({ ...errors, salePrice: "" })
-            : errors.salePrice}
-        </span>
-      }
-      <label htmlFor="">Estado del producto:</label>
-      <select defaultValue="Estado" name="status" id="" onChange={handleChange}>
-        <option value="Estado">Seleccionar Estado</option>
-        <option value="USADO">Usado</option>
-        <option value="NUEVO">Nuevo</option>
-      </select>
-      {<span>{errors.status}</span>}
-
-      <label htmlFor="">Categorías: </label>
-      <select
-        defaultValue="Categorias"
-        name="categories"
-        id=""
-        onChange={handleChange}
-      >
-        <option value="Categorias">Seleccionar Categorias</option>
-        {allCategories?.map((e, index) => (
-          <option key={index} value={e.name}>
-            {e.name}
-          </option>
-        ))}
-      </select>
-      {<span>{errors.categories}</span>}
-
-      <FormGroup>
-        <Input
-          type="file"
-          name="img"
-          placeholder="Sube foto aqui"
-          onChange={uploadImage}
-        />
-        {loading ? (
-          <label htmlFor="">Loading Image</label>
-        ) : (
-          input.img.map((i, index) => (
-            <img key={index} src={i} style={{ width: "300px" }} />
-          ))
-        )}
-        {<span>{errors.img}</span>}
-      </FormGroup>
-
-      <h6 htmlFor="">Desea activar o desactivar el producto</h6>
-
-      <label htmlFor="">Activo</label>
-      <input type="checkbox" />
-      <label htmlFor="">Inactivo</label>
-      <input type="checkbox" />
-
-      <button>Crea tu producto</button>
-      <button>
-        <Link to="/">Home</Link>
-      </button>
-    </form>
+    <div className={style.Allform}>
+      <form onSubmit={handleSubmit} className={style.FormAdmin}>
+        <h1>Actualizar Producto</h1>
+        <div className={style.formContainer}>
+          <div className={style.NameLast}>
+            <div>
+              <p htmlFor="">Nombre</p>
+              <input
+                className={style.right}
+                type="text"
+                name="name"
+                onChange={handleChange}
+                defaultValue={value?.col1}
+              ></input>
+              <span>{errors?.name}</span>
+            </div>
+            <div>
+              <p htmlFor="">Stock</p>
+              <input
+                type="text"
+                name="stock"
+                defaultValue={value?.col2}
+                onChange={handleChange}
+              />
+              <span>{errors?.stock}</span>
+            </div>
+          </div>
+          <div className={style.adreessDate}>
+            <div>
+              <p htmlFor="">Precio</p>
+              <input
+                className={style.right}
+                defaultValue={value?.col4}
+                type="text"
+                name="price"
+                onChange={handleChange}
+              />
+              <span>{errors?.price}</span>
+            </div>
+            <div>
+              <p htmlFor="">Descripcion</p>
+              <input
+                type="text"
+                name="description"
+                defaultValue={value?.col3}
+                onChange={handleChange}
+              />
+              <span>{errors?.description}</span>
+            </div>
+          </div>
+          <div className={style.adreessDate}>
+            <div>
+              <p htmlFor="">isOnSale</p>
+              {/* <input
+                className={style.right}
+                defaultValue={value?.col8}
+                type="text"
+                name="isOnSale"
+                onChange={handleChange}
+              /> */}
+              <select
+                name="isOnSale"
+                onChange={handleChange}
+                defaultValue={value?.col8}
+                id=""
+              >
+                <option value="true">TRUE</option>
+                <option value="false">FALSE</option>
+              </select>
+            </div>
+            <div>
+              <p htmlFor="">Borrado Logico</p>
+              <select
+                name="deleteLogic"
+                onChange={handleChange}
+                defaultValue={value?.col9}
+                id=""
+              >
+                <option value="true">TRUE</option>
+                <option value="false">FALSE</option>
+              </select>
+              <span>{errors?.deleteLogic}</span>
+            </div>
+          </div>
+          <div className={style.adreessDate}>
+            <div>
+              <p htmlFor="">Estado</p>
+              <input
+                type="text"
+                name="status"
+                className={style.right}
+                defaultValue={value?.col5}
+                onChange={handleChange}
+              />
+              <span>{errors?.status}</span>
+            </div>
+            <div>
+              <p htmlFor="">salePrice</p>
+              <input
+                className={style.right}
+                type="text"
+                name="salePrice"
+                onChange={handleChange}
+                defaultValue={value?.col7}
+              />
+              <p>{errors?.salePrice}</p>
+            </div>
+          </div>
+          <div>
+            <p>Imagen</p>
+            <div>
+              <FormGroup>
+                <Input
+                  type="file"
+                  name="img"
+                  placeholder="Sube de perfil"
+                  style={{ width: "100%" }}
+                  accept="image/jpeg, image/jpg, image/webp, image/bmp, image/tiff, image/svg+xml"
+                  onChange={uploadImage}
+                />
+                {loading ? (
+                  <label htmlFor="">Loading Image</label>
+                ) : (
+                  <img
+                    src={value?.col6[0]}
+                    style={{
+                      width: "200px",
+                      marginTop: "12px",
+                      borderRadius: "10px",
+                    }}
+                  />
+                )}
+              </FormGroup>
+            </div>
+          </div>
+          <button type="submit">Actualizar</button>
+        </div>
+      </form>
+    </div>
   );
 }
