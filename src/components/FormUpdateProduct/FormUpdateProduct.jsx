@@ -158,22 +158,16 @@ export default function FormUpdateProduct({ value }) {
           </div>
           <div className={style.adreessDate}>
             <div>
-              <p htmlFor="">isOnSale</p>
-              {/* <input
-                className={style.right}
-                defaultValue={value?.col8}
-                type="text"
-                name="isOnSale"
-                onChange={handleChange}
-              /> */}
+              <p htmlFor="">Esta en oferta?</p>
               <select
                 name="isOnSale"
                 onChange={handleChange}
-                defaultValue={value?.col8}
+                defaultValue={"SELECCIONAR"}
                 id=""
               >
-                <option value="true">TRUE</option>
-                <option value="false">FALSE</option>
+                <option value="SELECCIONAR">SELECCIONAR</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
               </select>
             </div>
             <div>
@@ -181,11 +175,12 @@ export default function FormUpdateProduct({ value }) {
               <select
                 name="deleteLogic"
                 onChange={handleChange}
-                defaultValue={value?.col9}
+                defaultValue={"SELECCIONAR"}
                 id=""
               >
-                <option value="true">TRUE</option>
-                <option value="false">FALSE</option>
+                <option value="SELECCIONAR">SELECCIONAR</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
               </select>
               <span>{errors?.deleteLogic}</span>
             </div>
@@ -193,17 +188,20 @@ export default function FormUpdateProduct({ value }) {
           <div className={style.adreessDate}>
             <div>
               <p htmlFor="">Estado</p>
-              <input
-                type="text"
+              <select
                 name="status"
-                className={style.right}
-                defaultValue={value?.col5}
                 onChange={handleChange}
-              />
-              <span>{errors?.status}</span>
+                defaultValue={"Seleccionar"}
+                id=""
+              >
+                <option value="SELECCIONAR">SELECCIONAR</option>
+                <option value="NUEVO">NUEVO</option>
+                <option value="USADO">USADO</option>
+              </select>
+              <p>{errors?.status}</p>
             </div>
             <div>
-              <p htmlFor="">salePrice</p>
+              <p htmlFor="">Precio de oferta</p>
               <input
                 className={style.right}
                 type="text"
