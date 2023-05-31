@@ -33,6 +33,7 @@ import ProductSale from "./components/ProductSale/ProductSale";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormCreateAdmin from "./components/FormCreateAdmin/FormCreateAdmin";
 import UserAdmin from "./components/UserAdmin/UserAdmin";
+import UpdateProduct from "./components/User/Update";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -101,6 +102,7 @@ function App() {
           <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />
         )}
         <Route path="/admin/users" element={<UserAdmin />} />
+        <Route path="/user/update" element={<UpdateProduct />} />
       </Routes>
     </>
   );
