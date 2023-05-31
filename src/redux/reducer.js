@@ -32,9 +32,9 @@ import {
   CREATE_ADMIN,
   LIST_USERS,
   SEND_REVIEWS,
+  GET_PRODUCT_INACTIVE,
   GET_VENTAS,
   PUT_STATUS
-  
 } from "./actions";
 
 const initialState = {
@@ -44,6 +44,7 @@ const initialState = {
   categories: [],
   productDetail: {},
   productActive: [],
+  productInactive: [],
   error: null,
   userCreateError: null,
   userCreateSuccesfull: null,
@@ -311,6 +312,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         productActive: action.payload,
+      };
+
+    case GET_PRODUCT_INACTIVE:
+      return {
+        ...state,
+        productInactive: action.payload,
       };
 
     case CREATE_ADMIN:

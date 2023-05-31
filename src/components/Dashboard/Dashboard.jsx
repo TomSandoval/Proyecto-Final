@@ -59,14 +59,14 @@ function Dashboard() {
             <h5>{`${tarjeta?.porcentGoogle?.result?.googlePercentage?.toFixed(
               2
             )}%`}</h5>
-            <p>Visitas de Google</p>
+            <p>Usuarios de Google</p>
           </div>
           <div className="tarjetitas-delivered">
             <img src={carrito} style={{ width: "68.3%" }} alt="" />
             <h5>{`${tarjeta?.porcentGoogle?.result?.directPercentage?.toFixed(
               2
             )}%`}</h5>
-            <p>Visitas de Google</p>
+            <p>Usuarios de Tuki</p>
           </div>
           <div className="tarjetitas-sold">
             <img
@@ -74,7 +74,7 @@ function Dashboard() {
               alt=""
             />
             <h5>{tarjeta?.deliveredProduct?.result}</h5>
-            <p>Delivered</p>
+            <p>Cantidad de productos vendidos</p>
           </div>
           <div className="tarjetitas-sales">
             <img
@@ -97,7 +97,7 @@ function Dashboard() {
         </div>
         <div className="Chart-torta">
           <p>Cantidad de Productos Registrado por Categorías</p>
-          <PieChart />
+          <PieChartNEW />
         </div>
       </div>
     </div>

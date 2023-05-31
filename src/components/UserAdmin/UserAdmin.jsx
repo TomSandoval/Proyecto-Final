@@ -9,15 +9,16 @@ import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { listUsers } from "../../redux/actions";
+import axios from "axios";
 
 export default function UserAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const usersAdmin = useSelector((state) => state.usersAdmin);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
-  // const [rows1, setRows1] = useState([]);
   const dispatch = useDispatch();
   let rows1 = [];
+  let ids = selectedUserIds;
 
   useEffect(() => {
     dispatch(listUsers());
@@ -27,11 +28,33 @@ export default function UserAdmin() {
     setSelectedUserIds(selection);
   };
 
-  const handleDeleteRows = () => {
-    const remainingRows = rows1.filter((row) => row.col4 === true);
+  const handleDeleteSelectedUsers = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers?action=delete",
+        {
+          data: { ids: ids },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error(error.response?.data);
+    }
+  };
 
-    setRows1(remainingRows);
-    setSelectedRows([]);
+  const handleRestoreSelectedUsers = async () => {
+    try {
+      const response = await axios.delete(
+        "http://localhost:3001/admin/listusers?action=restore",
+        {
+          data: { ids: ids },
+        }
+      );
+      window.location.reload();
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
 
   usersAdmin.map((user, index) => {
@@ -71,14 +94,27 @@ export default function UserAdmin() {
         <DataGrid
           experimentalFeatures={{ columnGrouping: true }}
           checkboxSelection={true}
-          onRowSelectionModelChange={(newSelection) => handleRowSelection(newSelection)}
+          onRowSelectionModelChange={(newSelection) =>
+            handleRowSelection(newSelection)
+          }
           selectionModel={selectedRows}
           disableRowSelectionOnClick
           rows={filteredRows}
           columns={columns1}
         />
-        <Button onClick={handleDeleteRows} variant="outlined" color="secondary">
-          Desactivar Administrador
+        <Button
+          onClick={handleDeleteSelectedUsers}
+          variant="outlined"
+          color="secondary"
+        >
+          Desactivar
+        </Button>
+        <Button
+          onClick={handleRestoreSelectedUsers}
+          variant="outlined"
+          color="secondary"
+        >
+          Activar
         </Button>
       </div>
     </div>

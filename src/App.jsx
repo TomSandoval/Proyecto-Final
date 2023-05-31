@@ -38,6 +38,7 @@ import UpdateProduct from "./components/User/Update";
 function App() {
   const [visible, setVisible] = useState(false);
   const darkModes = useSelector((state) => state.darkModes);
+  const roll = localStorage.getItem("roll");
 
   const toggleVisibility = () => {
     setVisible(!visible);
@@ -97,7 +98,9 @@ function App() {
         <Route path="/shoppinghistory" element={<History />} />
         <Route path="/ProductSale" element={<ProductSale />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
-        <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />
+        {roll === "SUPERADMIN" && (
+          <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />
+        )}
         <Route path="/admin/users" element={<UserAdmin />} />
         <Route path="/user/update" element={<UpdateProduct />} />
       </Routes>
