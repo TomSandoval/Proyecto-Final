@@ -4,7 +4,8 @@
 }
 /*////////*/
 
-.allChart {
+.allChart,
+.allChartDark {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -12,9 +13,16 @@
   width: 100%;
   background-color: rgb(249, 250, 251);
   margin-top: 0%;
+  transition: all 1s ease-in-out;
 }
 
-.allChart h1 {
+.allChartDark {
+  background-color: rgb(27, 26, 26);
+  transition: all 1s ease-in-out;
+}
+
+.allChart h1,
+.allChartDark h1 {
   font-family: "Public Sans", sans-serif;
   font-weight: 600;
   font-size: 40px;
@@ -39,6 +47,7 @@
   text-align: center;
   margin: 1%;
   align-items: center;
+  color: black;
 }
 
 .Chart-torta:hover {
@@ -56,12 +65,15 @@
   border-radius: 12px;
   /* margin: 1%; */
   background-image: none;
+  transition: all 1s ease-in-out;
+  color: black;
 
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
 .chart-line:hover {
   border: 2px solid rgb(230, 230, 236);
+  transition: all 1s ease-in-out;
 }
 
 .chart-barra {
@@ -74,10 +86,13 @@
   border-radius: 12px;
   margin-left: 3%;
   /* margin-bottom: 2%; */
+  transition: all 1s ease-in-out;
+  color: black;
 }
 
 .chart-barra:hover {
   border: 2px solid rgb(230, 230, 236);
+  transition: all 1s ease-in-out;
 }
 
 .tarjetitas-google,
@@ -91,6 +106,8 @@
   border-radius: 8px;
   border: 0.1px solid rgb(241, 241, 249);
   /* background-color: rgb(208, 242, 255); */
+  background-color: white;
+  color: black;
   margin: 13px;
   display: flex;
   flex-direction: column;

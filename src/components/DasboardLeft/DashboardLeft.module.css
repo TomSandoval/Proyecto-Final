@@ -1,4 +1,5 @@
-.stage {
+.stage,
+.stageBlack {
   display: flex;
   left: 0;
   width: 22vw;
@@ -6,9 +7,11 @@
   border-right: 1px dotted rgb(230, 218, 218);
   align-items: center;
   flex-direction: column;
+  transition: all 1s ease-in-out;
 }
 
-.stage button {
+.stage button,
+.stageBlack button {
   width: 16.7vw;
   height: 5.7vh;
   border: none;
@@ -23,18 +26,28 @@
   display: flex;
 }
 
-.stage button:hover {
+.stageBlack {
+  background-color: black;
+  transition: all 1s ease-in-out;
+  border-right: 2px solid rgb(230, 218, 218);
+}
+
+.stage button:hover,
+.stageBlack button:hover {
   background-color: rgb(206, 206, 226);
 }
 
 .stage button:active,
-.stage button:focus {
+.stage button:focus,
+.stageBlack button :active,
+.stageBlack button:focus {
   background-color: rgb(206, 206, 226);
   border: 1px solid rgb(216, 209, 209);
   cursor: pointer;
 }
 
-.stage svg {
+.stage svg,
+.stageBlack svg {
   margin: 8%;
   margin-right: 10%;
 }
@@ -45,6 +58,7 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
+  color: black;
 
   width: 16.7vw;
   height: 9vh;

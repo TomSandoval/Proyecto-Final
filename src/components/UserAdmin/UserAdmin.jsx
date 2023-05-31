@@ -16,6 +16,7 @@ export default function UserAdmin() {
   const [searchValue, setSearchValue] = useState("");
   const usersAdmin = useSelector((state) => state.usersAdmin);
   const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
   let rows1 = [];
   let ids = selectedUserIds;
@@ -75,33 +76,37 @@ export default function UserAdmin() {
     { field: "col1", headerName: "Nombre", width: 150 },
     { field: "col2", headerName: "Email", width: 150 },
     { field: "col3", headerName: "roll", width: 150 },
-    { field: "col4", headerName: "deleteLogic", width: 150 },
+    { field: "col4", headerName: "Borrado Lógico", width: 150 },
   ];
 
   return (
-    <div className={styles.allUserAdmin}>
+    <div className={darkModes ? styles.allUserAdminDark : styles.allUserAdmin}>
       <SearchBar />
       <DashboardLeft />
-      <div className={styles.users}>
+      <div className={darkModes ? styles.darkUsers : styles.users}>
         <h1>Usuarios</h1>
-        <TextField
-          fullWidth
-          label="Buscar"
-          id="fullWidth"
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-        />
-        <DataGrid
-          experimentalFeatures={{ columnGrouping: true }}
-          checkboxSelection={true}
-          onRowSelectionModelChange={(newSelection) =>
-            handleRowSelection(newSelection)
-          }
-          selectionModel={selectedRows}
-          disableRowSelectionOnClick
-          rows={filteredRows}
-          columns={columns1}
-        />
+        <div className={styles.search}>
+          <TextField
+            fullWidth
+            label="Buscar"
+            id="fullWidth"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
+        </div>
+        <div className={styles.dataGri}>
+          <DataGrid
+            experimentalFeatures={{ columnGrouping: true }}
+            checkboxSelection={true}
+            onRowSelectionModelChange={(newSelection) =>
+              handleRowSelection(newSelection)
+            }
+            selectionModel={selectedRows}
+            disableRowSelectionOnClick
+            rows={filteredRows}
+            columns={columns1}
+          />
+        </div>
         <Button
           onClick={handleDeleteSelectedUsers}
           variant="outlined"

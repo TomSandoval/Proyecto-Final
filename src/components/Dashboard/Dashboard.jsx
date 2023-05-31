@@ -12,10 +12,12 @@ import carrito from "../../assets/Multimedia.jpg";
 import { useEffect, useState } from "react";
 import logo from "../../assets/Recurso 1.png";
 import LoadingDashboard from "../Loading/LoadingDashboard";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
   const navigate = useNavigate();
   const [tarjeta, setTarjeta] = useState();
+  const darkModes = useSelector((state) => state.darkModes);
 
   const handleNavigate = () => {
     navigate("/");
@@ -48,7 +50,7 @@ function Dashboard() {
     <div className="Dashboard">
       <SearchBar />
       <DashboardLeft />
-      <div className="allChart">
+      <div className={darkModes ? "allChartDark" : "allChart"}>
         <h1>Bienvenido al DashBoard</h1>
         <div className="alltarjetitas">
           <div className="tarjetitas-google">

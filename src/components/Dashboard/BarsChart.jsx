@@ -48,7 +48,7 @@ export default function BarsChart() {
       {
         label: "Dataset 1",
         data: chartData?.map((value) => value[1]),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        backgroundColor: "rgba(255, 99, 132, 1)",
       },
       // {
       //   label: "Dataset 2",
