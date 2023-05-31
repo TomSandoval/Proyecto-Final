@@ -28,8 +28,9 @@ function Order() {
         email: userData,
         rating: null,
         descripcion: '',
-
     });
+    const roll = localStorage.getItem('roll');
+
     useEffect(() => {
         const currentPath = location.pathname.split('/').pop();
         if (currentPath === 'user') {
@@ -109,11 +110,7 @@ function Order() {
         borderRadius: '8px',
         border: '0.1px solid rgb(241, 241, 249)'
     };
-    const card = {
-        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
-        borderRadius: '8px',
-        border: '0.1px solid rgb(241, 241, 249)'
-    };
+
     const cardHeight = {
         height: "50%",
         width: "75%",
@@ -178,9 +175,7 @@ function Order() {
         textAlign: "left"
     };
 
-      
-      
-      return (
+    return (
         <div style={background} >
             {reviews ? (
                 <div className={`${styles.overlay}`}>
@@ -282,16 +277,17 @@ function Order() {
                                     Pedidos
                                 </button>
                             </Link>
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
                             <Link to="/user/update" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
                                     Vendidos
                                 </button>
-                            </Link>
+                            </Link>)}
                             <Link to="/user/payment" style={linkColor}>
                                 <button
                                     type="button"
@@ -300,16 +296,6 @@ function Order() {
                                     id="perfil-btn"
                                 >
                                     Pagos
-                                </button>
-                            </Link>
-                            <Link to="/user/adress" style={linkColor}>
-                                <button
-                                    type="button"
-                                    className={`btn btn-light btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                    style={perfilButtonStyle}
-                                    id="perfil-btn"
-                                >
-                                    Dirección de envío
                                 </button>
                             </Link>
                             <Link to="/contact" style={linkColor}>
@@ -322,6 +308,7 @@ function Order() {
                                     Centro de ayuda
                                 </button>
                             </Link>
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
                             <Link to="/ProductSale" style={linkColor}>
                                 <button
                                     type="button"
@@ -331,7 +318,7 @@ function Order() {
                                 >
                                     Mis publicaciones
                                 </button>
-                            </Link>
+                            </Link>)}
                         </div>
                         <div className="card-footer">
                             <small className="text-body-light">TukiMarket 🐸</small>
@@ -368,7 +355,7 @@ function Order() {
                     </div>
                     {status.status === "TODO" ? <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
                         <div className="card-body">
-                            <h2>&nbsp; Compras realizadas por el usuario:</h2>
+                            <h2>Compras realizadas por el usuario:</h2>
                             {history ? (
                                 <>
                                     {history.map((el) => el.detailOrders.map((e) => (
@@ -391,8 +378,11 @@ function Order() {
                                 <h3>Todavía no has realizado compras.</h3>
                             )}
                         </div>
+                        <div className="card-footer">
+                                <small className="text-body-light">TukiMarket 🐸</small>
+                            </div>
                     </div> : ''}
-                    {status.status === "PENDIENTE" ? <div className="card h-100 bg-light bg-gradient">
+                    {status.status === "PENDIENTE" ? <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
 
                         <div className="card-body">
                             <h2>Compras en preparacion:</h2>
@@ -401,7 +391,6 @@ function Order() {
                                     {pendiente.map((el) => el.detailOrders.map((e) => (
                                         <div key={`${el.id}-${e.productId}`} className={styles.divCompra} >
                                             <div onClick={() => handleNavigate(e.product.id)}>
-
                                                 <h3>{`Item: ${e.product.name}`}</h3>
                                                 <h4>{`Precio: $${e.purchaseprice}`}</h4>
                                                 <h4>{`Status: ${el.status}`}</h4>
@@ -419,8 +408,11 @@ function Order() {
                                 <h3>No tienes compras en preparacion.</h3>
                             )}
                         </div>
+                        <div className="card-footer">
+                                <small className="text-body-light">TukiMarket 🐸</small>
+                            </div>
                     </div> : ''}
-                    {status.status === "ENVIADO" ? <div className="card h-100 bg-light bg-gradient">
+                    {status.status === "ENVIADO" ? <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
 
                         <div className="card-body">
                             <h2>Compras enviadas:</h2>
@@ -446,10 +438,12 @@ function Order() {
                                 <h3>No tienes compras en envio.</h3>
                             )}
                         </div>
+                        <div className="card-footer">
+                                <small className="text-body-light">TukiMarket 🐸</small>
+                            </div>
                     </div> : ''}
-                    {status.status === "ENTREGADO" ? <div className="card h-100 bg-light bg-gradient">
+                    {status.status === "ENTREGADO" ? <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
                         <div className="card-body ">
-
                             <h2>Compras Completadas:</h2>
                             {history ? (
                                 <>
@@ -473,8 +467,10 @@ function Order() {
                                 <h3>No hay compras registradas en su usuario.</h3>
                             )}
                         </div>
+                        <div className="card-footer">
+                                <small className="text-body-light">TukiMarket 🐸</small>
+                            </div>
                     </div> : ''}
-
                 </div>
             </div>
         </div>
