@@ -191,6 +191,8 @@ export const postLogin = (payload) => {
       );
       window.localStorage.setItem("username", response.data.nickname);
       window.localStorage.setItem("email", response.data.email);
+      window.localStorage.setItem("roll", response.data.roll);
+      window.localStorage.setItem("picture", response.data.picture);
       const user = {
         username: response.data?.nickname,
         email: response.data.email,
