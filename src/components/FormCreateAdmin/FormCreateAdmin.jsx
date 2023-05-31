@@ -8,12 +8,27 @@ import { createAdmin } from "../../redux/actions";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { FormGroup, Input } from "reactstrap";
+import { useEffect } from "react";
 
 export default function FormCreateAdmin() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const adminErrors = useSelector((state) => state.adminErrors);
+
 
   // const allAdmins = useSelector((state) => state.allAdmins);
+
+
+
+  useEffect(() => {
+    if (adminErrors) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un error',
+        text: `${adminErrors}`,
+      })
+    }
+  }, [adminErrors])
 
   const [form, setForm] = useState({
     name: "",

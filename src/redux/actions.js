@@ -582,7 +582,22 @@ export const createAdmin = (form) => {
       );
       dispatch({ type: CREATE_ADMIN, C });
     } catch (error) {
-      console.log(error);
+      const errors = {
+        emailError: "Existe un admin con el mismo correo electrónico.",
+        nicknameError: "Existe un admin con el mismo nickname.",
+      }
+      if(error.response.data === errors.emailError){
+        dispatch({
+          type: "CREATE_ADMIN_ERROR",
+          payload: errors.emailError,
+        })
+      }
+      if(error.response.data === errors.nicknameError){
+        dispatch({
+          type: "CREATE_ADMIN_ERROR",
+          payload: errors.nicknameError,
+        })
+      }
     }
   };
 };

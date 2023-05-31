@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
 import Footer from "../Footer/Footer";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import editUser from '../../assets/editUser.png'
+// import editUser from '../../assets/editUser.png'
 
 function User() {
     const [activeButton, setActiveButton] = React.useState('Perfil');

@@ -58,6 +58,7 @@ const initialState = {
   history: null,
   usersAdmin: [],
   ventas:null,
+  adminErrors: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -338,7 +339,12 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         ventas:action.payload,
       };
-
+    case "CREATE_ADMIN_ERROR": {
+      return {
+        ...state,
+        adminErrors: action.payload,
+      };
+    }
     default:
       return state;
   }
