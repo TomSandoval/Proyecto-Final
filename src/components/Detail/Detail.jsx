@@ -123,7 +123,7 @@ export default function Detail() {
       <div className="h2-review">
         <h2>Reviews</h2>
       </div>
-      <Review />
+      <Review id={productDetail.id} />
       <Footer />
     </div>
   );

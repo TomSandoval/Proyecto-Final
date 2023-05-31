@@ -108,10 +108,10 @@
 
 .adreessDate select {
   background-color: rgb(248, 242, 242);
-  margin: 15px;
+  margin: 5px;
   width: 13vw;
-  height: 5vh;
-  border-radius: 10px;
+  height: 5.3vh;
+  border-radius: 20px;
 }
 
 .right {

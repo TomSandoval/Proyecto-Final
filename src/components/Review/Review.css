@@ -34,3 +34,9 @@
   color: rgb(235, 225, 225);
   transition: all 1s ease-in-out;
 }
+
+.reviews-container h2,
+.reviews-container-dark h2 {
+  text-align: center;
+  margin-top: 6%;
+}
