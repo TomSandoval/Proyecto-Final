@@ -8,17 +8,30 @@ function Payment() {
     const [isInputVisible, setIsInputVisible] = useState([]);
     const [cardData, setCardData] = useState([]);
     const [showSaveButton, setShowSaveButton] = useState(false);
+    const roll = localStorage.getItem('roll');
+
 
     useEffect(() => {
+        // Cargar datos de tarjetas guardados en el localStorage al inicio
+        const storedCardData = localStorage.getItem('cardData');
+        if (storedCardData) {
+            setCardData(JSON.parse(storedCardData));
+        }
+
         const currentPath = window.location.pathname.split('/').pop();
         if (currentPath === 'user') {
             setActiveButton('Perfil');
         } else if (currentPath === 'payment') {
             setActiveButton('Pagos');
         } else {
-            setActiveButton('Pedido');
+            setActiveButton('Mis compras');
         }
     }, []);
+
+    useEffect(() => {
+        // Guardar los datos de las tarjetas en el localStorage cuando cambien
+        localStorage.setItem('cardData', JSON.stringify(cardData));
+    }, [cardData]);
 
     const handleInsertButtonClick = (index) => {
         const updatedVisibility = [...isInputVisible];
@@ -26,6 +39,7 @@ function Payment() {
         setIsInputVisible(updatedVisibility);
         setShowSaveButton(true);
     };
+
     const handleSaveButtonClick = (index) => {
         const updatedCardData = [...cardData];
         const inputs = document.querySelectorAll('.form-control');
@@ -40,13 +54,17 @@ function Payment() {
         setCardData(updatedCardData);
         setShowSaveButton(false);
     };
-
-
+        
     //! Estilos
     const background = {
-        background: 'linear-gradient(243.18deg, #FF8300 0%, #FFD688 100%)',
-        height: '150vh',
+        background: '#DAE3E7',
+        height: '152vh',
         width: '100vw'
+    };
+    const cardShadow = {
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
+        borderRadius: '8px',
+        border: '0.1px solid rgb(241, 241, 249)'
     };
     const perfilButtonStyle = {
         width: '100%',
@@ -63,7 +81,7 @@ function Payment() {
         textAlign: "left"
     };
     const linkColor = {
-        color: "white",
+        color: "black",
         textDecoration: "none",
     };
     const cardHeight = {
@@ -83,7 +101,10 @@ function Payment() {
         width: "75%"
     };
     const firstCard = {
-        width: "300px"
+        width: "300px",
+        boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
+        borderRadius: '8px',
+        border: '0.1px solid rgb(241, 241, 249)'
     };
     const lastCard = {
         width: "75%"
@@ -96,33 +117,50 @@ function Payment() {
     const links = {
         marginTop: "-25px",
     };
+    const linkColorHome = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "13px",
+        opacity: "0.7"
+    };
+    const linkColorAccount = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "13px",
+        opacity: "0.7"
+    };
+    const linkColorPayment = {
+        color: "black",
+        textDecoration: "none",
+        fontSize: "16px",
+    };
 
 
 
     return (
         <div style={background}>
-            <SearchBar/>
+            <SearchBar />
             <br />
             <br />
             <div className="row row-cols-1 row-cols-md-5 g-5" style={cardContainerStyle}>
                 <div className="col">
-                <div className='container-fluid' style={links}>
-                        <Link to="/" style={linkColor2}>
+                    <div className='container-fluid' style={links}>
+                        <Link to="/" style={linkColorHome}>
                             Hogar &gt; &nbsp;
                         </Link>
-                        <Link to="/user" style={linkColor2}>
+                        <Link to="/user" style={linkColorAccount}>
                             Mi cuenta &gt; &nbsp;
                         </Link>
-                        <Link to="/user/payment" style={linkColor2}>
+                        <Link to="/user/payment" style={linkColorPayment}>
                             Pagos
                         </Link>
                     </div>
-                    <div className="card h-100 bg-secondary" style={firstCard}>
+                    <div className="card h-100 bg-light bg-gradient" style={firstCard}>
                         <div className="card-body">
                             <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
                             <button
                                 type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
+                                className={`btn btn-light btn-lg ${activeButton === 'Perfil' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
@@ -133,7 +171,7 @@ function Payment() {
                             </button>
                             <button
                                 type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
+                                className={`btn btn-light btn-lg ${activeButton === 'Pedidos' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
@@ -141,19 +179,20 @@ function Payment() {
                                     Pedidos
                                 </Link>
                             </button>
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
                             <Link to="/user/update" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
                                     Vendidos
                                 </button>
-                            </Link>
+                            </Link>)}
                             <button
                                 type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
+                                className={`btn btn-light btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
@@ -163,17 +202,7 @@ function Payment() {
                             </button>
                             <button
                                 type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                style={perfilButtonStyle}
-                                id="perfil-btn"
-                            >
-                                <Link to="/user/adress" style={linkColor}>
-                                    Dirección de envío
-                                </Link>
-                            </button>
-                            <button
-                                type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
+                                className={`btn btn-light btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
                             >
@@ -181,36 +210,37 @@ function Payment() {
                                     Centro de ayuda
                                 </Link>
                             </button>
-                            <button
-                                type="button"
-                                className={`btn btn-secondary btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                style={perfilButtonStyle}
-                                id="perfil-btn"
-                            >
-                                <Link to="/ProductSale" style={linkColor}>
-                                    Mis publicaciones
-                                </Link>
-                            </button>
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
+                                <button
+                                    type="button"
+                                    className={`btn btn-light btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
+                                    style={perfilButtonStyle}
+                                    id="perfil-btn"
+                                >
+                                    <Link to="/ProductSale" style={linkColor}>
+                                        Mis publicaciones
+                                    </Link>
+                                </button>
+                            )}
                         </div>
                         <div className="card-footer">
-                            <small className="text-body-secondary">TukiMarket 🐸</small>
+                            <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>
                 <div className="col" style={cardHeight}>
-                    <div className="card h-100 bg-secondary">
-                        <h5 className="card-title" style={titleButton}>&nbsp; &nbsp; Pagos:</h5>
+                    <div className="card h-100 bg-light bg-gradient" style={cardShadow}>
+                        <h5 className="card-title" style={titleButton}>&nbsp; &nbsp; Pagos: </h5>
                         <div className="container">
                             <div className="row row-cols-1 row-cols-md-3 g-4">
                                 <div className="col">
-                                    <div className="card bg-warning">
+                                    <div className="card bg-warning bg-gradient">
                                         <div className="card-body text-center">
                                             <div className="d-flex justify-content-center">
                                                 <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(0)}>+ Añadir tarjeta</button>
                                             </div>
                                             {isInputVisible[0] && (
                                                 <>
-
                                                     <input type="text" className="form-control" placeholder="Nombre del titular" />
                                                     <input type="text" className="form-control" placeholder="Número de la tarjeta" />
                                                     <input type="text" className="form-control" placeholder="Mes" />
@@ -221,7 +251,7 @@ function Payment() {
                                                     )}
                                                 </>
                                             )}
-                                             {/* Info tarjeta guardada */}
+                                            {/* Info tarjeta guardada */}
                                             {cardData[0] && (
                                                 <>
                                                     <p>Titular: {cardData[0].titular}</p>
@@ -235,7 +265,7 @@ function Payment() {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="card bg-warning">
+                                    <div className="card bg-warning bg-gradient">
                                         <div className="card-body text-center">
 
                                             <div className="d-flex justify-content-center">
@@ -272,7 +302,7 @@ function Payment() {
                                 </div>
 
                                 <div className="col">
-                                    <div className="card bg-warning">
+                                    <div className="card bg-warning bg-gradient">
                                         <div className="card-body text-center">
                                             <div className="d-flex justify-content-center">
                                                 <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(2)}>+ Añadir tarjeta</button>
@@ -304,7 +334,7 @@ function Payment() {
                                     </div>
                                 </div>
                                 <div className="col">
-                                    <div className="card bg-warning">
+                                    <div className="card bg-warning bg-gradient">
                                         <div className="card-body text-center">
                                             <div className="d-flex justify-content-center">
                                                 <button className="btn btn-primary mt-2" onClick={() => handleInsertButtonClick(3)}>+ Añadir tarjeta</button>
@@ -335,6 +365,9 @@ function Payment() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="card-footer">
+                            <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>

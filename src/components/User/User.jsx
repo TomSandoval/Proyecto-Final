@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
 import Footer from "../Footer/Footer";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-
+import editUser from '../../assets/editUser.png'
 
 function User() {
     const [activeButton, setActiveButton] = React.useState('Perfil');
@@ -81,6 +81,7 @@ function User() {
         textAlign: "left",
         fontSize: "24px"
     };
+  
 
 
     return (
@@ -125,16 +126,17 @@ function User() {
                                     Pedidos
                                 </Link>
                             </button>
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
                             <Link to="/user/update" style={linkColor}>
                                 <button
                                     type="button"
-                                    className={`btn btn-secondary btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
+                                    className={`btn btn-light btn-lg ${activeButton === 'Vendidos' ? 'active' : ''}`}
                                     style={perfilButtonStyle}
                                     id="perfil-btn"
                                 >
                                     Vendidos
                                 </button>
-                            </Link>
+                            </Link>)}
                             <button
                                 type="button"
                                 className={`btn btn-light btn-lg ${activeButton === 'Pagos' ? 'active' : ''}`}
@@ -147,16 +149,6 @@ function User() {
                             </button>
                             <button
                                 type="button"
-                                className={`btn btn-light btn-lg ${activeButton === 'Dirección de envío' ? 'active' : ''}`}
-                                style={perfilButtonStyle}
-                                id="perfil-btn"
-                            >
-                                <Link to="/user/address" style={linkColor}>
-                                    Dirección de envío
-                                </Link>
-                            </button>
-                            <button
-                                type="button"
                                 className={`btn btn-light btn-lg ${activeButton === 'Centro de ayuda' ? 'active' : ''}`}
                                 style={perfilButtonStyle}
                                 id="perfil-btn"
@@ -165,7 +157,7 @@ function User() {
                                     Centro de ayuda
                                 </Link>
                             </button>
-                            {roll === 'SELLER' && (
+                            {(roll === 'SELLER' || roll === 'SUPERADMIN' || roll === 'ADMIN') && (
                                 <button
                                     type="button"
                                     className={`btn btn-light btn-lg ${activeButton === 'Mis publicaciones' ? 'active' : ''}`}
@@ -191,6 +183,7 @@ function User() {
                             <text x="50%" y="50%" textAnchor="middle" fill="#dee2e6" dy=".3em">{image} </text>
                         </svg>
                         <div className="card-body">
+                            
                             <h5 className="card-title">{username}</h5>
                             <p className="card-text text-center mb-0">{email}</p>
                             <p className="card-text text-center mb-0">Tipo de usuario: {roll}</p>
@@ -208,7 +201,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Nombre:</h5>
                                 </div>
                                 <div className="col">
-                                    <p className="card-text text-center">{username}</p>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                    <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{username}</p>
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -217,7 +212,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Email: </h5>
                                 </div>
                                 <div className="col">
-                                    <p className="card-text text-center">{email}</p>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                    <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{email}</p>
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -226,7 +223,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Celular:</h5>
                                 </div>
                                 <div className="col">
-                                    <p className="card-text text-center">+56 9 8752 0519</p>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                    <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;+56978245686</p>
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -235,7 +234,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Dirección:</h5>
                                 </div>
                                 <div className="col">
-                                    <p className="card-text text-center">Calle 123, Ciudad, País</p>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                    <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;Calle 123, París</p>
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
