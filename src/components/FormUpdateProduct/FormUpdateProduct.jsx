@@ -171,7 +171,7 @@ export default function FormUpdateProduct({ value }) {
               </select>
             </div>
             <div>
-              <p htmlFor="">Borrado Logico</p>
+              <p htmlFor="">Estado</p>
               <select
                 name="deleteLogic"
                 onChange={handleChange}
@@ -179,8 +179,8 @@ export default function FormUpdateProduct({ value }) {
                 id=""
               >
                 <option value="SELECCIONAR">SELECCIONAR</option>
-                <option value="true">Sí</option>
-                <option value="false">No</option>
+                <option value="true">Activo</option>
+                <option value="false">Inactivo</option>
               </select>
               <span>{errors?.deleteLogic}</span>
             </div>

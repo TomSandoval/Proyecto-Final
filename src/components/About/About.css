@@ -1,16 +1,16 @@
 .container-about {
   width: 100vw;
   height: 100vh;
-  background-image: url("https://images3.alphacoders.com/559/thumb-1920-559115.png");
-  background-size: cover;
+  background: linear-gradient(243.18deg, #ff8300 0%, #ffd688 100%);
 }
 
-.container-h1 {
+.container-h1{
   display: flex;
   align-items: center;
   justify-content: end;
   font-size: 90%;
 }
+
 
 .btn-outline-success {
   position: absolute;
@@ -19,16 +19,17 @@
 }
 
 .About {
-  width: 82vw;
-  height: 52vh;
+  background-color: #fff;
+  border: 2px solid #ddd;
   position: absolute;
   top: 61%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
-  padding: 20px;
+  padding: 40px;
   backdrop-filter: blur(90px);
   -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .About:root {
@@ -37,18 +38,32 @@
   --animate-repeat: 1;
 }
 
-.About p {
-  font-family: Work Sans;
-  font-size: 20px;
-  font-size: 25px;
-  color: #fff;
-}
 
 .container-about h1 {
-  color: #fff;
-  font-family: Roboto, sans-serif;
+  font-family: "Kameron";
   font-size: 8em;
   position: absolute;
   top: 7%;
   left: 15%;
+}
+
+
+.aboutTuki {
+  font-family: "Poppins";
+  font-size: 20px;
+  font-size: 25px;
+  color: #000;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+
+@font-face {
+  font-family: "Kameron";
+  src: url('../../../public/fonts/Kameron-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../../../public/fonts/Poppins-Medium.ttf");
 }
