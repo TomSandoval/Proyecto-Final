@@ -223,6 +223,7 @@ export const closeSesion = () => {
   window.localStorage.removeItem("roll");
   window.localStorage.removeItem("picture");
   window.localStorage.removeItem("nickname");
+
   return {
     type: CLOSE_SESION,
   };

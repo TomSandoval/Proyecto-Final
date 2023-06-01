@@ -23,6 +23,7 @@ export default function Home() {
         const picture = decodeURIComponent(urlParams.get("picture"));
   
             
+
         // Guardar los datos en el localStorage
         if(token !== "null"){
         localStorage.setItem("token", token);
