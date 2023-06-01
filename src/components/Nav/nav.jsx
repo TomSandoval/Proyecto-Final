@@ -26,8 +26,7 @@ export default function SearchBar({ view }) {
   const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = localStorage.getItem('username
-
+  const username = localStorage.getItem('username')
 
   useEffect(()=>{
     async function getProducts(){
