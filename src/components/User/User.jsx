@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import SearchBar from "../Nav/nav";
 import Footer from "../Footer/Footer";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-// import editUser from '../../assets/editUser.png'
+import editUser from '../../assets/editUser.png'
+import defaultPicture from '../../assets/user.png'
 
 function User() {
     const [activeButton, setActiveButton] = React.useState('Perfil');
@@ -197,7 +198,7 @@ function User() {
                 </div>
                 <div className="col">
                     <div className="card h-100 bg-light bg-gradient" style={card}>
-                        <img src={picture} style={pictureUser}/>
+                        <img src={picture || defaultPicture} style={pictureUser}/>
                         <div className="card-body" style={cardBody}>
                             
                             <h5 className="card-title">{username}</h5>
@@ -217,9 +218,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Nombre:</h5>
                                 </div>
                                 <div className="col">
-                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{username}</p>
-                                </button> */}
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -228,9 +229,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Email: </h5>
                                 </div>
                                 <div className="col">
-                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{email}</p>
-                                </button> */}
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -239,9 +240,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Celular:</h5>
                                 </div>
                                 <div className="col">
-                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;+56978245686</p>
-                                </button> */}
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -250,9 +251,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Dirección:</h5>
                                 </div>
                                 <div className="col">
-                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
+                                <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;Calle 123, París</p>
-                                </button> */}
+                                </button>
                                 </div>
                             </div>
                             <div className="border-top border-dark" />

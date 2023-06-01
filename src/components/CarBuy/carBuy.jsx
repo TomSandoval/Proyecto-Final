@@ -17,6 +17,7 @@ import Footer from "../Footer/Footer";
 import "./carBuyst.css";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
+import SearchBar from "../Nav/nav";
 
 //! NO PROBAR CON SUS DATOS REALES PORQUE PODRIA GENERARLES UN COBRO REAL!!!!!!
 
@@ -109,7 +110,9 @@ export default function CarBuy() {
   };
 
   return carrito.length > 0 ? (
-    <div>
+    <div className="allContainerCart">
+    <SearchBar/>
+      <div className="main-cart">
       <div className="search"></div>
       <div className="cartContainer container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
@@ -327,8 +330,10 @@ export default function CarBuy() {
           </div>
         </div>
       </div>
-      <Footer />
+    <Footer />
     </div>
+    </div>
+
   ) : (
     <div>
       <CarEmpty />

@@ -104,6 +104,7 @@ export default function SearchBar({ view }) {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
+        navigate("/");
         dispatch(closeSesion());
         Swal.fire(
           "Espero verte pronto!",

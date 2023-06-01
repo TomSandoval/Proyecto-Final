@@ -98,7 +98,7 @@ function App() {
         <Route path="/shoppinghistory" element={<History />} />
         <Route path="/ProductSale" element={<ProductSale />} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
-        {roll === "USER" && (
+        {roll === "SUPERADMIN" && (
           <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />
         )}
         <Route path="/admin/users" element={<UserAdmin />} />
