@@ -23,7 +23,7 @@ export default function ProductSale() {
   const productActive = useSelector((state) => state.productActive);
   const productInactive = useSelector((state) => state.productInactive);
   const dispatch = useDispatch();
-  const username = "candel@email.com";
+  const email = window.localStorage.getItem("email");
   const name = productActive && productActive.length > 0 && productActive[0];
   const prodName = Object.keys(name);
 
@@ -43,10 +43,14 @@ export default function ProductSale() {
   console.log(ids1);
 
   useEffect(() => {
+
+      
+
+
     dispatch(getCategories());
     dispatch(getProductByCategory("Deporte"));
-    dispatch(getProductActive(username));
-    dispatch(getProductInactive(username));
+    dispatch(getProductActive(email));
+    dispatch(getProductInactive(email));
   }, []);
 
   let rows = [];

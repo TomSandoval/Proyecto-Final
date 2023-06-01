@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import styles from "./form.module.css";
 import logo from "../../assets/Recurso 1.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Validation from "./validacion";
 import Footer from "../Footer/Footer";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
@@ -10,6 +10,7 @@ import { postForm } from "../../redux/actions";
 import UserCreateError from "./UserCreateError/UserCreateError";
 import UserCreateSuccesFull from "./UserCreateSuccesfull/UserCreateSuccesfull";
 import axios from "axios";
+import Swal from "sweetalert2";
 import Typewriter  from "typewriter-effect";
 
 const paisesAmerica = [
@@ -55,11 +56,24 @@ export default function FormRegister() {
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
   const userCreateError = useSelector((state) => state.userCreateError);
-  const userCreateSuccesfull = useSelector(
-    (state) => state.userCreateSuccesfull
-  );
+  const userCreateSuccesfull = useSelector((state) => state.userCreateSuccesfull);
+  const navigate = useNavigate()
 
   useEffect(() => {
+
+
+    if (userCreateError) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Algo salio mal',
+        text: userCreateError,
+        confirmButtonText: 'Revisar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAN_USER_ERROR" })
+        }
+      })
+    }
 
 
     if (userCreateSuccesfull) {
@@ -76,8 +90,22 @@ export default function FormRegister() {
         address: "",
       });
     }
+
+    if (userCreateSuccesfull) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuario creado!',
+        text: userCreateSuccesfull,
+        confirmButtonText: 'Iniciar sesion',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAN_USER_CREATE" })
+          navigate('/formLogin')
+        }
+      })
+    }
     
-  }, [userCreateSuccesfull]);
+  }, [userCreateSuccesfull, userCreateError]);
 
 
   const [loading, setLoading] = useState(false);

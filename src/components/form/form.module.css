@@ -68,6 +68,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  padding: 15px;
 }
 
 
@@ -87,7 +88,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 16px;
+  margin: 16px
 }
 
 

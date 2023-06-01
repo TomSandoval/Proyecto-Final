@@ -6,6 +6,7 @@ import styles from "./formLogin.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
+import Swal from "sweetalert2";
 
 const verificarFormulario = (errores) => {
   let respuesta = true;
@@ -19,6 +20,7 @@ const verificarFormulario = (errores) => {
 
 export default function FormUserLogin() {
   const userLogin = useSelector((state) => state.userLogin);
+  const loginError = useSelector((state) => state.loginError);
 
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
@@ -39,10 +41,26 @@ export default function FormUserLogin() {
     if (token) {
       dispatch(checkExpiration());
     }
+
+    if (loginError) {
+      Swal.fire({
+        icon: "error",
+        title: "Ocurrio un error",
+        text: `${loginError}`,
+        confirmButtonText: "Revisar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAN_LOGIN_ERROR" });
+        }
+      });
+      
+    }
+
+
     if (userLogin) {
       navigate("/");
     }
-  }, [userLogin, navigate]);
+  }, [userLogin, navigate, loginError, dispatch]);
 
   const handleChange = (e) => {
     setInput({
@@ -62,7 +80,12 @@ export default function FormUserLogin() {
     if (verificar && input.nickname && input.password) {
       dispatch(postLogin(input));
     } else {
-      alert("Hay errores en el formulario");
+      Swal.fire({
+        icon: "error",
+        title: "Ocurrio un error",
+        text: "Verifique los datos ingresados",
+        confirmButtonText: "Revisar"
+      });
     }
   };
   const googleHandle = () => {

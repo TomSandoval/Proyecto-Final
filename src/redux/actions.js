@@ -191,6 +191,8 @@ export const postLogin = (payload) => {
       );
       window.localStorage.setItem("username", response.data.nickname);
       window.localStorage.setItem("email", response.data.email);
+      window.localStorage.setItem("roll", response.data.roll);
+      window.localStorage.setItem("picture", response.data.picture);
       const user = {
         username: response.data?.nickname,
         email: response.data.email,
@@ -200,7 +202,15 @@ export const postLogin = (payload) => {
         payload: user,
       });
     } catch (error) {
-      console.log(error);
+      const errors = {
+        errorDefault: "Nombre de usuario o contraseña incorrectos.",
+      }
+      if (error.response.data.message) {
+        dispatch({
+          type: "LOGIN_ERROR",
+          payload: errors.errorDefault,
+        });
+      }
     }
   };
 };
@@ -210,6 +220,9 @@ export const closeSesion = () => {
   window.localStorage.removeItem("tokenExpiration");
   window.localStorage.removeItem("username");
   window.localStorage.removeItem("email");
+  window.localStorage.removeItem("roll");
+  window.localStorage.removeItem("picture");
+  window.localStorage.removeItem("nickname");
   return {
     type: CLOSE_SESION,
   };
@@ -240,6 +253,7 @@ export const postCreate = (payload) => {
   return async function (dispatch) {
     try {
       var json = await axios.post("http://localhost:3001/product", payload);
+      window.localStorage.setItem("roll", "SELLER")
       return dispatch({
         type: POST_CREATE,
         payload: json,
@@ -594,19 +608,20 @@ export const createAdmin = (form) => {
         "http://localhost:3001/admin/createadmin/",
         form
       );
-      dispatch({ type: CREATE_ADMIN, C });
+      dispatch({ type: CREATE_ADMIN, payload: form });
     } catch (error) {
+      console.log(error);
       const errors = {
         emailError: "Existe un admin con el mismo correo electrónico.",
         nicknameError: "Existe un admin con el mismo nickname.",
       }
-      if(error.response.data === errors.emailError){
+      if(error?.response?.data?.error === errors.emailError){
         dispatch({
           type: "CREATE_ADMIN_ERROR",
           payload: errors.emailError,
         })
       }
-      if(error.response.data === errors.nicknameError){
+      if(error?.response?.data?.error === errors.nicknameError){
         dispatch({
           type: "CREATE_ADMIN_ERROR",
           payload: errors.nicknameError,

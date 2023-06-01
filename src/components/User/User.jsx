@@ -19,7 +19,8 @@ function User() {
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
     const roll = localStorage.getItem('roll');
-    const image = localStorage.getItem('image'); //! REVISAR
+    const image = localStorage.getItem('image');
+    const picture = localStorage.getItem('picture') //! REVISAR
 
 
     //! ESTILOS EXTRAS
@@ -40,7 +41,19 @@ function User() {
     const card = {
         boxShadow: 'rgba(0, 0, 0, 0.2) 0px 0px 2px 0px, rgba(0, 0, 0, 0.4) 0px 12px 24px -4px',
         borderRadius: '8px',
-        border: '0.1px solid rgb(241, 241, 249)'
+        border: '0.1px solid rgb(241, 241, 249)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    };
+
+    const cardBody = {
+        width: '100%',
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'center',
+        // alignItems: 'center',
     };
     const links = {
         marginTop: "-25px",
@@ -81,6 +94,13 @@ function User() {
         textAlign: "left",
         fontSize: "24px"
     };
+
+    const pictureUser = {
+        maxWidth: '150px',
+        position: 'relative',
+        top: '5%',
+        borderRadius: '50%',
+    }
   
 
 
@@ -103,7 +123,7 @@ function User() {
                         </Link>
                     </div>
                     <div className="card h-100 bg-light bg-gradient" style={card}>
-                        <div className="card-body">
+                        <div className="card-body" style={cardBody}>
                             <h5 className="card-title" style={titleButton}>Mi cuenta:</h5>
                             <button
                                 type="button"
@@ -170,40 +190,36 @@ function User() {
                                 </button>
                             )}
                         </div>
-                        <div className="card-footer">
+                        <div className="card-footer" style={cardBody}>
                             <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>
                 <div className="col">
                     <div className="card h-100 bg-light bg-gradient" style={card}>
-                        <svg className="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            <circle cx="50%" cy="50%" r="80" fill="#868e96" />
-                            <text x="50%" y="50%" textAnchor="middle" fill="#dee2e6" dy=".3em">{image} </text>
-                        </svg>
-                        <div className="card-body">
+                        <img src={picture} style={pictureUser}/>
+                        <div className="card-body" style={cardBody}>
                             
                             <h5 className="card-title">{username}</h5>
                             <p className="card-text text-center mb-0">{email}</p>
                             <p className="card-text text-center mb-0">Tipo de usuario: {roll}</p>
                         </div>
-                        <div className="card-footer">
+                        <div className="card-footer" style={cardBody}>
                             <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>
                 </div>
                 <div className="col">
                     <div className="card h-100 bg-light bg-gradient" style={card}>
-                        <div className="card-body">
+                        <div className="card-body" style={cardBody}>
                             <div className="row align-items-center">
                                 <div className="col">
                                     <h5 className="card-title" style={subtitleButton}>Nombre:</h5>
                                 </div>
                                 <div className="col">
-                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{username}</p>
-                                </button>
+                                </button> */}
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -212,9 +228,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Email: </h5>
                                 </div>
                                 <div className="col">
-                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;{email}</p>
-                                </button>
+                                </button> */}
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -223,9 +239,9 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Celular:</h5>
                                 </div>
                                 <div className="col">
-                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;+56978245686</p>
-                                </button>
+                                </button> */}
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
@@ -234,14 +250,14 @@ function User() {
                                     <h5 className="card-title" style={subtitleButton}>Dirección:</h5>
                                 </div>
                                 <div className="col">
-                                <button style={{border: "none", background: "none", padding: "0"}}>
+                                {/* <button style={{border: "none", background: "none", padding: "0"}}>
                                     <p className="card-text text-left"><img src={editUser} alt="edit_data_user"   style={{height: "20px", marginLeft: "-80px"}} />&nbsp;&nbsp;&nbsp;&nbsp;Calle 123, París</p>
-                                </button>
+                                </button> */}
                                 </div>
                             </div>
                             <div className="border-top border-dark" />
                         </div>
-                        <div className="card-footer">
+                        <div className="card-footer" style={cardBody}>
                             <small className="text-body-light">TukiMarket 🐸</small>
                         </div>
                     </div>

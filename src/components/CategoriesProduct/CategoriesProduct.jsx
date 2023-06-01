@@ -18,6 +18,7 @@ import CardList from "../Products/CardList";
 import Footer from "../Footer/Footer";
 import Paginate from "../Paginate/Paginate";
 import Loading from "../Loading/Loading";
+import FilterButtons from '../home/FilterButtons/FilterButtons'
 
 export default function CategoriesProduct() {
   const products = useSelector((state) => state.products);
@@ -60,12 +61,12 @@ export default function CategoriesProduct() {
   },[name])
 
   const changePage = (value) => {
-    if (filters == "Precio") {
+    if (filters.includes("A partir de") || filters.includes("Maximo") || filters.includes("Entre")) {
       setCurrentPage(value);
       let min = priceFilters.min;
       let max = priceFilters.max;
       max === 0 || max === ""
-        ? (max = 999999999)
+        ? (max = 999999999999999)
         : (max = parseInt(priceFilters.max));
       min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
       dispatch(changePageFilterCategory(name, min, max, value));
@@ -268,7 +269,8 @@ export default function CategoriesProduct() {
             </div>
           </div>
         </div>
-        <div className="all-container">
+        <div className="all-container-category">
+            <FilterButtons />
           <div className="list-container">
             {products?.rows?.map((p, index) => (
               <CardList
