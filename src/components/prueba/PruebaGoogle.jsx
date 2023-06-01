@@ -13,6 +13,7 @@ export default function PruebaGoogle() {
         const username = decodeURIComponent(urlParams.get("username"));
         const tokenExpiration = decodeURIComponent(urlParams.get("tokenExpiration"));
         const roll = decodeURIComponent(urlParams.get("roll"));
+        const picture = decodeURIComponent(urlParams.get("picture"));
     
 
         // Guardar los datos en el localStorage
@@ -21,6 +22,7 @@ export default function PruebaGoogle() {
         localStorage.setItem("username", username);
         localStorage.setItem("tokenExpiration", tokenExpiration);
         localStorage.setItem("roll", roll);
+        localStorage.setItem("picture", picture);
 
         navigate("/")
 

@@ -49,6 +49,7 @@ const initialState = {
   userCreateError: null,
   userCreateSuccesfull: null,
   userLogin: false,
+  loginError: null,
   userData: null,
   errorMail: null,
   darkModes: false,
@@ -59,6 +60,8 @@ const initialState = {
   history: null,
   usersAdmin: [],
   ventas:null,
+  adminErrors: null,
+  adminCreateSuccesfull: null,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -154,6 +157,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userCreateSuccesfull: "Usuario Creado con exito",
+      };
+    }
+    case "CLEAN_USER_CREATE": {
+      return {
+        ...state,
+        userCreateSuccesfull: null,
       };
     }
     case USER_LOGIN: {
@@ -319,19 +328,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         productInactive: action.payload,
       };
-
-    case CREATE_ADMIN:
-      return {
-        ...state,
-        allAdmins: [...allAdmins, action.payload],
-      };
-
     case LIST_USERS:
       return {
         ...state,
         usersAdmin: action.payload,
       };
-
     case SEND_REVIEWS:
       return {
         ...state,
@@ -345,6 +346,42 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         ventas:action.payload,
       };
+    case "CREATE_ADMIN_ERROR": {
+      return {
+        ...state,
+        adminErrors: action.payload,
+      };
+    }
+    case "CLEAR_ERRORS_ADMIN": {
+      return {
+        ...state,
+        adminErrors: null,
+      };
+    }
+    case CREATE_ADMIN: {
+      return {
+        ...state,
+        adminCreateSuccesfull: "Admin creado con exito",
+      };
+    }
+    case "CLEAR_CREATE_ADMIN": {
+      return {
+        ...state,
+        adminCreateSuccesfull: null,
+      };
+    }
+    case "LOGIN_ERROR": {
+      return {
+        ...state,
+        loginError: action.payload,
+      };
+    }
+    case "CLEAN_LOGIN_ERROR": {
+      return {
+        ...state,
+        loginError: null,
+      };
+    }
 
     default:
       return state;

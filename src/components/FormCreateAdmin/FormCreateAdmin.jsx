@@ -8,13 +8,47 @@ import { createAdmin } from "../../redux/actions";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { FormGroup, Input } from "reactstrap";
+import { useEffect } from "react";
 
 export default function FormCreateAdmin() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const adminErrors = useSelector((state) => state.adminErrors);
+  const adminCreated = useSelector((state) => state.adminCreateSuccesfull);
+
   const darkModes = useSelector((state) => state.darkModes);
 
   // const allAdmins = useSelector((state) => state.allAdmins);
+
+
+
+  useEffect(() => {
+    if (adminErrors) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un error',
+        text: `${adminErrors}`,
+        
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAR_ERRORS_ADMIN" })
+        }
+      }
+      )
+    }
+    if (adminCreated) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Creado',
+        text: adminCreated,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAR_CREATE_ADMIN" })
+        }
+      }
+      )
+    }
+  }, [adminErrors, adminCreated])
 
   const [form, setForm] = useState({
     name: "",
@@ -64,7 +98,6 @@ export default function FormCreateAdmin() {
       !errors?.passwordRepit
     ) {
       dispatch(createAdmin(form));
-      Swal.fire("Creado!", "Has creado un Administrador con Exito.", "success");
     } else {
       Swal.fire({
         title: "Introduzca los datos Correctamente",
