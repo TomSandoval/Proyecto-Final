@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import logoCarro from "../../assets/cart-alt-regular-24.png";
 import logoUser from "../../assets/user-regular-24.png";
@@ -10,6 +10,8 @@ import logoWhite from "../../assets/cart-white-alt-regular-24.png";
 import { getProductByName, darkMode, closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./searchBar.module.css";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function SearchBar({ view }) {
   const carrito = useSelector((state) => state.carrito);
@@ -18,22 +20,55 @@ export default function SearchBar({ view }) {
   const userData = useSelector((state) => state.userData);
   const [name, setName] = useState("");
   const [viewMenu, setViewMenu] = useState(false);
+  const [productsSearch, setProductsSearch] = useState([]); //para el buscador
+  const [matched, setMatched] = useState([]); //para el buscador
+  const [displayResults, setDisplayResults] = useState(false); //para el buscador
+  const inputRef = useRef(null);
+  const searchDisplayRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const username = localStorage.getItem("username");
+  const roll = localStorage.getItem("roll");
 
-  function handleInput(e) {
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(`https://tuki-server.onrender.com/product`);
+      setProductsSearch(response.data);
+    }
+    getProducts();
+    function handleClickOutside(event) {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        searchDisplayRef.current &&
+        !searchDisplayRef.current.contains(event.target)
+      ) {
+        setDisplayResults(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  async function handleInput(e) {
     setName(e.target.value);
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    dispatch(getName(name));
+    setMatched(
+      productsSearch.filter((product) =>
+        product.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+    setDisplayResults(name.length >= 3 && matched.length > 1);
   }
 
   function handleSubmit() {
     dispatch(getProductByName(name));
     setName("");
     navigate(`/Search/${name}`);
+    window.sessionStorage.removeItem("filtroNombre");
   }
 
   function handleKeyDown(e) {
@@ -42,12 +77,8 @@ export default function SearchBar({ view }) {
     }
   }
 
-  function handleChangeOn() {
-    dispatch(darkMode(true));
-  }
-
-  function handleChangeOff() {
-    dispatch(darkMode(false));
+  function handleChange() {
+    dispatch(darkMode(!darkModes));
   }
 
   useEffect(() => {
@@ -55,14 +86,33 @@ export default function SearchBar({ view }) {
     darkModes
       ? body.classList.add("dark-theme")
       : body.classList.remove("dark-theme");
-  });
+  },[roll]);
 
   const handleMenu = () => {
     setViewMenu(!viewMenu);
   };
 
   const handleSession = () => {
-    dispatch(closeSesion());
+    Swal.fire({
+      title: "¿Estas seguro que quieres cerrar sesión?",
+      text: "",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Cerrar Sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/");
+        dispatch(closeSesion());
+        Swal.fire(
+          "Espero verte pronto!",
+          "Tu cuenta fue cerrda con exito.",
+          "success"
+        );
+      }
+    });
   };
 
   const buttonsUnlogin = () => {
@@ -88,7 +138,32 @@ export default function SearchBar({ view }) {
           <Link to="/formCreateProduct" className={styles.link}>
             Publicar un producto
           </Link>
+          {(roll === "ADMIN" || roll === "SUPERADMIN") && (
+            <Link to="/admin/dashboard" className={styles.link}>
+              Admin
+            </Link>
+          )}
         </div>
+      </div>
+    );
+  };
+
+  const handleSearchItem = (id) => {
+    navigate(`/Detail/${id}`);
+  };
+
+  const searchDisplay = () => {
+    return (
+      <div ref={searchDisplayRef} className={styles.searchDisplay}>
+        {matched.map((product, index) => (
+          <option
+            onClick={() => handleSearchItem(product.id)}
+            className={styles.searchItems}
+            key={index}
+          >
+            {product.name}
+          </option>
+        ))}
       </div>
     );
   };
@@ -107,6 +182,7 @@ export default function SearchBar({ view }) {
       {view ? (
         <div className={styles.divInput}>
           <input
+            ref={inputRef}
             type="search"
             value={name}
             placeholder="¿Que vas a llevar hoy?"
@@ -118,11 +194,12 @@ export default function SearchBar({ view }) {
           <button onClick={handleSubmit} className={styles.buttonSerch}>
             <img src={logoSearch} className={styles.img} />
           </button>
+          {displayResults ? searchDisplay() : null}
         </div>
       ) : null}
 
       <div className={darkModes ? styles.divUserDark : styles.divUser}>
-        {userLogin ? buttonsLogin() : buttonsUnlogin()}
+        {roll ? buttonsLogin() : buttonsUnlogin()}
         <button className={styles.button}>
           <Link to="/carroBuy">
             <img
@@ -130,7 +207,9 @@ export default function SearchBar({ view }) {
               className={styles.img2}
             />
           </Link>
-          <span>{carrito.length}</span>
+          <span className={darkModes ? styles.count_dark : styles.count}>
+            {carrito.length}
+          </span>
         </button>
         <button className={styles.button}>
           <button onClick={handleMenu} className={styles.button}>
@@ -154,15 +233,25 @@ export default function SearchBar({ view }) {
               <path d="M12 2A10.13 10.13 0 0 0 2 12a10 10 0 0 0 4 7.92V20h.1a9.7 9.7 0 0 0 11.8 0h.1v-.08A10 10 0 0 0 22 12 10.13 10.13 0 0 0 12 2zM8.07 18.93A3 3 0 0 1 11 16.57h2a3 3 0 0 1 2.93 2.36 7.75 7.75 0 0 1-7.86 0zm9.54-1.29A5 5 0 0 0 13 14.57h-2a5 5 0 0 0-4.61 3.07A8 8 0 0 1 4 12a8.1 8.1 0 0 1 8-8 8.1 8.1 0 0 1 8 8 8 8 0 0 1-2.39 5.64z"></path>
               <path d="M12 6a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4zm0 6a1.91 1.91 0 0 1-2-2 1.91 1.91 0 0 1 2-2 1.91 1.91 0 0 1 2 2 1.91 1.91 0 0 1-2 2z"></path>
             </svg>
-            <Link to="/profile" className={styles.linkMenu}>
-              Perfil
-            </Link>
+            {(roll === "USER"  ||
+              roll === "SELLER"  ||
+              roll === "SUPERADMIN"  ||
+              roll === "ADMIN") && (
+              <Link to="/user" className={styles.linkMenu}>
+                {username ? username : "Perfil"}
+              </Link>
+            )}
+            {!roll && (
+              <Link to="/formLogin" className={styles.linkMenu}>
+                Iniciar sesión
+              </Link>
+            )}
           </div>
           <div>
             <span className={styles.themeTitle}>Change Themes</span>
             {darkModes ? (
               <div className="button-container">
-                <button onClick={handleChangeOff}>
+                <button onClick={handleChange}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -176,7 +265,7 @@ export default function SearchBar({ view }) {
               </div>
             ) : (
               <div className="button-container">
-                <button onClick={handleChangeOn}>
+                <button onClick={handleChange}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -192,11 +281,11 @@ export default function SearchBar({ view }) {
             )}
           </div>
           <div>
-            { userLogin && 
+            {userLogin && (
               <button onClick={handleSession} className={styles.logoutButton}>
                 Cerrar Sesión
               </button>
-            }
+            )}
           </div>
         </div>
       </div>

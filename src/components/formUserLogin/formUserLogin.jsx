@@ -6,6 +6,7 @@ import styles from "./formLogin.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/Recurso 1.png";
 import logoTukiDark from "../../assets/tuki-market-darks.jpg";
+import Swal from "sweetalert2";
 
 const verificarFormulario = (errores) => {
   let respuesta = true;
@@ -19,6 +20,7 @@ const verificarFormulario = (errores) => {
 
 export default function FormUserLogin() {
   const userLogin = useSelector((state) => state.userLogin);
+  const loginError = useSelector((state) => state.loginError);
 
   const dispatch = useDispatch();
   const darkModes = useSelector((state) => state.darkModes);
@@ -39,10 +41,26 @@ export default function FormUserLogin() {
     if (token) {
       dispatch(checkExpiration());
     }
+
+    if (loginError) {
+      Swal.fire({
+        icon: "error",
+        title: "Ocurrio un error",
+        text: `${loginError}`,
+        confirmButtonText: "Revisar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch({ type: "CLEAN_LOGIN_ERROR" });
+        }
+      });
+      
+    }
+
+
     if (userLogin) {
       navigate("/");
     }
-  }, [userLogin, navigate]);
+  }, [userLogin, navigate, loginError, dispatch]);
 
   const handleChange = (e) => {
     setInput({
@@ -62,7 +80,12 @@ export default function FormUserLogin() {
     if (verificar && input.nickname && input.password) {
       dispatch(postLogin(input));
     } else {
-      alert("Hay errores en el formulario");
+      Swal.fire({
+        icon: "error",
+        title: "Ocurrio un error",
+        text: "Verifique los datos ingresados",
+        confirmButtonText: "Revisar"
+      });
     }
   };
   const googleHandle = () => {
@@ -100,6 +123,7 @@ export default function FormUserLogin() {
         />
       </Link>
       <div className={darkModes ? styles.divDark : styles.div}>
+        <h2 className={styles.loginTitle}>Login</h2>
         <form
           action="/login"
           method="POST"
@@ -107,46 +131,26 @@ export default function FormUserLogin() {
           className={styles.divForm}
         >
           <div className={styles.divAlreadyRegister}>
-            <div className={styles.userNameInput}>
-              <input
-                type="text"
-                name="nickname"
-                value={input.nickname}
-                onChange={handleChange}
-                placeholder="Nombre"
-                className={styles.inputMail}
-              />
-              {<span className={styles.errors}>{errors.nickName}</span>}
+            <div class={styles.inputUserContainer}>
+              <input autoComplete="non" type="text" name="nickname" id="username-input" className={input.nickname < 1 ? styles.inputUsername : styles.inputUserActive} value={input.nickname} onChange={handleChange}/>
+              <label for="username-input" className={styles.inputLabel}>
+                Nombre de usuario
+              </label>
+            {<span className={styles.errors}>{errors.nickname}</span>}
             </div>
           </div>
 
           <div className={styles.divAlreadyRegister}>
-            <div className={styles.userNameInput}>
-              <input
-                type="password"
-                value={input.password}
-                onChange={handleChange}
-                name="password"
-                placeholder="Contraseña"
-                className={styles.inputPassword}
-              />
-              {<span className={styles.errors}>{errors.password}</span>}
+          <div class={styles.inputUserPasswordContainer}>
+              <input type="password" name="password" id="password-input" className={input.password < 1 ? styles.inputPasswordLogin : styles.inputPasswordActiveLogin} value={input.password} onChange={handleChange}/>
+              <label for="password-input" className={styles.inputLabel}>
+                Contraseña
+              </label>
+            {<span className={styles.errors}>{errors.password}</span>}
             </div>
-
-            <span className={styles.register}>Ingresar</span>
           </div>
           <div className={styles.divAlreadyRegister}>
             <button className={styles.buttonHome}>Ingresar</button>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <Link to={"/formRegister"} className={styles.noRegister}>
-              No tengo cuenta
-            </Link>
-          </div>
-          <div className={styles.divAlreadyRegister}>
-            <Link to="/" className={styles.buttonGuest}>
-              Continuar como Invitado
-            </Link>
           </div>
         </form>
         <button className={styles.googleButton} onClick={googleHandle}>
@@ -161,6 +165,7 @@ export default function FormUserLogin() {
           </svg>
           Continuar con Google
         </button>
+        <span className={styles.userNoRegister} >No tienes cuenta? <Link to='/formRegister' className={styles.toRegister}>Registrate</Link></span>
       </div>
     </div>
   );

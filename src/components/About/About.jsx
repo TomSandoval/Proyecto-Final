@@ -11,23 +11,9 @@ export default function About() {
         <button className="btn btn-outline-success">Hogar</button>
       </Link>
       <div className="About">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-          animi accusantium voluptate deserunt repudiandae? Rem officia
-          doloribus labore suscipit dolorum ea, eos excepturi ipsa consequatur
-          perferendis laudantium voluptatum, obcaecati sit. Lorem ipsum dolor
-          sit amet consectetur adipisicing elit. Asperiores animi accusantium
-          voluptate deserunt repudiandae? Rem officia doloribus labore suscipit
-          dolorum ea, eos excepturi ipsa consequatur perferendis laudantium
-          voluptatum, obcaecati sit. Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Asperiores animi accusantium voluptate deserunt
-          repudiandae? Rem officia doloribus labore suscipit dolorum ea, eos
-          excepturi ipsa consequatur perferendis laudantium voluptatum,
-          obcaecati sit. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Asperiores animi accusantium voluptate deserunt repudiandae? Rem
-          officia doloribus labore suscipit dolorum ea, eos excepturi ipsa
-          consequatur perferendis laudantium voluptatum, obcaecati sit.
-        </p>
+        <h3 className="aboutTuki">
+        ¡Bienvenidos a TukiMarket! Con TukiMarket, podrás comprar y vender una amplia variedad de productos, tanto nuevos como usados, de manera segura y conveniente. Nuestra plataforma te permite conectarte con vendedores confiables y encontrar todo lo que necesitas en un solo lugar. Ya sea que estés buscando electrónicos, ropa, artículos para el hogar o cualquier otro producto, TukiMarket tiene todo lo que necesitas. Únete a nuestra comunidad y descubre la nueva forma de comprar y vender en línea con TukiMarket.
+        </h3>
       </div>
     </div>
   );

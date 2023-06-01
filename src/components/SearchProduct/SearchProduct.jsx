@@ -7,7 +7,11 @@ import {
   getProductByName,
   filterByName,
   sortAlphabeticProducts,
-  checkExpiration,
+  changePageFilterNames,
+  changePageOrderName,
+  sortPriceProducts,
+  changePageSortPriceName,
+
 } from "../../redux/actions";
 import SearchBar from "../Nav/nav";
 import CardList from "../Products/CardList";
@@ -19,31 +23,86 @@ export default function SearchProduct() {
   const products = useSelector((state) => state.products);
   const darkModes = useSelector((state) => state.darkModes);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProductByName(name));
-  }, []);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [priceFilters, setPriceFilters] = useState({
-    min: 0,
-    max: 0,
+    min: "",
+    max: "",
   });
   const [filters, setFilters] = useState("");
+  useEffect(() => {
+    window.sessionStorage.removeItem("filtroCategoria");
+    const filtro = window.sessionStorage.getItem("filtroNombre");
+    if (!filtro ) {
+      dispatch(getProductByName(name));
+      return;
+    }
+    if (filtro.includes('A partir de') || filtro.includes('Maximo') || filtro.includes('Entre')) {
+      setFilters(filtro);
+    }
+    if (filtro === "alfabetico") {
+      setFilters("Ordenado alfabéticamente");
+    }
+    if (filtro === "Menor precio") {
+      setFilters("Menor Precio");
+    }
+    if (filtro === "Mayor precio") {
+      setFilters("Mayor Precio");
+    }
+  }, [dispatch, name]);
+
+  useEffect(()=>{
+    const filtro = window.sessionStorage.getItem("filtroNombre");
+    if(!filtro){
+      setFilters("")
+    }
+  },[name])
 
   const changePage = (value) => {
-    setCurrentPage(value);
+    if (filters == "Precio") {
+      setCurrentPage(value);
+      let min = priceFilters.min;
+      let max = priceFilters.max;
+      max === 0 || max === ""
+        ? (max = 999999999)
+        : (max = parseInt(priceFilters.max));
+      min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
+      dispatch(changePageFilterNames(name, min, max, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
+    if (filters.includes("alfabéticamente")) {
+      let filter;
+      filters.includes("A-Z") ? (filter = "asc") : (filter = "desc");
+      setCurrentPage(value);
+      dispatch(changePageOrderName(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
+    if(filters.includes("precio")){
+      setCurrentPage(value);
+      let filter;
+      filters.includes("Menor") ? (filter = "ascPrice") : (filter = "descPrice");
+      dispatch(changePageSortPriceName(name, filter, value));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return null;
+    }
     if (currentPage == value) return null;
+    setCurrentPage(value);
     dispatch(changePagesName(name, value));
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    dispatch(getProductByName(name));
-  }, []);
 
   const handleChange = (e) => {
     setPriceFilters({
@@ -52,28 +111,58 @@ export default function SearchProduct() {
     });
   };
 
-  useEffect(() => {
-    dispatch(getProductByName(name));
-  }, []);
-
   const handleSubmit = () => {
     let min = priceFilters.min;
     let max = priceFilters.max;
-    max === 0 || max === "" ? (max = 999999999) : (max = priceFilters.max);
-    min === "" ? (min = 0) : (min = priceFilters.min);
+    if(!min && !max) return null;
+    max === 0 || max === ""
+      ? (max = 999999999999999)
+      : (max = parseInt(priceFilters.max));
+    min === "" ? (min = 0) : (min = parseInt(priceFilters.min));
     dispatch(filterByName(name, min, max));
-    setFilters("Precio");
+    if(min === 0){
+      setFilters(`Maximo $${max}`);
+      window.sessionStorage.setItem("filtroNombre", `Maximo $${max}`);
+    }
+    if(max === 999999999999999){
+      setFilters(`A partir de $${min}`);
+      window.sessionStorage.setItem("filtroNombre", `A partir de $${min}`);
+    }
+    if(min !== 0 && max !== 999999999999999){
+      setFilters(`Entre $${min} y $${max}`);
+      window.sessionStorage.setItem("filtroNombre", `Entre $${min} y $${max}`);
+    }
+    setCurrentPage(1);
   };
 
   const cleanFilter = () => {
     setFilters("");
+    setPriceFilters({
+      min: "",
+      max: "",
+    });
     dispatch(getProductByName(name));
+    setCurrentPage(1);
+    window.sessionStorage.removeItem("filtroNombre");
   };
 
   const handleSort = (e) => {
     const value = e.target.value;
+    const filter = value === "asc" ? "A-Z" : "Z-A";
+    setFilters(`Ordenado alfabéticamente ${filter}`);
     dispatch(sortAlphabeticProducts(name, value));
+    setCurrentPage(1);
+    window.sessionStorage.setItem("filtroNombre", "alfabetico");
   };
+
+  const handleSortPrice = (e) => {
+    const value = e.target.value;
+    const filter = value === "ascPrice" ? "Menor precio" : "Mayor precio";
+    setFilters(filter);
+    dispatch(sortPriceProducts(name, value));
+    setCurrentPage(1);
+    window.sessionStorage.setItem("filtroNombre", filter);
+  }
 
   return (
     <>
@@ -108,6 +197,7 @@ export default function SearchProduct() {
                 className="inputs"
                 type="number"
                 placeholder="mínimo"
+                value={priceFilters.min}
               />
               <input
                 name="max"
@@ -115,6 +205,7 @@ export default function SearchProduct() {
                 className="inputs"
                 type="number"
                 placeholder="máximo"
+                value={priceFilters.max}
               />
               <button onClick={handleSubmit} className="button-price">
                 <svg
@@ -137,17 +228,24 @@ export default function SearchProduct() {
                 onClick={handleSort}
                 className="buttons-filter"
               >
-                ASC
+                A-Z
               </button>
               <button
                 value="desc"
                 onClick={handleSort}
                 className="buttons-filter"
               >
-                DESC
+                Z-A
               </button>
             </div>
           </div>
+          <div className="price-order-container">
+              <label>Orden por precio:</label>
+              <div>
+                <button onClick={handleSortPrice} className="buttons-filter" value="ascPrice">Menor Precio</button>
+                <button onClick={handleSortPrice} className="buttons-filter" value="descPrice">Mayor Precio</button>
+              </div>
+            </div>
         </div>
         <div className="all-container">
           <div className="list-container">
@@ -158,9 +256,10 @@ export default function SearchProduct() {
                 title={p.name}
                 img={p.img}
                 description={p.description}
-                category={p?.Categories[0].name}
+                category={p?.Categories[0]?.name}
                 stock={p.stock}
                 price={p.price}
+                userId={p.userId}
                 dataAos={index % 2 == 0 ? "fade-left" : "fade-right"}
               />
             ))}

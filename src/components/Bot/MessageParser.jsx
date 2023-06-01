@@ -43,6 +43,17 @@ const MessageParser = ({ children, actions }) => {
     ) {
       actions.categories();
     }
+    if (
+      message.toLowerCase().includes("home") ||
+      message.toLowerCase().includes("llevame al inicio") || 
+      message.toLowerCase().includes("llévame al inicio") ||
+      message.toLowerCase().includes("llevame a la home") ||
+      message.toLowerCase().includes("llévame a la home") ||
+      message.toLowerCase().includes("hogar") ||
+      message.toLowerCase().includes("inicio")
+    ) {
+      actions.home();
+    }
     if (message.toLowerCase().includes("contacto")) {
       actions.contact();
     }

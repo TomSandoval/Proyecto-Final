@@ -12,14 +12,20 @@
   align-items: center;
   position: relative;
   z-index: 100;
+  transition: all 1s ease-in-out;
 }
 
-.contact{ 
+.contact,
+.contact-dark {
   text-decoration: none;
   color: black;
 }
+
+.contact-dark {
+  color: white;
+}
 .footer-dark {
-  background-color: #232323;
+  background-color: #191818;
   color: white;
   transition: all 1s ease-in-out;
 }
@@ -81,4 +87,55 @@
 .redirect-links-dark div ul li {
   width: 70px;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  @media (max-width: 600px) {
+    /* Estilos para pantallas más pequeñas, como smartphones */
+    .footer,
+    .footer-dark {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: space-evenly;
+      height: 100%;
+    }
+
+    .Redireccc {
+      font-size: 18px;
+      justify-content: space-evenly;
+      margin-left: auto;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .Redireccc li {
+      margin-left: 18px;
+    }
+
+    .Redirect-h4 {
+      font-size: 27px;
+      margin-top: 5%;
+    }
+
+    .redirect-links {
+      margin-top: 20px; /* Añade un margen superior para separar los enlaces */
+    }
+
+    .footer-logo,
+    .footer-logo-dark {
+      width: 100%; /* Reduce el ancho del logo */
+      /* height: 50%; */
+      margin: 15px; /* Añade un margen inferior para separar el logo */
+    }
+
+    .footer-logo-dark {
+      width: 70%;
+    }
+
+    .contact-block {
+      margin-top: 20px; /* Añade un margen superior para separar el bloque de contacto */
+    }
+  }
 }

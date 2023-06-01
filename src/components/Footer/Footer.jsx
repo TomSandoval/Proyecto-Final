@@ -15,8 +15,8 @@ export default function Footer() {
   return (
     <footer className={darkModes ? "footer-dark" : "footer"}>
       <div className={darkModes ? "redirect-links-dark" : "redirect-links"}>
-        <h4>Redirecciones</h4>
-        <div>
+        <h4 className="Redirect-h4">Redirecciones</h4>
+        <div className="Redireccc">
           <ul>
             {location.pathname !== "/" ? (
               <li>
@@ -27,9 +27,6 @@ export default function Footer() {
             <li>
               <Link to="/about">Nosotros</Link>
             </li>
-            <li>
-              <Link to="/developers">Desarrolladores</Link>
-            </li>
           </ul>
         </div>
       </div>
@@ -39,7 +36,14 @@ export default function Footer() {
         alt="TukiMarket"
       ></img>
       <div className="contact-block">
-        <h4><Link to="/contact" className="contact">Contáctanos</Link></h4>
+        <h4 className="Redirect-h4">
+          <Link
+            to="/contact"
+            className={darkModes ? "contact-dark" : "contact"}
+          >
+            Contáctanos
+          </Link>
+        </h4>
         <div>
           <img src={darkModes ? logoDark : image} alt="mail" />
           <span>TukiMarket@gmail.com</span>

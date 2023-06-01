@@ -23,13 +23,22 @@ import { useDispatch, useSelector } from "react-redux";
 import Contact from "./components/Contact/Contact";
 import { checkSesion, closeSesion } from "./redux/actions";
 import PaymentOptions from "./components/ComponenteDePago/pago";
-import { Toaster} from 'sonner'
+import { Toaster } from "sonner";
 import PruebaGoogle from "./components/prueba/PruebaGoogle";
+import User from "./components/User/User";
+import Order from "./components/User/Order";
+import Payment from "./components/User/Payment";
+import History from "./components/Record/record";
+import ProductSale from "./components/ProductSale/ProductSale";
+import Dashboard from "./components/Dashboard/Dashboard";
+import FormCreateAdmin from "./components/FormCreateAdmin/FormCreateAdmin";
+import UserAdmin from "./components/UserAdmin/UserAdmin";
+import UpdateProduct from "./components/User/Update";
 
 function App() {
   const [visible, setVisible] = useState(false);
   const darkModes = useSelector((state) => state.darkModes);
-
+  const roll = localStorage.getItem("roll");
 
   const toggleVisibility = () => {
     setVisible(!visible);
@@ -42,13 +51,15 @@ function App() {
   };
   return (
     <>
-    <Toaster 
-    position="bottom-right" 
-    toastOptions={{
-      style: {
-        fontSize: '16px'}}}
-    richColors
-    />
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            fontSize: "16px",
+          },
+        }}
+        richColors
+      />
       <img src={bubble} alt="bubblechat" className="bubble_chat" />
       <span className={darkModes ? "chat_with_dark" : "chat_with"}>
         Chatea <br />
@@ -81,6 +92,17 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/buy" element={<PaymentOptions />} />
         <Route path="/loginGoogle" element={<PruebaGoogle />} />
+        <Route path="/user" element={<User />} />
+        <Route path="/user/orders" element={<Order />} />
+        <Route path="/user/payment" element={<Payment />} />
+        <Route path="/shoppinghistory" element={<History />} />
+        <Route path="/ProductSale" element={<ProductSale />} />
+        <Route path="/admin/dashboard" element={<Dashboard />} />
+        {roll === "SUPERADMIN" && (
+          <Route path="/admin/createAdmin" element={<FormCreateAdmin />} />
+        )}
+        <Route path="/admin/users" element={<UserAdmin />} />
+        <Route path="/user/update" element={<UpdateProduct />} />
       </Routes>
     </>
   );

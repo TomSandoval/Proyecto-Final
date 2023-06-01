@@ -5,12 +5,13 @@ import Carrousel from "../Carrousel/Carrousel";
 import "../home/Home.css";
 import Footer from "../Footer/Footer";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { checkExpiration, cleanProducts } from "../../redux/actions";
 import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
   const dispatch = useDispatch();
+  const userData = useSelector((state) => state.userData);
   const navigate = useNavigate()
       useEffect(()=>{
         const urlParams = new URLSearchParams(window.location.search);
@@ -19,7 +20,9 @@ export default function Home() {
         const username = decodeURIComponent(urlParams.get("username"));
         const tokenExpiration = decodeURIComponent(urlParams.get("tokenExpiration"));
         const roll = decodeURIComponent(urlParams.get("roll"));
-        
+        const picture = decodeURIComponent(urlParams.get("picture"));
+  
+            
 
         // Guardar los datos en el localStorage
         if(token !== "null"){
@@ -36,6 +39,9 @@ export default function Home() {
         }
         if(roll !== "null"){
         localStorage.setItem("roll", roll);
+      }
+        if (picture !== "null") {
+          localStorage.setItem("picture", picture);
         }
         navigate("/")
 

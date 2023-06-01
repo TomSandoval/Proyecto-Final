@@ -29,6 +29,16 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       messages: [...prev.messages, botMessage],
     }));
   };
+  const home = () => {
+    const botMessage = createChatBotMessage("Vamos a la Home");
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+    }));
+    setTimeout(() => {
+      window.location.href = "http://localhost:5173/";
+    }, 1500)
+    };
   const product = () => {
     const botMessage = createChatBotMessage(
       "Te provee de todo lo que Tuki necesites"
@@ -115,7 +125,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
             errorShipping,
             categories,
             dark,
-            contact
+            contact,
+            home
           },
         });
       })}

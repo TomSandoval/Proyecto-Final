@@ -9,13 +9,13 @@
   min-height: 100vh;
 }
 
-.all-container {
+.all-container-category {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10em;
-  margin-left: 25em;
+  margin-top: 5em;
+  gap: 6em;
 }
 
 .list-container {
@@ -37,6 +37,7 @@
   flex-direction: column;
   position: fixed;
   gap: 3em;
+  transition: all 1s ease-in-out;
 }
 
 .filters-container-dark {
@@ -118,4 +119,12 @@
 
 .buttons-filter:hover {
   background-color: #e9941d;
+}
+
+
+.price-order-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
