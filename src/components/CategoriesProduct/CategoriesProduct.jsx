@@ -18,7 +18,7 @@ import CardList from "../Products/CardList";
 import Footer from "../Footer/Footer";
 import Paginate from "../Paginate/Paginate";
 import Loading from "../Loading/Loading";
-import FilterButtons from '../home/FilterButtons/FilterButtons'
+import FilterButtons from "../home/FilterButtons/filterButtons"
 
 export default function CategoriesProduct() {
   const products = useSelector((state) => state.products);
