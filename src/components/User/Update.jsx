@@ -333,8 +333,8 @@ function UpdateProduct() {
                                 </li>
                                 <li className="nav-item">
                                     {status.status === 'ENTREGADO' ?
-                                        <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalEnviados})</a> :
-                                        <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalEnviados})</a>
+                                        <a className="nav-link active" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalCompletos})</a> :
+                                        <a className="nav-link" href="#" style={linkColor} name='ENTREGADO' onClick={(e) => handleStatus(e)}>Completado ({totalCompletos})</a>
                                     }
                                 </li>
                             </ul>
