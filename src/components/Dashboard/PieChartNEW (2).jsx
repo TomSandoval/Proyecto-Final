@@ -10,7 +10,7 @@ export default function PieChartNEW() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/admin/piechart"
+          "https://tuki-server.onrender.com/admin/piechart"
         );
         setData(response.data);
       } catch (error) {

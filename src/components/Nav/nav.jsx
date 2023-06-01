@@ -32,7 +32,7 @@ export default function SearchBar({ view }) {
 
   useEffect(() => {
     async function getProducts() {
-      const response = await axios.get(`http://localhost:3001/product`);
+      const response = await axios.get(`https://tuki-server.onrender.com/product`);
       setProductsSearch(response.data);
     }
     getProducts();

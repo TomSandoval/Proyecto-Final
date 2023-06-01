@@ -32,7 +32,7 @@ export default function UserAdmin() {
   const handleDeleteSelectedUsers = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:3001/admin/listusers?action=delete",
+        "https://tuki-server.onrender.com/admin/listusers?action=delete",
         {
           data: { ids: ids },
         }
@@ -46,7 +46,7 @@ export default function UserAdmin() {
   const handleRestoreSelectedUsers = async () => {
     try {
       const response = await axios.delete(
-        "http://localhost:3001/admin/listusers?action=restore",
+        "https://tuki-server.onrender.com/admin/listusers?action=restore",
         {
           data: { ids: ids },
         }

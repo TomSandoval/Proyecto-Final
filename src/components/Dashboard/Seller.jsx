@@ -9,7 +9,7 @@ export default function PieChartSeller() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/admin/sellers");
+        const response = await axios.get("https://tuki-server.onrender.com/admin/sellers");
         console.log(response.data);
 
         setData(response.data);

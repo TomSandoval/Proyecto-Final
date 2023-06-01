@@ -20,7 +20,9 @@ export default function Home() {
         const username = decodeURIComponent(urlParams.get("username"));
         const tokenExpiration = decodeURIComponent(urlParams.get("tokenExpiration"));
         const roll = decodeURIComponent(urlParams.get("roll"));
-
+        const picture = decodeURIComponent(urlParams.get("picture"));
+  
+            
         // Guardar los datos en el localStorage
         if(token !== "null"){
         localStorage.setItem("token", token);
@@ -36,6 +38,9 @@ export default function Home() {
         }
         if(roll !== "null"){
         localStorage.setItem("roll", roll);
+      }
+        if (picture !== "null") {
+          localStorage.setItem("picture", picture);
         }
         navigate("/")
 
